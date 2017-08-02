@@ -1,0 +1,36 @@
+RoomName:
+  type: string
+  description: Room name
+  example: authentix-discovery
+RoomDescription:
+  type: string
+  description: Room description
+  example: Discovery level information between customer and CloudFactory team
+RoomTopic:
+  type: string
+  description: Room Topic
+  example: Customer and CloudFactory communication
+RoomType:
+  type: string
+  description: Type of room. Either public {c} or private {p}
+  example: c
+RoomReadOnly:
+  type: boolean
+  description: true | false
+  example: true
+RoomCustomFields:
+  type: object
+  properties:
+    scope:
+      type: string
+      description: |
+        user | client | cfteam
+      example: ["client", "user"]
+    projectId:
+      type: string
+      description: id of the Project
+      example: NfO7bTGgM0gQrezv9CBT
+RoomArchive:
+  type: boolean
+  description: true | false
+  example: false

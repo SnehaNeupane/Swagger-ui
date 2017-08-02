@@ -1,0 +1,56 @@
+calendar_request:
+  type: object
+  required:
+    - owner
+  properties:
+    name:
+      type: string
+      description: The name of the calendar. Optional. Max 100 Chars
+      example: Sample Calendar
+    description:
+      type: string
+      description: The calendar description. Optional. Max 500 chars
+      example: This is sample description
+    owner:
+      type: object
+      description: Contains information about the object that owns the calendar
+
+      properties:
+        type:
+          type: string
+          description: 'The type of the object that owns the calendar. Currently, only "project" can own a calendar. In the future "user", or "resources" may also own a calendar'
+          example: project
+        id:
+          type: string
+          description: The id that uniquely identifies the owner
+          example: Iwizlw8bIYorPEuFzxHE
+
+calendar_response:
+  type: object
+  properties:
+    id:
+      type: string
+      description: id of calendar
+      example: Iwizlw8bIYorPEuFzxHE
+
+    name:
+      type: string
+      description: The name of the calendar. Optional. Max 100 Chars
+      example: Sample Calendar
+    description:
+      type: string
+      description: The calendar description. Optional. Max 500 chars
+      example: This is sample description
+    owner:
+      type: object
+      description: Contains information about the object that owns the calendar
+
+      properties:
+        type:
+          type: string
+          description: 'The type of the object that owns the calendar. Currently, only "project" can own a calendar. In the future "user", or "resources" may also own a calendar'
+          example: project
+        id:
+          type: string
+          description: The id that uniquely identifies the owner
+          example: Tsiylw8bIYorPEuFzxHE

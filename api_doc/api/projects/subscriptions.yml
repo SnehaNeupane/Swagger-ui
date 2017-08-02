@@ -1,0 +1,263 @@
+# Subscription APIs
+/projects/{project_id}/subscriptions:
+  # Create subscription
+  post:
+    summary: Create a Subscription
+    description: |
+      <h3><span style="color:#0088bb"> POST /api/v1/subscriptions </span></h3><hr>
+      This API allows users to create a Subscription. <br><br>
+      <b> Validations </b>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> effective_from is after effective_till
+          <td> effective_from must be on or before effective_till
+          <td> 422
+        </tr>
+        <tr>
+          <td> Invalid stage
+          <td> stage must be 'validation', 'proposal', 'contracting', 'booked' or 'lost'
+          <td> 422
+        </tr>
+      </table><br>
+      <b> Other Validations </b><br>
+      <ul>
+        <li> monthly_units, monthly_hours, flex_pass_units, flex_pass_hours are positive
+             integers >= 0. monthly_units and flex_pass units could go be in millions but the
+             monthly_hours and flex_pass_hours in general are in thousands
+        <li> monthly_price and flex_pass_price are floating point numbers rounded upto two decimal
+             places. Minimum >= 0
+        <li> Cannot create a subscription if previous subscription stage is other than lost or
+             booked. If attempted, it will give out this validation error - "there is already a
+             subscription at non final stage" 422
+        <li> Cannot create a subscription for a "closed" project. If attempted, it will give out
+             this validation error - "can create a subscription only when the project is open" 422.
+        <li> Cannot create a subscription if the billable_unit is not present in a project.
+        <li> Cannot create a new subscription if the project already has a previous subscription not
+             in lost or booked stage
+      </ul>
+      <br>
+      <b> Note </b><br>
+      <ol>
+        <li>
+          <b>Base Subscription</b><br>
+          The first subscription created under a project will be marked as the base subscription.
+        <li>
+          <b>Adjustments</b><br>
+          For a base subscription, the adjustments values will be an object with all the keys but
+          null in the values. For others, the adjustments are calculated based on the current and
+          the previous subscription.<br>
+          When the subscription_type is "flex_pass"
+          <ul>
+            <li> if the billable_unit is "hour" - updates "flex_pass_hours", "hourly_rate",
+                 "flex_pass_price"
+            <li> if billable_unit is "piece_rate" - updates "flex_pass_units", "piece_rate",
+                 "flex_pass_price"
+          </ul>
+          When the subscription_type is "monthly"
+          <ul>
+            <li> if billable_unit is "hour" - updates "monthly_hours, hourly_rate, monthly_price"
+            <li> if billable_unit is "piece_rate" - updates "monthly_units, piece_rate, monthly_price"
+          </ul>
+      </ol>
+      <br>
+      <span style="color:#1abc9c">[New Release] New project_id attribute added in the response.</span>
+    tags: [Subscriptions, New Release]
+    parameters:
+      - name: project_id
+        type: string
+        in: path
+        required: true
+        description: id of project
+      - name: subrequest
+        in: body
+        schema:
+          $ref: '#/definitions/subscription_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/subscription_response'
+
+  # List subscriptions
+  get:
+    summary: List Subscriptions
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/subscriptions </span></h3><hr>
+      This API allows users to list Subscriptions based on the provided filter params. <br><br>
+      <b> Filter parameters</b> <br>
+      <table>
+        <tr>
+          <th> Filter
+          <th> Description
+        </tr>
+        <tr>
+          <td> sf_opportunity_id
+          <td> Returns the subscription with the given sf_opportunity_id
+        </tr>
+        <tr>
+          <td> base
+          <td> Lists the base subscription
+        </tr>
+        <tr>
+          <td> time_min
+          <td> Lists all the subscriptions that are effective on or after this date.
+        </tr>
+        <tr>
+          <td> time_max
+          <td> Lists all the subscriptions that are effective before this date.
+        </tr>
+        <tr>
+          <td> stage
+          <td> Lists all the subscriptions with the given stage
+        </tr>
+      </table>
+      <br>
+      <span style="color:#1abc9c">[New Release] New project_id attribute added in the response.</span>
+    tags: [Subscriptions, New Release]
+    parameters:
+      - name: project_id
+        type: string
+        in: path
+        required: true
+        description: Id of project
+      - name: sf_opportunity_id
+        type: string
+        in: query
+        required: false
+        description: Returns the subscription with the given sf_opportunity_id
+      - name: base
+        type: boolean
+        in: query
+        required: false
+        description: List the base subscription
+      - name: stage
+        type: string
+        in: query
+        required: false
+        description: List all the subscriptions with the given stage
+      - name: time_min
+        type: string
+        format: date-time
+        in: query
+        required: false
+        description: List all the subscriptions that are effective on or after this date.
+      - name: time_max
+        type: string
+        format: date-time
+        in: query
+        required: false
+        description: List all the subscriptions that are effective on or before this date.
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/subscription_response'
+
+/projects/{project_id}/subscriptions/{id}:
+  # Get subscription
+  get:
+    summary: Get a Subscription
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/subscriptions/:id </span></h3><hr>
+      This API allows users to fetch details of a Subscription. <br><br>
+      <span style="color:#1abc9c">[New Release] New project_id attribute added in the response.</span>
+    tags: [Subscriptions, New Release]
+    parameters:
+       - name: project_id
+         type: string
+         in: path
+         required: true
+         description: Id of Project
+       - name: id
+         type: string
+         in: path
+         required: true
+         description: Id of Subscription
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/subscription_response'
+
+  # Update subscription
+  put:
+    summary: Update a Subscription
+    description:
+      <h3><span style="color:#0088bb"> PUT /api/v1/subscriptions/:id </span></h3><hr>
+      This API allows users to update a Subscription. <br><br>
+      <b> Validations </b>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> effective_from is after effective_till
+          <td> effective_from must be on or before effective_till
+          <td> 422
+        </tr>
+        <tr>
+          <td> Invalid stage
+          <td> stage must be 'validation', 'proposal', 'contracting', 'booked' or 'lost'
+          <td> 422
+        </tr>
+        <tr>
+          <td> The Subscription is not the latest subscription of the Project
+          <td> Only the most recent subscription is allowed for update
+          <td> 422
+        </tr>
+      </table>
+      <br>
+      <b> Note </b> <br>
+      <ol>
+        <li> "base" attribute cannot be updated. It is calculated internally.
+        <li>
+          <b>Adjustments</b><br>
+            For a base subscription, the adjustments values will be an object with all the keys but
+            null in the values. For others, the adjustments are calculated based on the current and
+            the previous subscription.<br>
+            When the subscription_type is "flex_pass"
+            <ul>
+              <li> if the billable_unit is "hour" - updates "flex_pass_hours", "flex_pass_price",
+                   "hourly_rate"
+              <li> if billable_unit is "piece_rate" - updates "flex_pass_units", "flex_pass_price",
+                   "piece_rate"
+            </ul>
+            When the subscription_type is "monthly"
+            <ul>
+              <li> if billable_unit is hour - updates "monthly_hours", "hourly_rate", "monthly_price"
+              <li> if billable_unit is piece_rate - updates "monthly_units", "piece_rate",
+                   "monthly_price"
+            </ul>
+      </ol>
+      <br>
+      <span style="color:#1abc9c">[New Release] New project_id attribute added in the response.</span>
+    tags:  [Subscriptions, New Release]
+    parameters:
+       - name: project_id
+         type: string
+         in: path
+         required: true
+         description: Id of Project
+       - name: id
+         type: string
+         in: path
+         required: true
+         description: Id of Subscription
+       - name: subrequest
+         in: body
+         schema:
+           $ref: '#/definitions/subscription_update_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/subscription_response'

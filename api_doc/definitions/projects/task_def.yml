@@ -1,0 +1,39 @@
+task_request:
+  type: object
+  required:
+    - name
+    - billable
+  properties:
+    name:
+      type: string
+      description: The name of the task. Max 200 Chars
+      example: Task A
+    billable:
+      type: boolean
+      description: Defines if the task is billable or not.
+      example: false
+
+task_response:
+  type: object
+  properties:
+    id:
+      type: string
+      example: '912414xyz'
+    name:
+      type: string
+      example: Task A
+    billable:
+      type: boolean
+      example: false
+    created_at:
+      type: string
+      format: date-time
+      description: |
+        The created timestamp of the Task
+      example: '2017-05-01T08:54:14Z'
+    updated_at:
+      type: string
+      format: date-time
+      description: |
+        The updated timestamp of the Task
+      example: '2017-05-01T10:34:23Z'

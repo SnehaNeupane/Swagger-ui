@@ -1,0 +1,195 @@
+subscription_request:
+  type: object
+  required:
+    - effective_from
+  properties:
+    name:
+      type: string
+      example: 'XYZ'
+    sf_opportunity_id:
+      type: string
+      example: '456fgh'
+    stage:
+      type: string
+      example: 'validation'
+    effective_from:
+      type: string
+      format: date
+      example: '2017-05-26'
+    effective_till:
+      type: string
+      format: date
+      example: '2017-08-28'
+    monthly_units :
+        type: integer
+        example: 1300
+    monthly_price :
+        type: number
+        format: float
+        example: 200.00
+    monthly_hours :
+        type: number
+        format: float
+        example: 20.00
+    piece_rate:
+        type: number
+        format: float
+        example: 14.00
+    hourly_rate:
+        type: number
+        format: float
+        example: 12.50
+    flex_pass_units:
+        type: integer
+        example: 20
+    flex_pass_price:
+        type: number
+        format: float
+    flex_pass_hours:
+        type: number
+        format: float
+        example: 20.00
+subscription_update_request:
+  type: object
+  properties:
+    name:
+      type: string
+      example: 'XYZ'
+    sf_opportunity_id:
+      type: string
+      example: '456fgh'
+    stage:
+      type: string
+      example: 'validation'
+    effective_from:
+      type: string
+      format: date
+    effective_till:
+          type: string
+          format: date
+    monthly_units :
+        type: integer
+        example: 10
+    monthly_price :
+        type: number
+        format: float
+        example: 200.00
+    monthly_hours :
+        type: number
+        format: float
+        example: null
+    piece_rate:
+        type: number
+        format: float
+        example: 20.00
+    hourly_rate:
+        type: number
+        format: float
+        example: 12.50
+    flex_pass_units:
+        type: integer
+        example: 20
+    flex_pass_price:
+        type: number
+        format: float
+    flex_pass_hours:
+        type: number
+        format: float
+        example: 20.00
+subscription_response:
+  type: object
+  properties:
+    id:
+      type: string
+      example: "123xyz"
+    name:
+      type: string
+      example: 'XYZ'
+    sf_opportunity_id:
+      type: string
+      example: '123abc'
+    project_id:
+      type: string
+      description: <span style="color:#1abc9c">[New Release]</span>
+      example: j30gr07efou47hhnrtr6
+    base:
+      type: boolean
+      example: 'false'
+    stage:
+      type: string
+      example: 'validation'
+    effective_from:
+      type: string
+      format: date
+    effective_till:
+          type: string
+          format: date
+    monthly_units :
+        type: integer
+        example: 10
+    monthly_price :
+        type: number
+        format: float
+        example: 200.00
+    monthly_hours :
+        type: [number, 'null']
+        format: float
+        example: null
+    piece_rate:
+        type: number
+        format: float
+        example: 20
+    hourly_rate:
+        type: [number, 'null']
+        format: float
+        example: null
+    flex_pass_units:
+        type: [integer, 'null']
+        example: null
+    flex_pass_price:
+        type: [number, 'null']
+        format: float
+        example: null
+    flex_pass_hours:
+        type: [number, 'null']
+        format: float
+        example: null
+    adjustments:
+      type: object
+      properties:
+        flex_pass_units:
+          type: [integer, 'null']
+          example: null
+        flex_pass_hours:
+          type: [number, 'null']
+          format: float
+          example: null
+        flex_pass_price:
+          type: [number, 'null']
+          format: float
+          example: null
+        monthly_units:
+          type: [integer, 'null']
+          example: null
+        monthly_price:
+          type: [number, 'null']
+          format: float
+          example: 20
+        monthly_hours:
+          type: number
+          format: float
+          example: 30.00
+        piece_rate:
+          type: number
+          format: float
+          example: 20.00
+        hourly_rate:
+          type: [number, 'null']
+          format: float
+          example: null
+    created_at:
+        type: string
+        format: date-time
+    updated_at:
+        type: string
+        format: date-time

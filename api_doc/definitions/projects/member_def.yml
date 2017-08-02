@@ -1,0 +1,73 @@
+member_request:
+  type: object
+  required:
+    - user_id
+  properties:
+    user_id:
+      type: string
+      description: User to be added. Needs to be a valid user id.
+      example: 6MJM2OeK2s2xisiRyAkZ
+    scope:
+      type: string
+      description: The role/title of the user in the project.
+      example: team leader
+
+member_response:
+  type: object
+  properties:
+    user_id:
+      type: string
+      description: id of user
+      example: 6MJM2OeK2s2xisiRyAkZ
+    project_id:
+      type: string
+      description: id of project
+      example: S1234OeQW2s2xisiRyAkZ
+    scope:
+      type: string
+      description: The role/title of the user in the project.
+      example: team leader
+    created_at:
+      type: string
+      format: date-time
+      description: The date when the member was added to project
+    updated_at:
+      type: string
+      format: date-time
+      description: The date when member detail was updated
+    type:
+      type: string
+      description: 'The type of member ie.''worker'' , ''client'' or ''core'''
+      example: core
+
+lists:
+  type: object
+  properties:
+    id:
+      type: string
+      description: id of calendar
+      example: Iwizlw8bIYorPEuFzxHE
+    name:
+      type: string
+      description: Name of calendar
+      example: Sample calendar
+    description:
+      type: string
+      description: Description of calendar
+      example: Sampe description of calendar
+    owner:
+      type: object
+      description: Contains information about the object that owns the calendar
+      properties:
+        type:
+          type: string
+          description: 'The type of the object that owns the calendar. Currently, only "project" can own a calendar. In the future "user", or "resources" may also own a calendar'
+          example: project
+        id:
+          type: string
+          description: The id that uniquely identifies the owner
+          example: Iwizlw8bIYorPEuFzxHE
+    primary:
+      type: boolean
+      description: Boolean value to store if the calendar is primary
+      example: true

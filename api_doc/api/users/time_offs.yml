@@ -1,0 +1,197 @@
+/time_offs:
+  # Create a time_off
+  post:
+    summary: Create a Time Off
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/time_offs</span></h3><hr>
+      This method allows users to create time off requests.<br><br>
+      <b> Validations </b> <br>
+      <table>
+        <tr>
+          <th> Field </th>
+          <th> Message </th>
+          <th> Code </th>
+        </tr>
+        <tr>
+          <td> Incorrect or missing leave_type </td>
+          <td> must be "regular", "sick" or "emergency" </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Incorrect or missing status </td>
+          <td> must be "pending", "approved" or "denied" </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Time off spans over two years </td>
+          <td> time offs can not span two years </td>
+          <td> 422 </td>
+        </tr>
+      </table>
+    tags: [Time Offs]
+    parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/create_timeoff_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/timeoff_response'
+  # List time_offs
+  get:
+    summary: List Time Offs
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/time_offs</span></h3><hr>
+      This API provides a list of time_offs as per the filter conditions provided.
+      <br><br>
+    parameters:
+      - name: user_id
+        in: query
+        description: Get time offs belonging to a particular user
+        type: string
+        format: uuid
+      - name: time_min
+        in: query
+        description: Get time offs falling on this date-time paremeter upto current time
+        type: string
+        format: date-time
+      - name: time_max
+        in: query
+        description: Get time offs falling on first time_off created date upto this date-time paremeter
+        type: string
+        format: date-time
+      - name: status
+        in: query
+        description: Get time offs having a specific status
+        type: string
+      - name: projects
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        format: array of valid project_id
+        description: Get time offs of users belonging to specific projects
+      - name: sort
+        in: query
+        description: Sort the list of time offs as per one of start_date, end_date, created_at
+          or updated_at fields
+        type: string
+        default: created_at
+      - name: order
+        in: query
+        type: string
+        description: Order the list of time offs in ascending (asc) or descending (desc) order
+        default: desc
+      - name: page
+        in: query
+        description: Get a specific page from the list of time offs
+        type: integer
+        default: 1
+        minimum: 1
+      - name: per_page
+        in: query
+        description: Get a specific item per_page
+        type: integer
+        default: 100
+        minimum: 1
+        maximum: 1000
+    tags: [Time Offs]
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/timeoff_response'
+
+/time_offs/{id}:
+  # Update a time_off
+  put:
+    summary: Update a Time Off
+    description: |
+      <h3><span style="color:#0088bb">PUT /api/v1/time_offs/:id</span></h3><hr>
+      This API allows users to update a time off.<br><br>
+      <b> Validations </b> <br>
+      <table>
+        <tr>
+          <th> Field </th>
+          <th> Message </th>
+        </tr>
+        <tr>
+          <td> approver_id is present and status is not present in request params </td>
+          <td> status is missing </td>
+        </tr>
+        <tr>
+          <td> status is present and approver_id is not present in request params </td>
+          <td> approver_id is missing </td>
+        </tr>
+      </table>
+    tags: [Time Offs]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of the Time Off
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/update_timeoff_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/timeoff_response'
+  # get time_offs
+  get:
+    summary: Get a Time Off
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/time_offs/:id </span></h3><hr>
+      This API allows users to fetch a specific time off resource.
+      <br>
+      <span style="color:#1abc9c">[New Release] Added Get Time Off API.</span>
+    tags: [Time Offs, New Release]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/timeoff_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+
+/users/{user_id}/time_offs/stats :
+  # Get time_off stat for a user
+  get:
+    summary: Get Time Off Stats for a User
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/users/:user_id/time_offs/stats</span></h3><hr>
+      This API provides the information about time offs which includes:
+      <ol>
+        <li> how much time off a user has taken
+        <li> how much balance is remaining
+        <li> how much balance was carried forward from the previous year
+      </ol>
+    tags: [Time Offs]
+    parameters:
+      - name: user_id
+        type: string
+        description: Id of the User
+        in: path
+        required: true
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/timeoff_stat_response'

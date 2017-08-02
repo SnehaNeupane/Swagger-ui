@@ -1,0 +1,768 @@
+room_create_request:
+  type: object
+  required:
+    - name
+    - customFields
+  properties:
+    name:
+      $ref: '#/definitions/RoomName'
+    description:
+      $ref: '#/definitions/RoomDescription'
+    topic:
+      $ref: '#/definitions/RoomTopic'
+    type:
+      $ref: '#/definitions/RoomType'
+    readOnly:
+      $ref: '#/definitions/RoomReadOnly'
+    customFields:
+      $ref: '#/definitions/RoomCustomFields'
+    archived:
+      $ref: '#/definitions/RoomArchive'
+room_update_request:
+  type: object
+  required:
+    - name
+    - customFields
+  properties:
+    name:
+      $ref: '#/definitions/RoomName'
+    description:
+      $ref: '#/definitions/RoomDescription'
+    topic:
+      $ref: '#/definitions/RoomTopic'
+    type:
+      $ref: '#/definitions/RoomType'
+    readOnly:
+      $ref: '#/definitions/RoomReadOnly'
+    customFields:
+      $ref: '#/definitions/RoomCustomFields'
+    archived:
+      $ref: '#/definitions/RoomArchive'
+room_create_response:
+  type: object
+  properties:
+    room:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: ByehQjC44FwMeiLbX
+        name:
+          type: string
+          example: CloudFactory Discovery
+        msgs:
+          type: integer
+          example: 0
+        u:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: aobEdbYhXfu5hkeqG
+            username:
+              type: string
+              example: kylie
+        customFields:
+          type: object
+          properties:
+            scope:
+              type: string
+              example: ["user"]
+            projectId:
+              type: string
+              example: NfO7bTGgM0gQrezv9CBT
+        ts:
+          type: string
+          format: date-time
+        sysMes:
+          type: boolean
+          example: true
+        _updatedAt:
+          type: string
+          format: date-time
+        meta:
+          type: object
+          properties:
+            revision:
+              type: integer
+              example: 5
+            created_at:
+              type: integer
+              example: 14938970000016
+            version:
+              type: integer
+              example: 0
+            updated:
+              type: integer
+              example: 1493897000153
+        $loki:
+          type: integer
+          example: 404
+        usernames:
+          type: string
+          description: Name
+          example: ["Katherine Piers", "Bonnie Bennet"]
+        topic:
+          type: string
+          example: Customer and CloudFactory Communication
+        description:
+          type: string
+          example: Internal Channel
+        archived:
+          type: boolean
+          example: false
+        readOnly:
+          type: boolean
+          example: true
+        type:
+          type: string
+          description: Type of room. Either public {c} or private {p}
+          example: c
+    success:
+      type: boolean
+    statusCode:
+      type: integer
+      example: 201
+
+room_update_response:
+  type: object
+  properties:
+    room:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: ACehQjC44FwDFKLbX
+        name:
+          type: string
+          description: CloudFactory Discovery
+          example: CloudFactory Discovery
+        msgs:
+          type: integer
+          example: 0
+        u:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: tTAibfAzxAhM4PnJ5
+            username:
+              type: string
+              example: philip.tester
+        customFields:
+          type: object
+          properties:
+            scope:
+              type: string
+              example: ["cfteam, user"]
+            projectId:
+              type: string
+              example: fOwSA3pUZJkh1h7RBXW9
+        ts:
+          type: string
+          format: date-time
+        sysMes:
+          type: boolean
+          example: true
+        _updatedAt:
+          type: string
+          format: date-time
+        archived:
+          type: string
+          example: true
+        meta:
+          type: object
+          properties:
+            revision:
+              type: integer
+              example: 5
+            created_at:
+              type: integer
+              example: 14938970000016
+            version:
+              type: integer
+              example: 0
+            updated:
+              type: integer
+              example: 1493897000153
+        $loki:
+          type: integer
+          example: 914
+        usernames:
+          type: string
+          description: Name
+          example: ["Katherine Piers", "Bonnie Bennet"]
+        topic:
+          type: string
+          example: Customer and CloudFactory Communication
+        description:
+          type: string
+          example: Internal Channel
+        readOnly:
+          type: boolean
+          example: true
+        type:
+          type: string
+          example: c
+    success:
+      type: boolean
+      example: true
+    statusCode:
+      type: integer
+      example: 200
+
+room:
+  type: object
+  properties:
+    _id:
+      type: string
+      example: ByehQjC44FwMeiLbX
+    name:
+      type: string
+      example: blackrock-discovery
+    msgs:
+      type: boolean
+      example: 0
+    u:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: aobEdbYhXfu5hkeqG
+        username:
+          type: string
+          example: philip.tester
+    customFields:
+      type: object
+      properties:
+        scope:
+          type: string
+          example: ["cfteam", "user"]
+        projectId:
+          type: string
+          example: fOwSA3pUZJkh1h7RBXW9
+    ts:
+      type: string
+      format: date-time
+    sysMes:
+      type: boolean
+      example: true
+    _updatedAt:
+      type: string
+      format: date-time
+    topic:
+      type: string
+      example: Customer and CloudFactory Communication
+    description:
+      type: string
+      example: Internal Channel
+    archived:
+      type: boolean
+      example: false
+    meta:
+      type: object
+      properties:
+        revision:
+          type: integer
+          example: 5
+        created_at:
+          type: integer
+          example: 14938970000016
+        version:
+          type: integer
+          example: 0
+    $loki:
+      type: integer
+      example: 915
+    usernames:
+      type: array
+      minLength: 0
+      items:
+        type: string
+        example: Aaron.Ford
+    readOnly:
+      type: boolean
+      example: false
+    type:
+      type: string
+      example: c
+
+rooms:
+  type: object
+  properties:
+    rooms:
+      type: array
+      items:
+        $ref: '#/definitions/room'
+    success:
+      type: boolean
+      example: true
+    statusCode:
+      type: integer
+      example: 200
+room_detail:
+  type: object
+  properties:
+    room:
+      $ref: '#/definitions/room'
+    success:
+      type: boolean
+      example: true
+    statusCode:
+      type: integer
+      example: 200
+
+join_room_request:
+  type: object
+  properties:
+    userId:
+      type: string
+      description: Id of the User
+      example: y6TA5mHs93aDChMWu
+
+join_room_response:
+  type: object
+  properties:
+    userId:
+      type: string
+      example: y6TA5mHs93aDChMWu
+    room:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: aySoEpmcnRrBQypf4
+        name:
+          type: string
+          example: CloudFactory1484885718643
+        msgs:
+          type: boolean
+          example: 4
+        u:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: knQx65DQLKMpXazop
+            username:
+              type: string
+              example: cf.admin
+        customFields:
+          type: object
+          properties:
+            projectId:
+              type: string
+              example: fOwSA3pUZJkh1h7RBXW9
+        ts:
+          type: string
+          format: date-time
+        sysMes:
+          type: boolean
+          example: true
+        _updatedAt:
+          type: string
+          format: date-time
+        archived:
+          type: boolean
+          example: false
+        topic:
+          type: string
+          example: Rocket Fly
+        description:
+          type: string
+          example: The most exciting thing you can possibly do on Earth is to get away from it; jump in a rocket and blast into space!
+        meta:
+          type: object
+          properties:
+            revision:
+              type: integer
+              example: 5
+            created_at:
+              type: integer
+              example: 14938970000016
+            version:
+              type: integer
+              example: 0
+        $loki:
+          type: integer
+          example: 915
+        usernames:
+          type: string
+          example: ["katherine.piers", "bonnie.bennet", "cf.admin"]
+        readOnly:
+          type: boolean
+          example: false
+        type:
+          type: string
+          example: p
+        userId:
+          type: string
+          example: y6TA5mHs93aDChMWu
+        success:
+          type: boolean
+          example: true
+
+join_rooms_request:
+  type: object
+  required:
+    - userId
+    - scope
+    - projectId
+  properties:
+    userId:
+      type: string
+      description: Id of the user
+      example: y6TA5mHs93aDChMWu
+    scope:
+      type: string
+      example: client
+      description: |
+        client | user | cfteam
+    projectId:
+      type: string
+      example: NfO7bTGgM0gQrezv9CBT
+      description: Id of the Project
+
+UserId:
+  type: string
+  description: User id from channels
+  example: y6TA5mHs93aDChMWu
+MemberScope:
+  type: string
+  example: user
+Joined:
+  type: string
+  example: ["aoWDDbYhXfu5hk23G", "dEFTaHms93aDChMWu"]
+FailedId:
+  type: string
+  example: ["dEFTaHms93aDChMWu"]
+Success:
+  type: boolean
+  example: true
+
+join_rooms_response:
+  type: object
+  properties:
+    userId:
+      $ref: '#/definitions/UserId'
+    scope:
+      $ref: '#/definitions/MemberScope'
+    joined:
+      $ref: '#/definitions/Joined'
+    failed:
+      type: string
+      example: []
+    message:
+      type: string
+      example: Successfully added y6TA5mHs93aDChMWu to rooms
+    success:
+      $ref: '#/definitions/Success'
+    statusCode:
+      type: integer
+      example: 200
+
+get_rooms_by_scope_response:
+  type: object
+  properties:
+    user:
+      type: string
+      example: RE4vKJn3sueMkxLSP
+    client:
+      type: string
+      example: ["RE4vKJn3sueMkxLSP", "QHLoAg67CpxXYxKBd"]
+    cfteam:
+      type: string
+      example: ["RE4vKJn3sueMkxLSP", "QHLoAg67CpxXYxKBd"]
+    projectId:
+      type: string
+      example: nktmrnktmrnktmr
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true
+
+remove_from_rooms_request:
+  type: object
+  required:
+    - userId
+    - projectId
+  properties:
+    userId:
+      type: string
+      example: y6TA5mHs93aDChMWu
+      description: Id of the user in channels
+    projectId:
+      type: string
+      example: nKtMrNkTmRnKtMr
+      description: Id of the project
+
+
+remove_from_rooms_response:
+  type: object
+  properties:
+    userId:
+      type: string
+      example: y6TA5mHs93aDChMWu
+    projectId:
+      type: string
+      example: nKtMrNkTmRnKtMr
+    removed:
+      type: string
+      example: ["RE4vKJn3sueMkxLSP", "QHLoAg67CpxXYxKBd"]
+    failed:
+      type: string
+      example: []
+    message:
+      type: string
+      example: Successfully removed fn8BFNdRh73hY8rCM from rooms
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true
+
+remove_from_a_room_request:
+  type: object
+  required:
+    - userId
+  properties:
+    userId:
+      type: string
+      description: Id of user in channels
+      example: fn8BFNdRh73hY8rCM
+
+remove_from_a_room_response:
+  type: object
+  properties:
+    userId:
+      type: string
+      example: fn8BFNdRh73hY8rCM
+    room:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: QHLoAg67CpxXYxKBd
+        name:
+          type: string
+          example: FirstRoom
+        msgs:
+          type: integer
+          example: 6
+        u:
+          type: object
+          properties:
+            _id:
+              type: string
+              example: ZgnFReaoSTX66ykHg
+            username:
+              type: string
+              example: Channels.Bot
+        ts:
+          type: string
+          format: date-time
+        sysMes:
+          type: boolean
+          example: true
+        _updatedAt:
+          type: string
+          format: date-time
+        topic:
+          type: string
+          example: Nuts and Bolts
+        description:
+          type: string
+          example: Customer and CloudFactory Communication
+        archived:
+          type: boolean
+          example: true
+        meta:
+          type: object
+          properties:
+            revision:
+              type: integer
+              example: 6
+            created:
+              type: integer
+              example: 1492709309284
+            version:
+              type: integer
+              example: 0
+            updated:
+              type: integer
+              example: 1492709313308
+        $loki:
+          type: integer
+          example: 914
+        usernames:
+          type: string
+          example: Channels.Bot
+        readOnly:
+          type: boolean
+          example: false
+        type:
+          type: string
+          example: c
+        customFields:
+          type: object
+          properties:
+            scope:
+              type: string
+              example: ["client", "cfteam"]
+            projectId:
+              type: string
+              example: nKtMrNkTmRnKtMr
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true
+
+find_user_response:
+  type: object
+  properties:
+    user:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: QHLoAg67CpxXYxKBd
+        createdAt:
+          type: string
+          format: date-time
+        avatarOrigin:
+          type: string
+          example: none
+        name:
+          type: string
+          example: Bonnie
+        username:
+          type: string
+          example: Bonnie.Bennet
+        emails:
+          type: object
+          properties:
+            address:
+              type: string
+              example: bonnie@cloudfactory.com
+            verified:
+              type: boolean
+              example: true
+        status:
+          type: string
+          example: online
+        statusDefault:
+          type: string
+          example: online
+        utcOffset:
+          type: integer
+          example: 0
+        active:
+          type: boolean
+          example: true
+        type:
+          type: string
+          example: user
+        roles:
+          type: string
+          example: ["admin"]
+        _updatedAt:
+          type: string
+          format: date-time
+        meta:
+          type: object
+          properties:
+            revision:
+                type: integer
+                example: 6
+            created:
+              type: integer
+              example: 1492709309284
+            version:
+              type: integer
+              example: 0
+            updated:
+              type: string
+              example: date-time
+        $loki:
+          type: integer
+          example: 914
+        services:
+          type: object
+          properties:
+            password:
+              type: object
+              properties:
+                bcrypt:
+                  type: string
+                  example: $2a$10$OHs924MXX/oSjH/.uZXI8OBOtuyp71HB9oeMLMbHlRBTt0Z8wj7AO
+            resume:
+              type: object
+              properties:
+                loginTokens:
+                  type: string
+                  example: []
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true
+
+get_username_response:
+  type: object
+  properties:
+    username:
+      type: string
+      example: sneha1
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true
+
+get_room_name_response:
+  type: object
+  properties:
+    roomName:
+      type: string
+      example: microsoft-discovery
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true
+
+update_user_avatar_request:
+  type: object
+  required:
+    - userId
+    - avatarUrl
+  properties:
+    userId:
+      type: string
+      example: JRacCyM4gdrknaWy7
+      description: Id of the user
+    avatarUrl:
+      type: string
+      example: https://s-media-cache-ak0.pinimg.com/736x/9d/0e/a4/9d0ea426351bdfc79043fcd113738def.jpg
+      description: Url
+
+update_user_avatar_response:
+  type: object
+  properties:
+    roomName:
+      type: string
+      example: roomName
+    statusCode:
+      type: integer
+      example: 200
+    success:
+      type: boolean
+      example: true

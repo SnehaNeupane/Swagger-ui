@@ -1,0 +1,438 @@
+time_entry_response:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uid
+      example: RfKhsbCgEijEvCk9MH8R
+    user_id:
+      type: string
+      format: uid
+      example: Zm4LepVRUtL4LpbPsoiI
+    project_id:
+      type: string
+      format: uid
+      example: 4TjV7qg5t8394ZsCal0S
+    task_id:
+      type: string
+      format: uid
+      example: QCaj5EAKoTSvQVdxUNi4
+    schedule_id:
+      type: string
+      format: uid
+      example: Huja9012jTB96j13hHU2
+    slot_id:
+      type: string
+      format: uid
+      example: NsidUwXrJq4KcsOqaME8
+    delivery_hub_id:
+      type: string
+      format: uid
+      example: cn3iuwXrJq4KcsOqkjg4
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T13:00:00Z'
+    end_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T15:00:00Z'
+    duration:
+      type: integer
+      description: In seconds
+      example: 1200
+    premium_for_client:
+      type: boolean
+      example: false
+    premium_for_worker:
+      type: boolean
+      example: false
+    notes:
+      type: string
+      example: This is sample note
+    timer:
+      type: boolean
+      description: Distinguish a time_entry made from start/stop timer and direct create api.
+      example: false
+    overage:
+      type: boolean
+      example: false
+    created_at:
+      type: string
+      format: date-time
+      example: '2017-06-01T09:28:18Z'
+    updated_at:
+      type: string
+      format: date-time
+      example: '2017-06-01T09:28:18Z'
+    custom_attributes:
+      $ref: "#/definitions/TimeEntryCustomAttributes"
+time_entry_create_request:
+  type: object
+  required:
+    - user_id
+    - project_id
+    - task_id
+    - start_time
+    - end_time
+    - duration
+  properties:
+    user_id:
+      type: string
+      example: Zm4LepVRUtL4LpbPsoiI
+    project_id:
+      type: string
+      example: 4TjV7qg5t8394ZsCal0S
+    task_id:
+      type: string
+      example: QCaj5EAKoTSvQVdxUNi4
+    slot_id:
+      type: string
+      example: NsidUwXrJq4KcsOqaME8
+    schedule_id:
+      type: string
+      example: Huja9012jTB96j13hHU2
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T13:00:00Z'
+    end_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T15:00:00Z'
+    duration:
+      type: integer
+      description: In seconds
+      example: 1200
+    premium_for_worker:
+      type: boolean
+      default: false
+    premium_for_client:
+      type: boolean
+      default: false
+    overage:
+      type: boolean
+      example: false
+    notes:
+      type: string
+      example: This is sample note
+    custom_attributes:
+      $ref: "#/definitions/TimeEntryCustomAttributes"
+time_entry_start_request:
+  type: object
+  required:
+    - project_id
+    - task_id
+    - start_time
+  properties:
+    project_id:
+      type: string
+      example: 4TjV7qg5t8394ZsCal0S
+    task_id:
+      type: string
+      example: QCaj5EAKoTSvQVdxUNi4
+    slot_id:
+      type: string
+      example: NsidUwXrJq4KcsOqaME8
+    schedule_id:
+      type: string
+      example: Huja9012jTB96j13hHU2
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T13:00:00Z'
+    premium_for_worker:
+      type: boolean
+      default: false
+    premium_for_client:
+      type: boolean
+      default: false
+    notes:
+      type: string
+      example: This is sample note
+    custom_attributes:
+      $ref: '#/definitions/TimeEntryCustomAttributes'
+time_entry_start_response:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uid
+      example: RfKhsbCgEijEvCk9MH8R
+    user_id:
+      type: string
+      format: uid
+      example: Zm4LepVRUtL4LpbPsoiI
+    project_id:
+      type: string
+      format: uid
+      example: 4TjV7qg5t8394ZsCal0S
+    task_id:
+      type: string
+      format: uid
+      example: QCaj5EAKoTSvQVdxUNi4
+    schedule_id:
+      type: string
+      format: uid
+      example: Huja9012jTB96j13hHU2
+    slot_id:
+      type: string
+      format: uid
+      example: NsidUwXrJq4KcsOqaME8
+    delivery_hub_id:
+      type: string
+      format: uid
+      example: cn3iuwXrJq4KcsOqkjg4
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T13:00:00Z'
+    end_time:
+      type: [string, 'null']
+      format: date-time
+      example: null
+    duration:
+      type: [integer, 'null']
+      description: In seconds
+      example: null
+    premium_for_client:
+      type: boolean
+      example: false
+    premium_for_worker:
+      type: boolean
+      example: false
+    notes:
+      type: string
+      example: This is sample note
+    timer:
+      type: boolean
+      description: Distinguish a time_entry made from start/stop timer and direct create api.
+      example: false
+    overage:
+      type: boolean
+      example: false
+    created_at:
+      type: string
+      format: date-time
+      example: '2017-06-01T09:28:18Z'
+    updated_at:
+      type: string
+      format: date-time
+      example: '2017-06-01T09:28:18Z'
+    custom_attributes:
+      $ref: "#/definitions/TimeEntryCustomAttributes"
+time_entry_update_request:
+  type: object
+  properties:
+    user_id:
+      type: string
+      example: Zm4LepVRUtL4LpbPsoiI
+    project_id:
+      type: string
+      example: 4TjV7qg5t8394ZsCal0S
+    task_id:
+      type: string
+      example: QCaj5EAKoTSvQVdxUNi4
+    slot_id:
+      type: string
+      example: NsidUwXrJq4KcsOqaME8
+    schedule_id:
+      type: string
+      example: Huja9012jTB96j13hHU2
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T13:00:00Z'
+    end_time:
+      type: string
+      format: date-time
+      example: '2017-04-12T15:00:00Z'
+    duration:
+      type: integer
+      description: In seconds
+      example: 1200
+    premium_for_worker:
+      type: boolean
+      example: false
+    premium_for_client:
+      type: boolean
+      example: false
+    notes:
+      type: string
+      example: This is sample note
+    custom_attributes:
+      $ref: "#/definitions/TimeEntryCustomAttributes"
+running_time_entry_response:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uid
+      example: RfKhsbCgEijEvCk9MH8R
+    user_id:
+      type: string
+      format: uid
+      example: Zm4LepVRUtL4LpbPsoiI
+    project_id:
+      type: string
+      format: uid
+      example: 4TjV7qg5t8394ZsCal0S
+    task_id:
+      type: string
+      format: uid
+      example: QCaj5EAKoTSvQVdxUNi4
+    slot_id:
+      type: string
+      format: uid
+      example: NsidUwXrJq4KcsOqaME8
+    schedule_id:
+      type: string
+      format: uid
+      example: Huja9012jTB96j13hHU2
+    delivery_hub_id:
+      type: string
+      format: uid
+      example: cn3iuwXrJq4KcsOqkjg4
+    start_time:
+      type: string
+      format: date-time
+      example: 2016-12-12T16:00:00Z
+    end_time:
+      type: ['string', 'null']
+      format: date-time
+      example: null
+    duration:
+      type: ['integer', 'null']
+      description: In seconds
+      example: null
+    premium_for_worker:
+      type: boolean
+    premium_for_client:
+      type: boolean
+    notes:
+      type: string
+      example: This is sample note
+    timer:
+      type: boolean
+      description: Distinguish a time_entry made from start/stop timer and direct create api.
+    overage:
+      type: boolean
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date-time
+    custom_attributes:
+      $ref: "#/definitions/TimeEntryCustomAttributes"
+total_logged_hour:
+  type: object
+  properties:
+    group_by:
+      type: object
+      description: Fields used for group_by query (type, slot_id, date)
+      properties:
+        { }
+      example: '"group_by": {"date": "2017-02-10","slot_id": "oAz5bP23iGz8oa5SkxIW","type": "regular"}'
+    standard_for_client:
+      type: number
+      format: float
+      example: 110.50
+    standard_for_worker:
+      type: number
+      format: float
+      example: 120.00
+    premium_for_client:
+      type: number
+      format: float
+      example: 39.50
+    premium_for_worker:
+      type: number
+      format: float
+      example: 30.00
+    client:
+      type: object
+      description: |
+        Detail information of client<br/>
+        <b> New Release </b>
+      properties:
+        standard:
+          type: object
+          properties:
+            base:
+              type: number
+              format: float
+              example: 50
+            overage:
+              type: number
+              format: float
+              example: 60.5
+        premium:
+          type: object
+          properties:
+            base:
+              type: number
+              format: float
+              example: 30.5
+            overage:
+              type: number
+              format: float
+              example: 9
+    worker:
+      type: object
+      description: |
+        Detail information of worker<br/>
+        <b> New Release </b>
+      properties:
+        standard:
+          type: object
+          properties:
+            base:
+              type: number
+              format: float
+              example: 120
+            overage:
+              type: ['number', 'null']
+              description: Not implemented for worker
+              example: null
+        premium:
+          type: object
+          properties:
+            base:
+              type: number
+              format: float
+              example: 30
+            overage:
+              type: ['number', 'null']
+              description: Not implemented for worker
+              example: null
+time_entry_start_error_response:
+  type: object
+  properties:
+    message:
+      type: string
+      description: Timer is already started. Cannot start a new one
+time_entry_stop_error_response:
+  type: object
+  properties:
+    message:
+      type: string
+      description: end_time must be greater than the start_time
+
+# time entry attributes
+TimeEntryCustomAttributes:
+  type: array
+  description: |
+    <span style="color:#1abc9c">[New Release]</span>
+    Free-end "array of objects" field to add extra attributes for the resource.
+  items:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the key that is used to identify the custom attribute.
+        example: worker_ip
+      value:
+        type: string
+        description: Value for the key that is used to identify the custom attribute.
+        example: 110.44.126.155

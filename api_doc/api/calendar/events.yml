@@ -1,0 +1,241 @@
+/calendars/{calendar_id}/events:
+  # Create an event
+  post:
+    description: This API allows users to create an event in a specific calendar. <br>
+      <b> behaviour</b>
+
+
+      When a user resource is added to an event. It sends an invitation email to the person. In future, the person might accept or reject the invitation. However, for now, they are considered to have automatically accepted the invitation.
+    summary: Create an Event
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: calendar_id
+        in: path
+        type: string
+        required: true
+        description: id of calendar
+      - name: eventbody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/eventbody'
+    responses:
+      '201':
+        description: Successful
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/geteventresponse'
+
+  # List events
+  get:
+    description:
+
+      <b> Optional query parameters </b>
+
+        These parameters need to be supplied in query string.<br>
+      <table>
+      <th>Name  <th>Type  <th>Description
+     <tr>
+
+      <td> time_min <td>  number  <td>Lower bound (inclusive) for an event's end time to filter by.  The default is not to filter by end time. ISO 8601 UTC
+       <tr> <td>time_max  <td>number<td>  Upper bound (exclusive) for an event's start time to filter by. The default is not to filter by start time. ISO 8601 UTC
+      <tr> <td>page <td>number<td>  The page number for events to be returned. Maximum value depends  upon the number of events that gets included and is included in header
+       <tr> <td>per_page<td>  number  <td>The maximum number of events to be returned per page. Maximum value is 1000 and default value is 100 </tr>
+
+     </table>
+     <b>Notes</b> <br> <ul> <li>The results are paginated using standard API pagination mechanism used by CloudFactory platform.</li> <li>The events are ordered by start_date in ascending order.</li></ul>
+    summary: Get list of Events
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: calendar_id
+        in: path
+        required: true
+        description: The id of the calendar in which event was created
+        type: string
+    responses:
+      '200':
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/geteventresponse'
+
+/calendars/{calendar_id}/events/{id}:
+  # Get an event
+  get:
+    summary: Get an Event
+    description: This API allows users to fetch an event through the owner's calendar as well as through the associated resource's  calendar.
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: calendar_id
+        in: path
+        required: true
+        description: The id of the calendar to which event is associated
+        type: string
+      - name: id
+        in: path
+        required: true
+        description: The id of event
+        type: string
+    responses:
+      '200':
+        description: OK
+        schema:
+          $ref: '#/definitions/geteventresponse'
+
+  # Update an event
+  put:
+    summary: Update an event
+    description: |
+      <b>Editable Parameters</b> <br>
+      name, description, start_time, end_time, custom_attributes, resources
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: calendar_id
+        in: path
+        required: true
+        description: The id of the calendar in which event was created
+        type: string
+      - name: id
+        in: path
+        required: true
+        description: The id of events
+        type: string
+    responses:
+      '200':
+        description: OK
+        schema:
+          $ref: '#/definitions/geteventresponse'
+
+  # Delete an event
+  delete:
+    description: '<b>Note</b> <br> <ul> <li>When an event is deleted, the event  stops being reported from calendars of the associated resources as well.</li> <li>It is  possible to delete both past and future events.</li></ul>'
+    summary: Delete an event
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: calendar_id
+        in: path
+        required: true
+        description: The id of the calendar in which event was created
+        type: string
+      - name: id
+        in: path
+        required: true
+        description: The id of events
+        type: string
+    responses:
+      '204':
+        description: No content
+
+# Event stats API
+/events/stats:
+  # Total scheduled hours
+  get:
+    summary: Total hours scheduled
+    description:
+
+      <b>Note</b> <br>
+
+      * All four aggregated hours (standard, premium) will be a floating value roundedup to two decimal places.
+
+      * Summary is calculated as
+
+           1. Standard for client => sum of duration when premium_for_client = false
+
+           2. Standard for worker => sum of duration when premium_for_worker = false
+
+           3.  Premium for client => sum of duration when premium_for_client = true
+
+           4.  Premium for worker => sum of duration when premium_for_worker = true
+
+      * standard_for_client + premium_for_client = standard_for_worker + premium_for_worker = total time scheduled for that duration
+
+      * Pagination is added for the list as per our standard pagination rule.
+             Order of the fields in the group by column should not affect the results.
+       <br>
+
+      * <b>Group By</b><br>
+        <ol><li> Groups the summaries by the given fields. Fields for now- date,        type & slot_id</li><li>The query parameter group_by must be an array with at least one of     date  , slot_id and type as the format as shown- <code>group_by[]=date&group_by[]=slot_id&group_by[]=type</code> </li><ol>
+
+
+      <b> Validation</b> <br>
+
+       * Error- group_by has an invalid field
+
+       * Message- must be an array with at least one of date, slot_id and type
+
+       * Error Code-  422 Unprocessable Entity
+
+       * time_min cannot be greater than time_max. It should respond with a 422 error and this message-  "time_max must be greater than or equal to time_min"
+
+
+
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: time_min
+        in: query
+        type: string
+        format: date-time
+        required: true
+        description: time since which the event was started and format according to  ISO 8601 standard
+
+      - name: time_max
+        in: query
+        type: string
+        format: date-time
+        required: true
+        description: time before which the event was started and format according to  ISO 8601 standard
+
+      - name: project_id
+        in: query
+        type: string
+        required: false
+        description: id of the project for which the event was created
+
+      - name: status
+        in: query
+        type: string
+        required: false
+        description: status of schedule, can be published or unpublished
+
+      - name: slot_id
+        in: query
+        type: string
+        required: false
+        description: Id of slot
+
+      - name: user_id
+        in: query
+        type: string
+        required: false
+        description: id of the user for whom the event was created
+
+      - name: premium_for_client
+        in: query
+        type: string
+        required: false
+        description: Denotes whether an event was created for a premium (for client) shift
+
+      - name: premium_for_worker
+        in: query
+        type: string
+        required: false
+        description: Denotes whether an event was created for a premium (for worker) shift
+
+      - name: group_by
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        description: Groups the summaries by the given fields. Allows only these three fields for now- date, slot_id & type. Multiple values separated by comma which does the 'AND' operation
+
+    responses:
+
+       '200':
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/total_scheduled_hours'

@@ -1,0 +1,227 @@
+#Scheduling APIs
+schedule_create_request:
+  type: object
+  required:
+    - user_id
+    - project_id
+    - delivery_hub_id
+    - slot_id
+    - start_date
+  properties:
+    user_id:
+      type: string
+      format: uid
+      example: 'JtzxY8MejfbCzxvLxeMH'
+    project_id:
+      type: string
+      format: uid
+      example: 'ApsHWmZQrVaK2TBhSOTi'
+    delivery_hub_id:
+      type: string
+      format: uid
+      example: 'UhbUQ3eUFqQFSScTzqgG'
+    slot_id:
+      type: string
+      format: uid
+      example: 'KpYwX97xuWmrE4zjvRZF'
+    start_date:
+      type: string
+      format: date
+      example: '2016-08-29'
+    status:
+      type: string
+      default: unpublished
+    type:
+      type: string
+      default: regular
+    overage:
+      type: boolean
+      default: false
+    break:
+      type: integer
+      default: 0
+      description: In minutes
+    premium_for_client:
+      type: boolean
+      description: |
+        Mark a schedule as Premium or Standard for Client User.
+        Default value is calculated using day, slot and delivery hub information.
+    premium_for_worker:
+      type: boolean
+      description: |
+        Mark a schedule as Premium or Standard for Worker User.
+        Default value is calculated using day, slot and delivery hub information.
+    custom_attributes:
+      type: array
+      items:
+        type: object
+        properties:
+            name:
+              type: string
+              example: seat_num
+            value:
+              type: string
+              example: 45
+
+schedule_update_request:
+  type: object
+  properties:
+    user_id:
+      type: string
+      format: uid
+      example: 'JtzxY8MejfbCzxvLxeMH'
+    project_id:
+      type: string
+      format: uid
+      example: 'ApsHWmZQrVaK2TBhSOTi'
+    delivery_hub_id:
+      type: string
+      format: uid
+      example: 'UhbUQ3eUFqQFSScTzqgG'
+    slot_id:
+      type: string
+      format: uid
+      example: 'KpYwX97xuWmrE4zjvRZF'
+    start_date:
+      type: string
+      format: date
+      example: '2016-08-29'
+    status:
+      type: string
+      default: unpublished
+    type:
+      type: string
+      default: regular
+    overage:
+      type: boolean
+      default: false
+    break:
+      type: integer
+      description: In minutes
+      default: 0
+    premium_for_client:
+      type: boolean
+      description: |
+        Mark a schedule as Premium or Standard for Client User.
+        Default value is calculated using day, slot and delivery hub information.
+    premium_for_worker:
+      type: boolean
+      description: |
+        Mark a schedule as Premium or Standard for Worker User.
+        Default value is calculated using day, slot and delivery hub information.
+    custom_attributes:
+      type: array
+      items:
+        type: object
+        properties:
+            name:
+              type: string
+              example: seat_num
+            value:
+              type: string
+              example: 45
+
+schedule_response:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uid
+      example: 'Hiu67HKMejfbCzxHJ99e'
+    user_id:
+      type: string
+      format: uid
+      example: 'JtzxY8MejfbCzxvLxeMH'
+    project_id:
+      type: string
+      format: uid
+      example: 'ApsHWmZQrVaK2TBhSOTi'
+    delivery_hub_id:
+      type: string
+      format: uid
+      example: 'UhbUQ3eUFqQFSScTzqgG'
+    slot_id:
+      type: string
+      format: uid
+      example: 'KpYwX97xuWmrE4zjvRZF'
+    status:
+      type: string
+      default: unpublished
+    type:
+      type: string
+      default: regular
+    premium_for_client:
+      type: boolean
+    premium_for_worker:
+      type: boolean
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-02-13T01:00:00Z'
+    end_time:
+      type: string
+      format: date-time
+      example: '2017-02-13T05:00:00Z'
+    overage:
+      type: boolean
+      default: false
+    break:
+      type: integer
+      description: |
+        In minutes
+    reported:
+      type: boolean
+    custom_attributes:
+      type: array
+      items:
+        type: object
+        properties:
+            name:
+              type: string
+              example: seat_num
+            value:
+              type: string
+              example: 45
+    created_at:
+      type: string
+      format: date-time
+    updated_at:
+      type: string
+      format: date
+
+schedule_list_response:
+  type: array
+  items:
+    $ref: '#/definitions/schedule_response'
+
+# Total Scheduled Hours API
+total_scheduled_hour:
+  type: object
+  properties:
+    group_by:
+        type: object
+        description: fields used for group_by query (type, slot_id, date)
+        properties:
+          { }
+        example: '"group_by": {"date": "2017-02-10","slot_id": "oAz5bP23iGz8oa5SkxIW","type": "regular"}'
+    standard_for_client:
+        type: number
+        format: float
+        example: 110.50
+    standard_for_worker:
+        type: number
+        format: float
+        example: 120.00
+    premium_for_client:
+        type: number
+        format: float
+        example: 39.50
+    premium_for_worker:
+        type: number
+        format: float
+        example: 30.00
+
+total_scheduled_hours:
+  type: array
+  items:
+    $ref: '#/definitions/total_scheduled_hour'

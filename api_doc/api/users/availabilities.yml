@@ -1,0 +1,56 @@
+# Availabilities APIs
+/users/{user_id}/availabilities:
+  # Create or Update Availabilities
+  put:
+    summary: Create or Update User Availabilities
+    description: |
+      <h3><span style="color:#0088bb"> PUT /api/v1/users/:user_id/availabilities </span></h3><hr>
+      This API allows users to create or update a user's availabilities. If a user's availabilities
+      are not present, then this API will create a new availabilities record for the user.
+
+      <b> Notes </b>
+      <ul>
+        <li> All fields inside slots are required, not providing them would generate validation
+             error. We are following our standard validation error format. </li>
+        <li> There is no validation for overlapping slots. However, system internally stores
+             availability information correctly. </li>
+      </ul>
+
+    tags: [Availabilities]
+    parameters:
+      - name: user_id
+        in: path
+        description: Id of a User
+        required: true
+        type: string
+      - name: availability_body
+        in: body
+        schema:
+          $ref: '#/definitions/availability_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/availability_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/st_val'
+
+  # List User Availabilities
+  get:
+    summary: List User Availabilities
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/users/:user_id/availabilities </span></h3><hr>
+      This API allows users to list the availabilities of a user.
+    tags: [Availabilities]
+    parameters:
+      - name: user_id
+        in: path
+        type: string
+        required: true
+    responses:
+      200:
+        description: OK
+        schema:
+         $ref: '#/definitions/availability_response'

@@ -1,0 +1,62 @@
+delivery_hub_response:
+  type: object
+  properties:
+      id:
+        type: string
+        example: 'm53ZCDJnRkE9mul18GcH'
+      name:
+        type: string
+        example: Bhanimandal
+      code:
+        type: string
+        example: CF-HQ
+      country:
+        type: string
+        example: Nepal
+      seats:
+        type: integer
+        example: 40
+      time_zone:
+        type: string
+        example: Kathmandu
+
+      slots:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 'm53ZCDJnRkE9mul18GcH'
+            day:
+              type: string
+              example: Tue
+            code:
+              type: string
+              example: 'F'
+
+            premium_for_client:
+              type: boolean
+              example: true
+            premium_for_worker:
+              type: boolean
+              example: false
+delivery_hub_capacity_response:
+  type: object
+  properties:
+    delivery_hub_id:
+      type: string
+      example: 1246614xyz
+    seats:
+      type: integer
+      example: 40
+    slot_id:
+      type: string
+      example: wst1234abcd
+    date:
+      type: string
+      format: date
+      example: '2017-03-18'
+    scheduled_seats:
+      type: integer
+      example: 4

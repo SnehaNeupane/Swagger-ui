@@ -1,0 +1,19 @@
+/low_level_api_path:
+  get:
+    summary: Examples come from each definition
+    description: description of api
+    responses:
+      200:
+        description: named element
+        schema:
+          $ref: "#/definitions/NamedElementArray"
+
+/high_level_api_path:
+  get:
+    summary: Examples com from the full example describe in NamedElementArrayWithFullDescription definition
+    description: description of api
+    responses:
+      200:
+        description: named element
+        schema:
+          $ref: "#/definitions/NamedElementArrayWithFullDescription"

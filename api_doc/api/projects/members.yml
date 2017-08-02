@@ -1,0 +1,164 @@
+# Members API
+/projects/{project_id}/members:
+  # Add members to project
+  post:
+    summary: Create a Member
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/projects/:project_id/members</span></h3><hr>
+      This API allows users to associate a User with a Project.<br><br>
+      <b>Validations</b>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> User with given id does not exist
+          <td> user_id must be a valid user id
+          <td> 422
+        </tr>
+        <tr>
+          <td> User is already a member of the Project
+          <td> user_id already a member of the project
+          <td> 422
+        </tr>
+      </table>
+    tags: [Members]
+    parameters:
+      - name: project_id
+        in: path
+        required: true
+        type: string
+        description: Id of a Project
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/member_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/member_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error'
+
+  # List members of project
+  get:
+    summary: List Members
+    tags: [Members]
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/projects/:project_id/members</span></h3><hr>
+      This API provides a method to list all users associated with a project.
+    parameters:
+      - name: project_id
+        in: path
+        required: true
+        type: string
+        description: Id of Project
+      - name: type
+        in: query
+        type: array
+        items:
+          type: string
+        description: Filter members list by at least one of "client", "core", "worker" user types
+      - name: scope
+        in: query
+        type: array
+        items:
+          type: string
+        description: Filter members list by at least one of the scopes of the members
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/member_response'
+
+/projects/{project_id}/members/{id}:
+  # Update members of a project
+  put:
+    summary: Update a Member
+    description: |
+      <h3><span style="color:#0088bb">PUT /api/v1/projects/:project_id/members/:id</span></h3><hr>
+      This API allows users to update some attributes of a member resource.<br><br>
+      <b>Validations</b>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> User with given id is not a member of the Project
+          <td> member not found
+          <td> 404
+        </tr>
+      </table>
+    tags: [Members]
+    parameters:
+      - name: project_id
+        in: path
+        required: true
+        type: string
+        description: Id of Project
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of Member
+      - name: request
+        in: body
+        schema:
+          type: object
+          properties:
+            scope:
+              type: string
+              description: The role/title of the user in the project
+              example: team leader
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/member_response'
+
+  # Delete members from project
+  delete:
+    summary: Delete a Member of a Project
+    description: |
+      <h3><span style="color:#0088bb">DELETE /api/v1/projects/:project_id/members/:id</span></h3><hr>
+      This API allows users to remove a User associated with a Project.<br><br>
+      <b>Validations</b>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> User with given id is not a member of the Project
+          <td> member not found
+          <td> 404
+        </tr>
+      </table>
+    tags: [Members]
+    parameters:
+      - name: project_id
+        in: path
+        required: true
+        type: string
+        description: Id of Project
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of Member
+    responses:
+      204:
+        description: No Content
+      404:
+        description: Not Found

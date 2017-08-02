@@ -1,0 +1,68 @@
+# Delivery Hub APIs
+/delivery_hubs:
+  # List delivery hubs
+  get:
+    summary: List Delivery Hubs
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/delivery_hubs</span></h3><hr>
+      This API allows users to fetch all the delivery hubs that are available for worker scheduling.
+      <br><br>
+    tags: [Delivery Hubs]
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/delivery_hub_response'
+
+/delivery_hubs/{id}:
+  # Get delivery hub
+  get:
+    summary: Get a Delivery Hub
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/delivery_hubs/:id</span></h3><hr>
+      This API allows users to fetch the details of a specific delivery hub.<br><br>
+    tags: [Delivery Hubs]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    responses:
+      200:
+        description: OK
+        schema:
+            $ref: '#/definitions/delivery_hub_response'
+
+/delivery_hubs/{id}/capacity:
+  get:
+    summary: Get Delivery Hub capacity
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/delivery_hubs/:id/capacity</span></h3><hr>
+      This API allows users to get the capacity of a specific delivery hub capacity based some
+      query parameters.<br>
+    tags: [Delivery Hubs]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of the Delivery Hub
+      - name: date
+        in: query
+        required: true
+        type: string
+        format: date
+        description: Query delivery hub capacity for this specific date
+      - name: slot_id
+        in: query
+        required: true
+        type: string
+        format: uuid
+        description: Query delivery hub capacity for this specific slot
+    responses:
+      200:
+        description: OK
+        schema:
+            $ref: '#/definitions/delivery_hub_capacity_response'

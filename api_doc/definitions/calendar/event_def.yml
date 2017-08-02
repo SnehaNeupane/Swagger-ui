@@ -1,0 +1,129 @@
+eventbody:
+  type: object
+  required:
+    - start_time
+    - end_time
+    - resources
+  properties:
+    name:
+      type: string
+      description: Name of event
+      example: EventA
+    description:
+      type: string
+      description: Description of event
+      example: This is sample description
+    start_time:
+      type: string
+      format: date-time
+      description: Start time of event according to  ISO 8601 standard
+    end_time:
+      type: string
+      format: date-time
+      description: End time of event according to  ISO 8601 standard
+    status:
+      type: string
+      example: unpublished
+      description: Value can be published or unpublished
+
+    custom_attributes:
+      type: array
+      description: Custom attributes for events. The attributes are dynamic
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            example: break
+          value:
+            type: string
+            example: 30
+    resources:
+      type: array
+      items:
+        type: object
+        required:
+          - type
+          - id
+        properties:
+          type:
+            type: string
+            description: This parameter stores type of resources. For now the type of resoure is user
+            example: user
+          id:
+            type: string
+            description: Id that uniquely identifies the resource type
+            example: Iwizlw8bIYorPEuFzxHE
+          response_status:
+            type: string
+            description: Response status can be accepted or denied. For now the default value id accepted
+            example: accepted
+geteventresponse:
+  type: object
+  properties:
+    id:
+      type: string
+      description: id of event
+      example: Iwizlw8bIYorPEuFzxHE
+    created:
+      type: string
+      format: date-time
+      description: Created date of event according to  ISO 8601 standard
+    updated:
+      type: string
+      format: date-time
+      description: Updated date of event according to  ISO 8601 standard
+    name:
+      type: string
+      description: Name of event
+      example: EventA
+    description:
+      type: string
+      description: Description of event
+      example: This is sample description
+    start_time:
+      type: string
+      format: date-time
+      description: Start time of event according to  ISO 8601 standard
+    end_time:
+      type: string
+      format: date-time
+      description: End time of event according to  ISO 8601 standard
+    status:
+      type: string
+      example: unpublished
+      description: Value can be published or unpublished
+    calendar_id:
+      type: string
+      description: id of calendar
+      example: Iwizlw8bIYorPEuFzxHE
+
+    custom_attributes:
+      type: array
+      description: Custom attributes for events
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            example: break
+          value:
+            type: string
+            example: 30
+    resources:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: The type of resource. For now the type of resource is user
+            example: user
+          id:
+            type: string
+            description: Id that uniquely identifies the resource type
+            example: u8pP7CXH2jzykQFQExob
+          response_status:
+            type: string
+            example: accepted
+            description: Response status can be accepted or denied. For now the default value id accepted

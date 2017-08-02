@@ -1,0 +1,219 @@
+# paths:
+/search/users:
+  get:
+    summary: User Search
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/search/users </span></h3><hr>
+      This API provides a method to search users by various parameters. <br><br>
+      Processing multiple fields and values <br>
+      <ol>
+        <li> Multiple fields are always AND-ed
+        <li> Multiple values of a field can be combined using operators explained in following section.
+      </ol>
+      <b> Logical Operators </b>
+      <table>
+        <tr>
+          <th> Name </th>
+          <th> Operator </th>
+          <th> Example </th>
+          <th> Description </th>
+        </tr>
+        <tr>
+          <td> AND </td>
+          <td> , </td>
+          <td> <span class="code"> available_day=SUN,MON,TUE </span></td>
+          <td> Available on all three days </td>
+        </tr>
+        <tr>
+          <td> OR </td>
+          <td> || </td>
+          <td> <span class="code"> available_day=SUN||MON||TUE </td>
+          <td> Available on either of three days </td>
+        </tr>
+        <tr>
+          <td>NOT</td>
+          <td> ! </td>
+          <td> <span class="code"> available_day=!SUN </td>
+          <td> Not available on Sundays </td>
+        </tr>
+        <tr>
+          <td> GREATER THAN </td>
+          <td> > </td>
+          <td> <span class="code"> weekly_commitment=>20 </td>
+          <td> weekly commitment is greater than 20 </td>
+        </tr>
+        <tr>
+          <td> LESS THAN </td>
+          <td> < </td>
+          <td> <span class="code"> weekly_commitment=>=20 </td>
+          <td> weekly commitment is less than 20 </td>
+        </tr>
+        <tr>
+          <td> GREATER THAN OR EQUAL TO </td>
+          <td> >= </td>
+          <td> <span class="code"> starting_date=>=2016-12-01 </td>
+          <td> Starting date is greater than or equal to december 1st, 2016 </td>
+        </tr>
+        <tr>
+          <td> LESS THAN OR EQUAL TO </td>
+          <td> <= </td>
+          <td> <span class="code"> weekly_commitment=<=6 </td>
+          <td> weekly commitment is less than or equal to 6 </td>
+        </tr>
+        <tr>
+          <td> LIKE</td>
+          <td> ~ </td>
+          <td> <span class="code"> name=~Somnath </td>
+          <td> Name is like Somnath </td>
+        </tr>
+      </table>
+      <br>
+      <b> Searchable fields </b> <br>
+      These are the list of fields that can be used to search Users <br>
+      <table>
+        <tr>
+          <th> Entity </th>
+          <th> Field Name </th>
+          <th> Sample values </th>
+          <th> Description </th>
+        </tr>
+        <tr>
+          <td rowspan="4"> Main Attributes </td>
+          <td> name </td>
+          <td> Ram <br> Ram||Shyam </td>
+          <td> Full Name of the User, using like query </td>
+        </tr>
+        <tr>
+          <td> country </td>
+          <td> Nepal <br> Nepal||Kenya </td>
+          <td> User’s country of residence </td>
+        </tr>
+        <tr>
+          <td> status </td>
+          <td> active <br> disabled||archived </td>
+          <td> The status of the User; that are active, disabled or archived </td>
+        </tr>
+        <tr>
+          <td> type </td>
+          <td> Core<br>Client||Worker </td>
+          <td> The type of the User; that are worker, core or client </td>
+        </tr>
+        <tr>
+          <td> Membership </td>
+          <td> project_id </td>
+          <td> Dihwd2d8437 <br> ioywefuyqwe,oinuew387 </td>
+          <td> The ids of the project, which the user is associated with </td>
+        </tr>
+        <tr>
+          <td rowspan="4"> Worker Attributes </td>
+          <td> starting_date </td>
+          <td> 2016-12-04 <br> <2016-11-01 </td>
+          <td> The starting/joined date of the worker. </td>
+        </tr>
+        <tr>
+          <td> employment_status </td>
+          <td> full time <br> part time </td>
+          <td> The status of a worker, if s/he is full time or part time </td>
+        </tr>
+        <tr>
+          <td> weekly_commitment </td>
+          <td> 20 <br> 20 || 40 </td>
+          <td> The number of hours a worker has agreed to work for. </td>
+        </tr>
+        <tr>
+          <td> primary_delivery_hub </td>
+          <td> ud243876 </td>
+          <td> The id of the delivery hub that has been set as primary for the worker </td>
+        </tr>
+        <tr>
+          <td rowspan="2"> Availability </td>
+          <td> available_day </td>
+          <td> SUN <br> MON||TUE </td>
+          <td> The day which the worker is available on </td>
+        </tr>
+        <tr>
+          <td> available_time </td>
+          <td> 10:45-12:45 <br> 10:45-12:45,12:45-14:45 </td>
+          <td> The time slots in which the worker is available. The start time and
+               the end time of the  slot separated by a dash </td>
+        </tr>
+        <tr>
+          <td> Schedule </td>
+          <td> scheduled_time </td>
+          <td> 2016-10-02T10:00:00Z-2016-10-02T14:00:00Z <br>
+               !2016-10-02T10:00:00Z-2016-10-02T14:00:00Z </td>
+          <td> The time range in which the worker has been scheduled to work on any project </td>
+        </tr>
+      </table>
+      <br>
+      <b>Note</b>: The response format is same as the User response from User APIs.
+    tags: [UserSearch]
+    parameters:
+      - name: name
+        in: query
+        description: Search users having name similar to.
+        type: string
+      - name: type
+        in: query
+        description: Search users having user type <i>client, worker and core</i>.
+        type: string
+      - name: status
+        in: query
+        description: |
+          Search users based on their status <i>active, disabled or archived</i>.
+        type: string
+      - name: country
+        in: query
+        description: Search users residing on some specific countries.
+        type: string
+      - name: starting_date
+        in: query
+        description: |
+          Search users who started working from a specific date.
+          Primarily applicable for users with type <i>worker</i>.
+        type: string
+      - name: available_day
+        in: query
+        description: |
+          Search users based on their preferred days of availability in a week.
+          Primarily applicable for users with type <i>worker</i>.
+        type: string
+      - name: available_time
+        in: query
+        description: |
+          Search users based on their preferred time of availability.
+          Primarily applicable for users with type <i>worker</i>.
+        type: string
+      - name: project_id
+        in: query
+        description: Search users associated with some specific projects.
+        type: string
+      - name: weekly_commitment
+        in: query
+        description: |
+          Search users on basis of the hours commited to work.
+          Primarily applicable for users with type <i>worker</i>.
+        type: integer
+      - name: employement_status
+        in: query
+        description: |
+          Search users on basis of full time or part time employment.
+          Primarily applicable for users with type <i>worker</i>.
+        type: string
+      - name: primary_delivery_hub
+        in: query
+        description: |
+          Search users on basis of some specific delivery hub id.
+          Primarily applicable for users with type <i>worker</i>.
+        type: string
+      - name: scheduled_time
+        in: query
+        type: string
+        description: |
+          Search users on basis of the time they have been scheduled for work.
+          Primarily applicable for users with type <i>worker</i>.
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/user_response'

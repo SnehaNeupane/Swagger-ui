@@ -1,0 +1,264 @@
+#Create a room for a WorkStream
+/rooms:
+  post:
+    summary: Create a Room
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/rooms</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: Create
+        in: body
+        schema:
+          $ref: '#/definitions/room_create_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/room_create_response'
+
+#List rooms of a WorkStream
+  get:
+    summary: List Rooms
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/rooms?projectId=id</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: projectId
+        in: query
+        required: true
+        type: string
+        description: Id of a workstream
+      - name: scope
+        in: query
+        required: true
+        type: string
+        description: Scope of a room
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/rooms'
+
+#Update the details of a room
+/rooms/{id}:
+  put:
+    summary: Update a Room
+    description: |
+      <h3><span style="color:#0088bb">PUT /api/v1/rooms/:id</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of a room
+      - name: Update
+        in: body
+        schema:
+          $ref: '#/definitions/room_update_request'
+    responses:
+      200:
+        description: Updated
+        schema:
+          $ref: '#/definitions/room_update_response'
+
+#Get a room of a WorkStream
+  get:
+    summary: Get a Room
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/rooms/:id</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of a room
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/room_detail'
+
+#Get rooms grouped by scope
+/rooms/group:
+  get:
+      summary: Get Rooms Grouped by Scope
+      description: |
+        <h3><span style="color:#0088bb">GET /api/v1/rooms/group?projectId=id</span></h3><hr>
+      tags: [Channels]
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: string
+          description: Id of a workstream
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/get_rooms_by_scope_response'
+
+#Join a room of WorkStream
+/rooms/{id}/join:
+  post:
+    summary: Join a Room
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/rooms/:id/join</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of a room
+      - name: Join
+        in: body
+        schema:
+          $ref: '#/definitions/join_room_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/join_room_response'
+
+#Join all the rooms of WorkStream
+/rooms/join:
+  post:
+    summary: Join Multiple Rooms Based on Scope
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/rooms/join</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: Join
+        in: body
+        schema:
+          $ref: '#/definitions/join_rooms_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/join_rooms_response'
+
+#Remove User from rooms
+/rooms/remove:
+  post:
+    summary: Remove Member from Rooms
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/rooms/remove</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: Remove
+        in: body
+        schema:
+          $ref: '#/definitions/remove_from_rooms_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/remove_from_rooms_response'
+
+#Remove from a room
+/rooms/{id}/remove:
+  post:
+    summary: Remove Member from a Room
+    description: |
+       <h3><span style="color:#0088bb">POST /api/v1/rooms/:id/remove</span></h3><hr>
+    tags: [Channels]
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: string
+      description: Id of a room
+    - name: Remove
+      in: body
+      schema:
+        $ref: '#/definitions/remove_from_a_room_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/remove_from_a_room_response'
+
+#Find a user
+/channels/search/users:
+  get:
+    summary: Find a User
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/search/users?email=bonnie.bennet@cf.com</span></h3><hr>
+
+      **_Note_:**
+
+      Since endpoint `/search/users` clashes with Users search in Searches app, it returns
+      only single API. Thus to distinguish, we have added dummy content i.e `channels`. But the actual
+      endpoint is `api/v1/search/users`.
+
+    tags: [Channels]
+    parameters:
+    - name: email
+      in: query
+      required: true
+      type: string
+      description: Email of a user
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/find_user_response'
+
+#Get username
+/users/username:
+  get:
+    summary: Get Username
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/users/username?username=sneha</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: username
+        in: query
+        required: true
+        type: string
+        description: Username of the user in rocketchat
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/get_username_response'
+
+#Get room name
+/rooms/name:
+  get:
+    summary: Get Room Name
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/rooms/name?domain=microsoft</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: domain
+        in: query
+        required: true
+        type: string
+        description: Domain of user's email
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/get_room_name_response'
+
+#Update users avatar
+/users/avatar:
+  put:
+    summary: Update Users Avatar
+    description: |
+      <h3><span style="color:#0088bb">PUT /api/v1/users/avatar</span></h3><hr>
+    tags: [Channels]
+    parameters:
+      - name: Update avatar
+        in: body
+        schema:
+          $ref: '#/definitions/update_user_avatar_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/update_user_avatar_response'

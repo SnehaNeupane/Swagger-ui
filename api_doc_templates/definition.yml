@@ -1,0 +1,52 @@
+Identifier:
+  type: string
+  format: uuid
+  example: Local UUID example
+
+NamedElement:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Local identifier example
+    identifier:
+      $ref: "#/definitions/Identifier"
+  required:
+  - name
+  - identifier
+
+NamedElementArray:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Local name example
+    elements:
+      type: array
+      minLength: 0
+      items:
+        $ref: "#/definitions/NamedElement"
+  required:
+  - name
+  - elements
+
+NamedElementArrayWithFullDescription:
+  type: object
+  properties:
+    name:
+      type: string
+    elements:
+      type: array
+      minLength: 0
+      items:
+        $ref: "#/definitions/NamedElement"
+  required:
+  - name
+  - elements
+  example:
+    name: Fred
+    elements:
+      - name: Identifier1
+        identifier: ab804529-11d0-4781-a49a-3bbbc40243df
+      - name: Identifier2
+        identifier: zzz4529-11d0-4781-a49a-3bbbc40243df

@@ -1,0 +1,189 @@
+update_user_request:
+  type: object
+  properties:
+    status:
+      $ref: "#/definitions/UsersStatus"
+    first_name:
+      $ref: "#/definitions/UsersFirstName"
+    last_name:
+      $ref: "#/definitions/UsersLastName"
+    bio:
+      $ref: "#/definitions/UsersBio"
+    address:
+      $ref: "#/definitions/UsersAddress"
+    linkedin_url:
+      $ref: "#/definitions/UsersLinkedInURL"
+    title:
+      $ref: "#/definitions/UsersTitle"
+    skype_handle:
+      $ref: "#/definitions/UsersSkypeHandle"
+    phone_number:
+      $ref: "#/definitions/UsersPhoneNumber"
+    time_zone:
+      $ref: "#/definitions/UsersTimeZone"
+    client_attributes:
+      $ref: "#/definitions/UsersClientAttributes"
+    worker_attributes:
+      $ref: "#/definitions/UsersWorkerAttributes"
+    custom_attributes:
+      $ref: "#/definitions/CustomAttributes"
+    type:
+      $ref: "#/definitions/UsersType"
+    avatar:
+      $ref: "#/definitions/UsersAvatar"
+user_response:
+  type: object
+  properties:
+    id:
+      $ref: "#/definitions/Identifier"
+    status:
+      $ref: "#/definitions/UsersStatus"
+    first_name:
+      $ref: "#/definitions/UsersFirstName"
+    last_name:
+      $ref: "#/definitions/UsersLastName"
+    bio:
+      $ref: "#/definitions/UsersBio"
+    email:
+      $ref: "#/definitions/Email"
+    address:
+      $ref: "#/definitions/UsersAddress"
+    linkedin_url:
+      $ref: "#/definitions/UsersLinkedInURL"
+    title:
+      $ref: "#/definitions/UsersTitle"
+    skype_handle:
+      $ref: "#/definitions/UsersSkypeHandle"
+    phone_number:
+      $ref: "#/definitions/UsersPhoneNumber"
+    time_zone:
+      $ref: "#/definitions/UsersTimeZone"
+    client_attributes:
+      $ref: "#/definitions/UsersClientAttributes"
+    worker_attributes:
+      $ref: "#/definitions/UsersWorkerAttributes"
+    custom_attributes:
+      $ref: "#/definitions/CustomAttributes"
+    type:
+      $ref: "#/definitions/UsersType"
+    avatar:
+      $ref: "#/definitions/UsersAvatar"
+    core_attributes:
+      $ref: "#/definitions/UsersCoreAttributes"
+    created_on:
+      $ref: "#/definitions/CreatedAt"
+
+#Users Attributes
+UsersStatus:
+  type: string
+  description: Identify the status of a user as one of active, disabled or archived.
+  example: worker
+UsersFirstName:
+  type: string
+  description: The first name of the user.
+  example: Sagun
+UsersLastName:
+  type: string
+  description: The family name of the user.
+  example: Khanal
+UsersBio:
+  type: string
+  description: A short biography of the user.
+  example: I work as a Scrum Master at CloudFactory.
+UsersAddress:
+  type: object
+  properties:
+    address_line_1:
+      type: string
+      description: Street and Location address of the user.
+      example: Bhaisepati, Sainbu
+    address_line_2:
+      type: ['string', 'null']
+      description: House/Suite/Apartment numbers or other less standard identifiers.
+      example: House Number 22
+    city:
+      type: string
+      description: Name of the city the user currently resides in.
+      example: Lalitpur
+    region:
+      type: string
+      description: Name of the state/region the user currently resides in.
+      example: Central Development Region
+    zip:
+      type: string
+      description: Zip code of the location the user currently resides in.
+      example: '44600'
+    country:
+      type: string
+      description: Name of the country the user currently resides in.
+      example: Nepal
+UsersLinkedInURL:
+  type: string
+  description: Linkedin profile of the user.
+  example: sagun@linkedin
+UsersTitle:
+  type: string
+  description: A job or a skill attribute belonging to the user.
+  example: Data Specialist
+UsersSkypeHandle:
+  type: string
+  description: Skype handle of the user.
+  example: sagun
+UsersPhoneNumber:
+  type: string
+  description: Primary phone number belonging to the user.
+  example: '9843123456'
+UsersTimeZone:
+  type: string
+  description: The timezone that the user primarly follows.
+  example: kathmandu
+UsersClientAttributes:
+  type: object
+  properties:
+    company:
+      type: string
+      description: Name of the company the client user represents.
+      example: Automation Technology
+UsersWorkerAttributes:
+  type: object
+  properties:
+    slack_handle:
+      type: string
+      description: Slack handle of the cloud worker user.
+      example: sagun
+    starting_date:
+      type: string
+      format: date
+      description: The joining day of the cloud worker user.
+      example: '2016-11-01'
+    weekly_commitment:
+      type: integer
+      description: The total hours the cloud worker user is willing to work in a week.
+      example: 40
+    gender:
+      type: string
+      example: Female
+    primary_delivery_hub:
+      type: string
+      description: The preferred delivery hub the cloud worker user is working from.
+      example: m53ZCDJnRkE9mul18GcH
+    employment_status:
+      type: string
+      description: Categorize the cloud worker user as a part time or a full time worker.
+      example: Full Time
+    date_of_birth:
+      type: string
+      format: date
+      description: Date of birth of the cloud worker user.
+      example: '1990-12-04'
+UsersCoreAttributes:
+  type: object
+UsersType:
+  type: string
+  description: Identify the user as one of client, core, sales or worker type of user.
+  example: worker
+UsersAvatar:
+  type: string
+  description: A url for the profile picture belonging to the user.
+  format: url
+  example: https://dummyimage.com/600x400/c93ac9/eaf513.png&text=I+am+sagun

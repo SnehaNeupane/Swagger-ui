@@ -1,0 +1,31 @@
+milestone:
+  type: object
+  properties:
+    id:
+      $ref: "#/definitions/Identifier"
+    name:
+      $ref: "#/definitions/MilestonesName"
+    order:
+      $ref: "#/definitions/MilestonesOrder"
+    flow:
+      $ref: "#/definitions/MilestonesFlow"
+    no_flow:
+      $ref: "#/definitions/MilestonesNoFlow"
+
+#Milestones Attributes
+MilestonesName:
+  type: string
+  example: Assembling Data Squad
+  description: Name of the milestone.
+MilestonesOrder:
+  type: string
+  example: 1
+  description: Denotes the progress of the milestone.
+MilestonesFlow:
+  type: boolean
+  example: false
+  description: Determines whether the milestone is applicable for flow workstream type.
+MilestonesNoFlow:
+  type: boolean
+  example: true'
+  description: Determines whether the milestone is applicable for non-flow workstream type.

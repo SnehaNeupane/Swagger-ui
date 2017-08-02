@@ -1,0 +1,237 @@
+project_create_request:
+  type: object
+  required:
+    - name
+    - subscription_type
+  properties:
+    name:
+      $ref: "#/definitions/ProjectsName"
+    description:
+      $ref: "#/definitions/ProjectsDescription"
+    start_date:
+      $ref: "#/definitions/ProjectsStartDate"
+    intended_start_date:
+      $ref: "#/definitions/ProjectsIntendedStartDate"
+    subscription_type:
+      $ref: "#/definitions/ProjectsSubscriptionType"
+    billable_unit:
+      $ref: "#/definitions/ProjectsBillableUnit"
+    workforce_model:
+      $ref: "#/definitions/ProjectsWorkforceModel"
+    ws_flow_enabled:
+      $ref: "#/definitions/ProjectsWSFlowEnabled"
+    ws_shield_enabled:
+      $ref: "#/definitions/ProjectsWSShieldEnabled"
+    payment_option:
+      $ref: "#/definitions/ProjectsPaymentOption"
+    tools:
+      $ref: "#/definitions/ProjectsTools"
+    channel:
+      $ref: "#/definitions/ProjectsChannel"
+    status:
+      $ref: "#/definitions/ProjectsStatus"
+    estimated_time_per_unit:
+      $ref: "#/definitions/ProjectsEstimatedTimePerUnit"
+    current_milestone:
+      $ref: "#/definitions/ProjectsCurrentMilestone"
+    custom_attributes:
+      $ref: "#/definitions/CustomAttributes"
+
+project_update_request:
+  type: object
+  properties:
+    name:
+      $ref: "#/definitions/ProjectsName"
+    description:
+      $ref: "#/definitions/ProjectsDescription"
+    start_date:
+      $ref: "#/definitions/ProjectsStartDate"
+    intended_start_date:
+      $ref: "#/definitions/ProjectsIntendedStartDate"
+    subscription_type:
+      $ref: "#/definitions/ProjectsSubscriptionType"
+    billable_unit:
+      $ref: "#/definitions/ProjectsBillableUnit"
+    workforce_model:
+      $ref: "#/definitions/ProjectsWorkforceModel"
+    ws_flow_enabled:
+      $ref: "#/definitions/ProjectsWSFlowEnabled"
+    ws_shield_enabled:
+      $ref: "#/definitions/ProjectsWSShieldEnabled"
+    payment_option:
+      $ref: "#/definitions/ProjectsPaymentOption"
+    tools:
+      $ref: "#/definitions/ProjectsTools"
+    channel:
+      $ref: "#/definitions/ProjectsChannel"
+    status:
+      $ref: "#/definitions/ProjectsStatus"
+    estimated_time_per_unit:
+      $ref: "#/definitions/ProjectsEstimatedTimePerUnit"
+    current_milestone:
+      $ref: "#/definitions/ProjectsCurrentMilestone"
+    custom_attributes:
+      $ref: "#/definitions/CustomAttributes"
+
+project:
+  type: object
+  properties:
+    id:
+      $ref: "#/definitions/Identifier"
+    name:
+      $ref: "#/definitions/ProjectsName"
+    description:
+      $ref: "#/definitions/ProjectsDescription"
+    start_date:
+      $ref: "#/definitions/ProjectsStartDate"
+    intended_start_date:
+      $ref: "#/definitions/ProjectsIntendedStartDate"
+    subscription_type:
+      $ref: "#/definitions/ProjectsSubscriptionType"
+    billable_unit:
+      $ref: "#/definitions/ProjectsBillableUnit"
+    workforce_model:
+      $ref: "#/definitions/ProjectsWorkforceModel"
+    ws_flow_enabled:
+      $ref: "#/definitions/ProjectsWSFlowEnabled"
+    ws_shield_enabled:
+      $ref: "#/definitions/ProjectsWSShieldEnabled"
+    payment_option:
+      $ref: "#/definitions/ProjectsPaymentOption"
+    tools:
+      $ref: "#/definitions/ProjectsTools"
+    channel:
+      $ref: "#/definitions/ProjectsChannel"
+    status:
+      $ref: "#/definitions/ProjectsStatus"
+    estimated_time_per_unit:
+      $ref: "#/definitions/ProjectsEstimatedTimePerUnit"
+    current_milestone:
+      $ref: "#/definitions/ProjectsCurrentMilestone"
+    custom_attributes:
+      $ref: "#/definitions/CustomAttributes"
+    created_at:
+      $ref: "#/definitions/CreatedAt"
+    updated_at:
+      $ref: "#/definitions/UpdatedAt"
+
+project_including_milestone:
+  type: object
+  properties:
+    id:
+      $ref: "#/definitions/Identifier"
+    name:
+      $ref: "#/definitions/ProjectsName"
+    description:
+      $ref: "#/definitions/ProjectsDescription"
+    start_date:
+      $ref: "#/definitions/ProjectsStartDate"
+    intended_start_date:
+      $ref: "#/definitions/ProjectsIntendedStartDate"
+    subscription_type:
+      $ref: "#/definitions/ProjectsSubscriptionType"
+    billable_unit:
+      $ref: "#/definitions/ProjectsBillableUnit"
+    workforce_model:
+      $ref: "#/definitions/ProjectsWorkforceModel"
+    ws_flow_enabled:
+      $ref: "#/definitions/ProjectsWSFlowEnabled"
+    ws_shield_enabled:
+      $ref: "#/definitions/ProjectsWSShieldEnabled"
+    payment_option:
+      $ref: "#/definitions/ProjectsPaymentOption"
+    tools:
+      $ref: "#/definitions/ProjectsTools"
+    channel:
+      $ref: "#/definitions/ProjectsChannel"
+    status:
+      $ref: "#/definitions/ProjectsStatus"
+    estimated_time_per_unit:
+      $ref: "#/definitions/ProjectsEstimatedTimePerUnit"
+    current_milestone:
+      $ref: "#/definitions/ProjectsCurrentMilestone"
+    milestone:
+      type: object
+      properties:
+        id:
+          $ref: "#/definitions/Identifier"
+        name:
+          $ref: "#/definitions/MilestonesName"
+        order:
+          $ref: "#/definitions/MilestonesOrder"
+        flow:
+          $ref: "#/definitions/MilestonesFlow"
+        no_flow:
+          $ref: "#/definitions/MilestonesNoFlow"
+    custom_attributes:
+      $ref: "#/definitions/CustomAttributes"
+    created_at:
+      $ref: "#/definitions/CreatedAt"
+    updated_at:
+      $ref: "#/definitions/UpdatedAt"
+
+#Projects Attributes
+ProjectsName:
+  type: string
+  description: The name of project being created.
+  example: Sample  Projects
+ProjectsDescription:
+  type: string
+  description: Description about the project.
+  example: Transcribing old paperworks
+ProjectsStartDate:
+  type: string
+  format: date-time
+  description: Start date of the project according to ISO 8601 standard.
+  example: '2017-02-02'
+ProjectsIntendedStartDate:
+  type: string
+  description: Text field to capture the client's preferred start date during the initial conversation.
+  example: A couple of weeks
+ProjectsSubscriptionType:
+  type: string
+  description: One of "monthly" or "flex_pass" subscriptions the client has subscribed to.
+  example: monthly
+ProjectsBillableUnit:
+  type: string
+  description: One of "hour" or "piece_Rate" unit defining how client will be charged.
+  example: hour
+ProjectsWorkforceModel:
+  type: string
+  description: One of "in-house" or "semi-distributed" workforce model selected for the project.
+  example: in-house
+ProjectsWSFlowEnabled:
+  type: boolean
+  description: Determines whether the project uses workstream flow.
+  example: true
+  default: false
+ProjectsWSShieldEnabled:
+  type: boolean
+  description: Determines whether the project uses workstream shield.
+  example: true
+  default: false
+ProjectsPaymentOption:
+  type: string
+  description: One of "yearly", "monthly" or "one_time" payment option selected for the project.
+  example: yearly
+ProjectsTools:
+  type: string
+  description: One of "client", "third_party" or "ws_flow" tools selected for processing the project tasks.
+  example: client
+ProjectsChannel:
+  type: string
+  description: One of "api", "file_upload", "task_board" or "client_tools" selected for receiving the project tasks.
+  example: api
+ProjectsStatus:
+  type: string
+  description: One of "open" or "closed" status for a project.
+  example: open
+  default: open
+ProjectsEstimatedTimePerUnit:
+  type: integer
+  description: Estimated number of seconds per unit. Applicable only for WorkStream Flow.
+  example: 200
+ProjectsCurrentMilestone:
+  type: string
+  description: Milestone ID of the base subscription of the project.
+  example: kMJM2OeQW2s2xisiRyAkZ

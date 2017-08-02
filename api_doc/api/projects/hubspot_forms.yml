@@ -1,0 +1,16 @@
+# Crm Hubspot form API
+/hubspot/forms:
+  put:
+     summary: HubSpot Form API
+     description: <b>Description</b><br>
+         Currently, when a new parameter is to be added to a Hubspot form, it needs to be changed both in the experience side as well as the core services side. This is quite limiting. So, we want the form submission API to be agnostic to the form content.
+     tags: [CRM]
+     parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/crmhub'
+
+     responses:
+        '204':
+          description: No content

@@ -1,0 +1,242 @@
+/open_shift_requests:
+  # Create open shift request
+  post:
+    summary: Create an Open Shift Request
+    description: |
+      <h3><span style="color:#0088bb"> POST /api/v1/open_shift_requests </span></h3><hr>
+      This API allows users to create an Open Shift Request.<br><br>
+      <b> Validations</b> <br>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        <tr>
+          <td> invalid project_id
+          <td> "project_id" must be a valid project id
+          <td> 422
+        <tr>
+          <td> end_time is in the past
+          <td> "end_time" must be in present or in future
+          <td> 422
+        <tr>
+          <td> end_time is before start_time
+          <td> "end_time" must be greater than or equal to start_time
+          <td> 422
+        <tr>
+          <td> requested_hours is greater than 99999
+          <td> "requested_hours" must be an integer between 0 and 100K
+          <td> 422
+      </table>
+    tags: [Open Shift Requests]
+    parameters:
+      - name: open_shift_request_body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/open_shift_request_create_body'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/open_shift_request_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+  # List open shift requests
+  get:
+    summary: List Open Shift Requests
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/open_shift_requests </span></h3><hr>
+      This API allows users to list Open Shift Requests based on provided filter params.<br><br>
+      <span style="color:#1abc9c">[Pre Release] New sort and order attribute added in the request body.</span>
+    tags: [Open Shift Requests, Pre Release]
+    parameters:
+      - name: time_min
+        in: query
+        description: Datetime that is before or on the end date of the open shift request
+        type: string
+        format: date-time
+      - name: time_max
+        in: query
+        description: Datetime that is after the start date of the open shift request
+        type: string
+        format: date-time
+      - name: project_id
+        in: query
+        description: A valid project id
+        type: string
+      - name: overage
+        in: query
+        description: A boolean value to denote whether the request is from client or the from internal team
+        type: boolean
+      - name: sort
+        in: query
+        type: string
+        required: false
+        description: |
+          <span style="color:#1abc9c">[Pre Release]</span><br>
+          Sort the list according to given sorting value.
+          * start_datetime
+          * end_datetime
+          * requested_hours
+          * created_at
+          * updated_at
+
+          Default sort is `start_datetime`
+      - name: order
+        in: query
+        type: string
+        required: false
+        description: |
+          <span style="color:#1abc9c">[Pre Release]</span><br>
+          Order should be `asc` or `desc`
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/open_shift_request_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+
+/open_shift_requests/{id}:
+  # Get an open shift request
+  get:
+    summary: Get an Open Shift Request
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/open_shift_requests/:id </span></h3><hr>
+      This API allows users to fetch details of an Open Shift Request.<br><br>
+    tags: [Open Shift Requests]
+    parameters:
+       - name: id
+         in: path
+         type: string
+         required: true
+         description: Id of Open Shift Request
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/open_shift_request_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+
+  # Update an open shift request
+  put:
+    summary: Update an Open Shift Request
+    description: |
+      <h3><span style="color:#0088bb"> PUT /api/v1/open_shift_requests/:id </span></h3><hr>
+      This API allows users to update an Open Shift Request.<br><br>
+      <b> Validations</b><br><br>
+      When there are no associated Open Shifts
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        <tr>
+          <td> invalid project_id
+          <td> "project_id" must be a valid project id
+          <td> 422
+        <tr>
+          <td> end_time is in the past
+          <td> "end_time" must be in present or in future
+          <td> 422
+        <tr>
+          <td> end_time is before start_time
+          <td> "end_time" must be greater than or equal to start_time
+          <td> 422
+        <tr>
+          <td> requested_hours is greater than 99999
+          <td> "requested_hours" must be an integer between 0 and 100K
+          <td> 422
+      </table>
+      <br>
+      When there are associated Open Shifts
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        <tr>
+          <td> start_time is passed
+          <td> "start_time" cannot be updated for open shift request having open shifts
+          <td> 422
+        <tr>
+          <td> project_id is passed
+          <td> "project_id" cannot be updated for open shift request having open shifts
+          <td> 422
+        <tr>
+          <td> overage is passed
+          <td> "overage" cannot be updated for open shift request having open shifts
+          <td> 422
+        <tr>
+          <td> end_time is reduced
+          <td> "end_time" cannot be reduced for open shift request having open shifts
+          <td> 422
+        <tr>
+          <td> requested_hours is decreased
+          <td> "requested_hours" cannot be decreased for open shift request having open shifts
+          <td> 422
+      </table>
+    tags: [Open Shift Requests]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of Open Shift Request
+      - name: open_shift_request_body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/open_shift_request_update_body'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/open_shift_request_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+
+  # Delete open shift requests
+  delete:
+    summary: Delete an Open Shift Request
+    description: |
+      <h3><span style="color:#0088bb"> DELETE /api/v1/open_shift_requests/:id </span></h3><hr>
+      This API allows users to delete an Open Shift Request.<br><br>
+
+      <b> Validations </b>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        <tr>
+          <td> Open Shift Request has Open Shifts
+          <td> Cannot delete an open shift request which has open shifts
+          <td> 422
+      </table>
+    tags: [Open Shift Requests]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of Open Shift Request
+    responses:
+      204:
+        description: No Content
+      404:
+        description: Open Shift Request Not Found
+        schema:
+          $ref: '#/definitions/errormodel'

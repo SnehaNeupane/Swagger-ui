@@ -1,0 +1,496 @@
+/time_entries:
+  post:
+    summary: Create a Time Entry
+    description: |
+      <h3><span style="color:#0088bb"> POST /api/v1/time_entries </span></h3><hr>
+      This API allows users to track the time spent on delivering the requested hours of work in a WorkStream by creating a <span style="color:#1abc9c"><b>TimeEntry resource</b></span>.
+
+      <span style="color:#1abc9c"> [New Release] New custom attribute added in the request body and response. </span>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/time_entry_create_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/time_entry_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+  get:
+    summary: List Time Entries
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/time_entries </span></h3><hr>
+      This API allows users to fetch all the time_entries that have been logged except the ones
+      that are still in progress. <br><br>
+      <span style="color:#1abc9c">[New Release] New custom attribute added in time entry in the response.</span>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: time_min
+        in: query
+        description:
+          Get time entries having end_datetime less than this date-time
+          parameter
+        type: string
+      - name: time_max
+        in: query
+        description: Get time entries having start_datetime greater than this date-time parameter
+        type: string
+      - name: user_id
+        in: query
+        description: Get time entries belonging to a particular user or users
+        type: array
+        items:
+          type: string
+      - name: delivery_hub_id
+        in: query
+        description: Get time entries belonging to a particular delivery hub or hubs
+        type: array
+        items:
+          type: string
+      - name: slot_id
+        in: query
+        description: Get time entries belonging to a particular slot or slots
+        type: array
+        items:
+          type: string
+      - name: task_id
+        in: query
+        description: Get time entries belonging to a particular task or tasks
+        type: array
+        items:
+          type: string
+      - name: project_id
+        in: query
+        description: Get time entries belonging to a particular project or projects
+        type: array
+        items:
+          type: string
+      - name: schedule_id
+        in: query
+        description: Get time entries belonging to a particular schedule or schedules
+        type: array
+        items:
+          type: string
+      - name: premium_for_client
+        in: query
+        description: Filter time entries as per the premium flag for clients
+        type: boolean
+      - name: premium_for_worker
+        in: query
+        description: Filter time entries as per the premium flag for workers
+        type: boolean
+      - name: overage
+        in: query
+        description: Filter time_entries as per the overage
+        type: boolean
+      - name: page
+        in: query
+        description: Get a specific page of the time entries list
+        type: number
+        minimum: 1
+        default: 1
+      - name: per_page
+        in: query
+        description: Get a specific number of items in a page of the time entries list
+        type: number
+        minimum: 1
+        maximum: 1000
+        default: 100
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/time_entry_response'
+
+/time_entries/running:
+  get:
+    summary: List running Time Entries
+    description: |
+      <h3>
+        <span style="color:#1abc9c"> [New Release] New API </span><br>
+        <span style="color:#0088bb"> GET /api/v1/time_entries/running </span>
+      </h3><hr>
+      This API allows to fetch all currently running time entries and filter them based on different parameters.
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: time_min
+        in: query
+        description: Get running time entries having start_time less than this date-time parameter
+        type: string
+      - name: time_max
+        in: query
+        description: Get running time entries having start_time greater than this date-time parameter
+        type: string
+      - name: user_id
+        in: query
+        description: Get running time entries belonging to a particular user or users
+        type: array
+        items:
+          type: string
+      - name: delivery_hub_id
+        in: query
+        description: Get running time entries belonging to a particular delivery hub or hubs
+        type: array
+        items:
+          type: string
+      - name: schedule_id
+        in: query
+        description: Get running time entries belonging to a particular schedule or schedules
+        type: array
+        items:
+          type: string
+      - name: slot_id
+        in: query
+        description: Get running time entries belonging to a particular slot or slots
+        type: array
+        items:
+          type: string
+      - name: task_id
+        in: query
+        description: Get running time entries belonging to a particular task or tasks
+        type: array
+        items:
+          type: string
+      - name: project_id
+        in: query
+        description: Get running time entries belonging to a particular project or projects
+        type: array
+        items:
+          type: string
+      - name: premium_for_client
+        in: query
+        description: Filter running time entries as per the premium flag for clients
+        type: boolean
+      - name: premium_for_worker
+        in: query
+        description: Filter running time entries as per the premium flag for workers
+        type: boolean
+      - name: overage
+        in: query
+        description: Filter running time_entries as per the overage
+        type: boolean
+      - name: page
+        in: query
+        description: Get a specific page of the time entries list
+        type: number
+        minimum: 1
+        default: 1
+      - name: per_page
+        in: query
+        description: Get a specific number of items in a page of the time entries list
+        type: number
+        minimum: 1
+        maximum: 1000
+        default: 100
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/running_time_entry_response'
+
+/time_entries/{id}:
+  put:
+    summary: Update a Time Entry
+    description: |
+      <h3><span style="color:#0088bb"> PUT /api/v1/time_entries/:id</span> </h3><hr>
+        This API allows you to update the properties of a specific time entry resource.<br>
+      <span style="color:#1abc9c">[New Release] New custom attribute added in the request
+        and response.</span><br>
+      <span style="color:#1abc9c">[New Release] New validations for a running time entry.</span>
+
+      <h4> Validations </h4>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> user does not exist
+          <td> must be a valid user id
+          <td> 422
+        </tr>
+        <tr>
+          <td> slot does not exist
+          <td> must be a valid slot id
+          <td> 422
+        </tr>
+        <tr>
+          <td> schedule does not exist
+          <td> must be a valid schedule id
+          <td> 422
+        </tr>
+        <tr>
+          <td> delivery hub does not exist
+          <td> must be a valid delivery hub id
+          <td> 422
+        </tr>
+        <tr>
+          <td> end_time is less than start_time
+          <td> end_time must be greater than or equal to start_time
+          <td> 422
+        </tr>
+      </table><br>
+      <h4><span style="color:#1abc9c">[New Release]</span> Validations for Running Time Entry </h4>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> Code
+        </tr>
+        <tr>
+          <td> duration is passed in the request parameter for running time entry
+          <td> cannot be updated for running time entry
+          <td> 422
+        </tr>
+        <tr>
+          <td> end_time is passed in the request parameter for running time entry
+          <td> cannot be updated for running time entry
+          <td> 422
+        </tr>
+      </table>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/time_entry_update_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/time_entry_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+
+  get:
+    summary: Get a Time Entry
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/time_entries/:id </span></h3><hr>
+      This API allows users to fetch a specific time entry resource.
+
+      <span style="color:#1abc9c"> [New Release] New custom attribute added in the response. </span>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/time_entry_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+  # Delete time entry
+  delete:
+    summary: Delete a Time Entry
+    description: |
+      <h3><span style="color:#0088bb">DELETE /api/v1/time_entries/:id</span></h3><hr>
+      This API allows users to delete a specific time_entry resource.
+    tags: [Time Entries]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+    responses:
+      204:
+        description: No Content
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+
+/users/{user_id}/time_entries/start:
+  post:
+    summary: Start a Time Entry
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/users/:user_id/time_entries/start</span></h3><hr>
+      This API allows users to track the time spent on delivering the requested hours of work in a WorkStream.
+      Users can start a timer by providing the minimum data needed for a time_entry resource to be created.
+
+      <span style="color:#1abc9c"> [New Release] New custom attribute added in the request and response. </span>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: user_id
+        in: path
+        type: string
+        required: true
+      - name: body_start
+        in: body
+        schema:
+          $ref: '#/definitions/time_entry_start_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/time_entry_start_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+      403:
+        description: Forbidden
+        schema:
+          $ref: '#/definitions/time_entry_start_error_response'
+
+/users/{user_id}/time_entries/current:
+  get:
+    summary: Get currently running Time Entry
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/users/:user_id/time_entries/current</span></h3><hr>
+      This API allows users to fetch the currently running time entry for a specific user.
+
+      <span style="color:#1abc9c"> [New Release] New custom attribute added in the response. </span>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: user_id
+        in: path
+        type: string
+        required: true
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/time_entry_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+
+/users/{user_id}/time_entries/stop:
+  put:
+    summary: Stop a Time Entry
+    description: |
+      <h3><span style="color:#0088bb">PUT /api/v1/users/:user_id/time_entries/stop</span></h3><hr>
+      This API allows users to stop a running time_entry for a specific user.
+
+      <span style="color:#1abc9c"> [New Release] New custom attribute added in the request and response. </span>
+    tags: [Time Entries, New Release]
+    parameters:
+      - name: user_id
+        in: path
+        type: string
+        required: true
+      - name: request
+        in: body
+        schema:
+          type: object
+          properties:
+            end_time:
+              type: string
+              format: date-time
+              example: '2017-10-10T13:00:00Z'
+            custom_attributes:
+              $ref: '#/definitions/TimeEntryCustomAttributes'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/time_entry_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/time_entry_stop_error_response'
+
+/time_entries/stats/total_hours:
+  get:
+    summary: Get total logged hours
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/time_entries/stats/total_hours</span></h3><hr>
+      This API provides aggregated data for the selected time_entries by categorizing them into four sections namely -
+      <br>
+        1. Standard for client => sum of duration when premium_for_client = false
+      <br>
+        2. Standard for worker => sum of duration when premium_for_worker = false
+      <br>
+        3. Premium for client => sum of duration when premium_for_client = true
+      <br>
+        4. Premium for worker => sum of duration when premium_for_worker = true
+      <br>
+        5. Client.base => The sum of hours reported that are not marked as overage (overage is false).
+      <br>
+        6. Client.overage (client) => The sum of hours reported that are marked as overage (overage is true).
+      <br>
+        7. Worker.base => The sum of hours reported by worker by working on the regular shifts (based on the employment status with CF).
+      <br>
+        8. Worker.overage (worker) => The sum of hours reported by worker by working on the extra shifts.
+    tags: [Time Entries]
+    parameters:
+      - name: time_min
+        in: query
+        type: string
+        format: date-time
+        description: Query stat for time entries having end_datetime less than this date-time parameter
+      - name: time_max
+        in: query
+        type: string
+        format: date-time
+        description: Query stat for time entries having start_datetime greater than this date-time
+      - name: project_id
+        in: query
+        type: string
+        description: Get time entries belonging to a specific project resource
+      - name: task_id
+        in: query
+        type: string
+        description: Get time entries belonging to a specific task resource
+      - name: slot_id
+        in: query
+        type: string
+        description: Get time entries belonging to a specific slot resource
+      - name: user_id
+        in: query
+        type: string
+        description: Get time entries belonging to a specific user resource
+      - name: group_by
+        in: query
+        type: string
+        description: Group the stat using one or more of date, task_id and/or slot_id fields
+      - name: page
+        in: query
+        description: Get a specific page of the time entries list
+        type: number
+        minimum: 1
+        default: 1
+      - name: per_page
+        in: query
+        description: Get a specific number of items in a page of the time entries list
+        type: number
+        minimum: 1
+        maximum: 1000
+        default: 100
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/total_logged_hour'

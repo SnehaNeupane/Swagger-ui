@@ -1,0 +1,250 @@
+timeoff_stat_response:
+  type: object
+  properties:
+    year:
+      type: string
+      example: '2016'
+    policy_id:
+      type: string
+      example: 'zjWPT72WSCSJ25Bu7Mt8'
+    carried_forward:
+      type: number
+      format: number
+      example: 2
+      description: A number field that denotes the maximum number of days that is
+          carried forward from the previous calendar year for a worker
+    paid_time_offs_taken:
+      type: number
+      format: float
+      example: 0.5
+      description: The number of paid time offs taken by the worker at any given moment.
+    unpaid_time_offs_taken:
+      type: number
+      format: float
+      example: 4.5
+      description: The number of unpaid time offs taken by the worker at any given moment.
+    current_balance_paid:
+      type: number
+      format: float
+      example: 11.5
+      description: The number of days worth of time offs remaining from the current calendar year.
+    current_balance_unpaid:
+      type: number
+      format: float
+      example: 0.5
+      description: The number of days worth of time offs remaining from the current calendar year
+    policy:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'zjWPT72WSCSJ25Bu7Mt8'
+        paid_time_off:
+          type: string
+          format: number
+          example: 12
+        unpaid_time_off:
+          type: string
+          format: number
+          example: 5
+        carry_forward:
+          type: string
+          format: number
+          example: 5
+        paid_request_before:
+          type: string
+          format: number
+          example: 7
+
+create_timeoff_request:
+    type: object
+    required:
+      - creator_id
+      - user_id
+      - start_date
+      - end_date
+      - leave_type
+      - status
+      - days
+    properties:
+      creator_id:
+        type: string
+        format: uuid
+        description: id of the user who created the time off
+        example: oAz5bP23iGz8oa5SkxIXV
+      user_id:
+        type: string
+        format: uuid
+        description: id of the user who for whom the time off is requested
+        example: oAz5bP23iGz8oa5SkxIXV
+      approver_id:
+        type: string
+        format: uuid
+        description: id of the user who approved the time off
+        example: 23Az5bP23iGz8oa5SkxIW
+      start_date:
+        type: string
+        format: date
+        description: date from which the time off starts
+        example: '2016-01-22'
+      end_date:
+        type: string
+        format: date
+        description: date till which the time off is taken
+        example: '2016-01-22'
+      days:
+        type: number
+        format: float
+        example: 2.5
+        description: days is a positive number and cannot be greater than (end_date - start_date + 1)
+      slots:
+        type: array
+        items:
+          type: string
+          description: valid slot id
+          example: A1B5bH31iZt6oaS5xIKp0
+      leave_type:
+        type: string
+        description: one of regular, sick or emergency leaves
+        example: regular
+      status:
+        type: string
+        description: one of pending, approved, denied or cancelled status for a time_off
+        example: approved
+      reason:
+        type: string
+        description: reason for taking the time_off
+        example: I would like to go for a tour
+      paid:
+        type: boolean
+        description: flag to mark a time_off as paid or unpaid
+        example: false
+      feedback:
+        type: string
+        description: reason for approval or denial of a time_off
+        example: granted
+
+update_timeoff_request:
+    type: object
+    properties:
+      start_date:
+        type: string
+        format: date
+        description: date from which the time off starts
+        example: "2016-01-22"
+      end_date:
+        type: string
+        format: date
+        description: date till which the time off is taken
+        example: "2016-01-22"
+      days:
+        type: number
+        format: float
+        example: 2.5
+        description: days is a positive number and cannot be greater than (end_date - start_date + 1)
+      approver_id:
+        type: string
+        format: uuid
+        description: id of the user who approved the time off
+        example: 23Az5bP23iGz8oa5SkxIW
+      slots:
+        type: array
+        items:
+          type: string
+          description: valid slot id
+          example: A1B5bH31iZt6oaS5xIKp0
+      leave_type:
+        type: string
+        description: one of regular, sick or emergency leaves
+        example: regular
+      status:
+        type: string
+        description: one of pending, approved, denied or cancelled status for a time_off
+        example: approved
+      reason:
+        type: string
+        description: reason for taking the time_off
+        example: I would like to go for a tour
+      feedback:
+        type: string
+        description: reason for approval or denial of a time_off
+        example: granted
+      paid:
+        type: boolean
+        description: flag to mark a time_off as paid or unpaid
+        example: false
+
+timeoff_response:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: id of the time off resource
+      example: AyB5bH11iZt8oa5SxKIOp
+    creator_id:
+      type: string
+      format: uuid
+      description: id of the user who created the time off
+      example: oAz5bP23iGz8oa5SkxIXV
+    approver_id:
+      type: string
+      format: uuid
+      description: id of the user who approved the time off
+      example: 23Az5bP23iGz8oa5SkxIW
+    user_id:
+      type: string
+      format: uuid
+      description: id of the user who for whom the time off is requested
+      example: oAz5bP23iGz8oa5SkxIXV
+    start_date:
+      type: string
+      format: date
+      description: date from which the time off starts
+      example: '2016-01-22'
+    end_date:
+      type: string
+      format: date
+      description: date till which the time off is taken
+      example: '2016-01-24'
+    days:
+      type: number
+      format: float
+      example: 2.5
+      description: days is a positive number and cannot be greater than (end_date - start_date + 1)
+    slots:
+      type: array
+      items:
+        type: string
+        description: valid slot id
+        example: A1B5bH31iZt6oaS5xIKp0
+    leave_type:
+      type: string
+      description: one of regular, sick or emergency leaves
+      example: regular
+    status:
+      type: string
+      description: one of pending, approved, denied or cancelled status for a time_off
+      example: approved
+    reason:
+      type: string
+      description: reason for taking the time_off
+      example: I would like to go for a tour
+    feedback:
+      type: string
+      description: reason for approval or denial of a time_off
+      example: granted
+    paid:
+      type: boolean
+      description: flag to mark a time_off as paid or unpaid
+      example: false
+    created_at:
+      type: string
+      format: date-time
+      description: timestamp when the time_off resource was created
+      example: '2017-04-03T08:54:59Z'
+    updated_at:
+      type: string
+      format: date-time
+      description: timestamp when the time_off resource was last updated
+      example: '2017-04-03T08:54:59Z'

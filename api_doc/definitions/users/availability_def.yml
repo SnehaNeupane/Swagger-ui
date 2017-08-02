@@ -1,0 +1,42 @@
+availability_request:
+  type: object
+  properties:
+    slots:
+      type: array
+      items:
+        type: object
+        required:
+          - start_time
+          - end_time
+          - day
+        properties:
+          start_time:
+            type: string
+            description: start time of the availability 'HH:MM'
+            example: '06:00'
+          end_time:
+            type: string
+            description: end time of the availability. Since no date is specified, the first instance of the given time after the start time is assumed 'HH:MM'
+            example: '12:00'
+          day:
+            type: string
+            description: The day in which the start_time falls. The valid values are- "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
+            example: SUN
+availability_response:
+  type: object
+  properties:
+    slots:
+      type: array
+      items:
+        type: object
+        properties:
+          start_time:
+            type: string
+            example: '06:00'
+          end_time:
+            type: string
+            example: '12:00'
+          day:
+            type: string
+            description: MON
+            example: SUN

@@ -1,0 +1,35 @@
+#General Resource Attributes
+Identifier:
+  type: string
+  description: A unique identifier for the created resource.
+  format: uuid
+  example: 6MJM2OeK2s2xisiRyAkZ
+Email:
+  type: string
+  description: A unique email address of the created User resource.
+  format: email
+  example: sagun@cloudfactroy.com
+CustomAttributes:
+  type: array
+  description: Free-end "array of objects" field to add extra attributes for the resource.
+  items:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the key that is used to identify the custom attribute.
+        example: team-name
+      value:
+        type: string
+        description: Value for the key that is used to identify the custom attribute.
+        example: core_services
+CreatedAt:
+  type: string
+  format: date-time
+  description: TimeStamp when the resource was created.
+  example: '2017-04-05T17:19:04Z'
+UpdatedAt:
+    type: string
+    format: date-time
+    description: TimeStamp when the resource was created.
+    example: '2017-04-05T17:19:04Z'

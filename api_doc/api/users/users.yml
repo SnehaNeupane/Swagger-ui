@@ -1,0 +1,129 @@
+/users/{id}:
+  # Get a User
+  get:
+    summary: Get a User
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/users/:id </span></h3><hr>
+      This API allows users to fetch a User. <br><br>
+    tags: [Users]
+    parameters:
+      - name: id
+        in: path
+        description: Id of a User
+        required: true
+        type: string
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/user_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/errormodel'
+
+  # Update a User
+  put:
+    description: |
+      <h3><span style="color:#0088bb"> PUT /api/v1/users/:id </span></h3><hr>
+      This API allows users to update a User. <br><br>
+
+      <b> Note</b> <br>
+      Partial update is not available on the following attributes - <br>
+      <ul>
+        <li> <span class='code'> address</span>
+          <ul>
+            <li> <span class='code'> address_line_1
+            <li> <span class='code'> address_line_2
+            <li> <span class='code'> city
+            <li> <span class='code'> region
+            <li> <span class='code'> zip
+            <li> <span class='code'> country
+          </ul>
+        </li>
+        <li> <span class='code'> client_attributes
+          <ul>
+            <li> <span class='code'> company
+          </ul>
+        </li>
+        <li> <span class='code'> worker_attributes </span>
+          <ul>
+            <li> <span class='code'> slack_handle
+            <li> <span class='code'> starting_date
+            <li> <span class='code'> weekly_commitment
+            <li> <span class='code'> gender
+            <li> <span class='code'> primary_delivery_hub
+            <li> <span class='code'> employment_status
+            <li> <span class='code'> date_of_birth
+          </ul>
+        <li> <span class='code'> custom_attributes
+      </ul>
+      <br>
+      All the sub-attributes needs to be sent with old values even when the sub-attribute is not
+      intended for update. <br>
+      If something is to be deleted, the value needs to be sent as null.
+      <br><br>
+      <b> Validations </b> <br>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> HTTP status Code
+        <tr>
+          <td> invalid status
+          <td> must be one of active, disabled or archived
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> sub-attribute of address is missing
+          <td> is missing
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> sub-attribute of worker_attributes is missing
+          <td> is missing
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> sub-attribute of client_attributes is missing
+          <td> is missing
+          <td> 422 Unprocessable Entity
+      </table>
+    summary: |
+      Update a User
+    tags: [Users]
+    parameters:
+      - name: id
+        in: path
+        description: Id of a User
+        required: true
+        type: string
+      - name: update_body
+        in: body
+        schema:
+          $ref: '#/definitions/update_user_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/user_response'
+
+/users/email/{email}:
+  # Get a user by email
+  get:
+    summary: Get a User by email
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/users/email/:email </span></h3><hr>
+      This API allows users to fetch a User by email.
+    tags: [Users]
+    parameters:
+      - name: email
+        in: path
+        required: true
+        type: string
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/user_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/errormodel'

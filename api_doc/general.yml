@@ -1,0 +1,378 @@
+swagger: '2.0'
+info:
+  version: '1'
+  title: Core API Documentation
+  description: |
+    # Introduction
+    Collection of API related to following app:
+
+    Calendar  - https://calendar.cloudfactory.com <br>
+    Schedules - https://schedules.cloudfactory.com <br>
+    Projects  - https://projects.cloudfactory.com <br>
+    Users     - https://users.cloudfactory.com <br>
+    Searches  - https://searches.cloudfactory.com <br>
+    CRM       - https://crm.cloudfactory.com <br>
+    Channels  - https://channels.cloudfactory.com <br>
+
+    https://www.related_app.cloudfactory.com - related_app is the placeholder for app name in url
+    for example for calendar, related app name is calendar.cloudfactory.com
+
+    The following API facilitates these features
+  contact:
+    name: Core Services
+    url: 'https://related_app.cloudfactory.com'
+host: related_app.cloudfactory.com
+basePath: /api/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: X-API-TOKEN
+    in: header
+
+tags:
+  - name: New Release
+    description: |
+      It comprises of all the changes that are currently being worked on and are in line for release.
+  - name: Pre Release
+    description: It comprises of all the latest changes that are recently released.
+  - name: Deprecated
+    description: |
+      It comprises of the APIs that are going to get deprecated.
+  - name: Calendar
+    description: |
+      <b><i>App Name: Calendar</b> https://calendar.cloudfactory.com</i><br><br>
+        <h2 style="color:#FF3300" >
+            All the APIs belonging to calendar and events resources are going to be deprecated.
+            Please make sure that you have migrated to new Schedules APIs before June 29 2017.
+        </h2>
+  - name: CRM
+    description: CRM
+  - name: Channels
+    description: |
+      Channel is a tool to streamline communication. The API allows users to
+      create/update rooms, add/remove members to/from a room, get details of
+      room/user and update user avatar.
+  - name: Members
+    description: |
+      <b><i>App Name: Projects</b> https://projects.cloudfactory.com</i><br><br>
+      Members are the users assigned in Project. Members perform different responsibilities in
+      Projects, those responsibilities are defined in scope. A member can be Team Leader,
+      Sales Lead, Client Lead, Cloudfactory Lead etc.
+  - name: Milestones
+    description: |
+      <b><i>App Name: Projects</b> https://projects.cloudfactory.com</i><br><br>
+      WorkStream milestones are phases that a newly on-boarded WorkStream advances through.
+      Milestones are sequential in nature.
+      <ol>
+        <li>
+          Gathering Requirement: This milestone is obtained during the initial information gathering
+          process. Activities at this stage entails exchanging samples, business rules document to
+          better understand scope of work.
+        </li>
+        <li>
+          Preparing a Proposal: This milestone is obtained after the details are hashed out and a
+          proposal is in the works.
+        </li>
+        <li>
+          Reviewing Service Agreement: This milestone signifies that a formal agreement is under
+          review.
+        </li>
+        <li>
+          Spinning Up Team: This milestone signifies that a Cloud Team is being assembled and
+          trained to execute on the WorkStream. Alternatively, when clients opt to use
+          CloudFactory’s native micro-tasking Flow platform, a “RAPID Prototyping” milestone
+          signifies that custom workflow development and iteration is in progress.
+        </li>
+        <li>
+          Processing Data: This final milestone indicates that live data processing has begun!
+        </li>
+      </ol>
+  - name: Projects
+    description: |
+      <b><i>App Name: Projects</b> https://projects.cloudfactory.com</i><br><br>
+      Projects(WorkStreams) are a subscription model for outsourcing routine digital work. Customers
+      can purchase a package of hours to be used on a monthly basis, or for a one-time project with
+      our Flex Pass option. Each WorkStream includes a Team Lead and a Cloud Team comprised of our
+      vetted and trained managed workforce. All work is accessed and processed through custom-built
+      WorkStream Browser, customers can collaborate via WorkStream Channels, all of which is
+      included in every WorkStream. There is also optional add-ons like WorkStream Flow
+      (micro-tasking platform for high-volume work that needs to scale), and WorkStream Shield,
+      perfect for work needing extra layers of security.
+      <br>
+      <span style="color:#1abc9c">[Pre Release]
+        Note:
+          When a project is created or updated with milestone 'Spinning up team' or
+          'Processing data', Global Tasks (General, Idle, Margin and Training) automatically
+          get assigned to that project. This change is immutable.
+      </span>
+  - name: Subscriptions
+    description: |
+      <b><i>App Name: Projects</b> https://projects.cloudfactory.com</i><br><br>
+      Customers can purchase a package of hours to be used on a monthly basis or for a time frame
+      which can be used for non repeating one time projects. Purchase of such package is known as
+      subscriptions.
+  - name: Tasks
+    description: |
+      <b><i>App Name: Projects</b> https://projects.cloudfactory.com</i><br><br>
+      The routine assignments for the workers are categorized in different tasks. Tasks are
+      assigned to WorkStream and workers can choose tasks while reporting any schedule.
+      There are four generic tasks that are assigned to all the WS
+      <ul>
+        <li> General Task
+        <li> Idle Hours
+        <li> Margin Time
+        <li> Training
+      </ul>
+  - name: Open Shift Requests
+    description: |
+      <b><i>App Name: Schedules</b> https://schedules.cloudfactory.com</i><br><br>
+      During WorkStream production management, there are cases where a client/delivery pod wants
+      extra hours to be done for the project. OpenShift Request a.k.a. Extra Hour Request is a
+      mechanism that allows clients/delivery pods to easily handle worker scheduling for such cases.
+      Open shifts are created under open shift request which helps workers to claim the open shifts.
+  - name: Open Shifts
+    description: |
+      <b><i>App Name: Schedules</b> https://schedules.cloudfactory.com</i><br><br>
+      Once a request is made for extra hours, the team lead undertaking the management of the
+      request needs to share the information about the availability of additional work with the
+      workers associated with the WorkStream. OpenShift is a mechanism that allows the team lead to
+      easily share about the availability of extra work to the team of workers publicly. It can be
+      considered as a  schedule which does not have worker assigned. Once a worker claims for the
+      OpenShift, the worker will be considered available for scheduling.
+  - name: Schedules
+    description: |
+      <b><i>App Name: Schedules</b> https://schedules.cloudfactory.com</i><br><br>
+      <h3>SCHEDULE REST API</h3><br>
+      The Schedule REST API allows users to manage the CloudFactory schedules for WorkStream Delivery.
+      Users can fetch, create, update and delete schedules along with querying the state of
+      schedules through the attributes of a scheduled resource.<br>
+      <br><h3>SCHEDULE RESOURCE</h3><br>
+      The Schedule resource represents a "shift" - a scope in which a user is scheduled to be
+      available for a specific project on a specific CF delivery hub on a specific time slot of a
+      day.<br>Schedules also have additional properties that help determine the reporting and
+      billing criterias necessary for the reporting and billing purposes.<br>
+      <br>
+      <h4> Each schedule has these properties - </h4><br>
+      <table>
+        <tr>
+          <th> Name
+          <th> Description
+        <tr>
+          <td> id
+          <td> A 20 character string that uniquely identifies this resource.
+        <tr>
+          <td> user_id
+          <td> The unique id of the User resource associated with this schedule.
+        <tr>
+          <td> project_id
+          <td> The unique id of the Project resource associated with this schedule.
+        <tr>
+          <td> delivery_hub_id
+          <td> The unique id of the Delivery Hub resource associated with this schedule.
+        <tr>
+          <td> slot_id
+          <td> The unique id of the Slot resource associated with this schedule.
+        <tr>
+          <td> status
+          <td> The visibility of this schedule - either published or unpublished.
+        <tr>
+          <td> type
+          <td> The scope of this schedule - either normal or margin.
+        <tr>
+          <td> premium_for_client
+          <td> Determines if a schedule is Premium or Standard for Client User
+               Type - either true or false.
+        <tr>
+          <td> premium_for_worker
+          <td> Determines if a schedule is Premium or Standard for Worker User
+               Type - either true or false.
+        <tr>
+          <td> start_time
+          <td> The date-time that denotes the schedule's start.
+        <tr>
+          <td> end_time
+          <td> The date-time that denotes the schedule's end.
+        <tr>
+          <td> overage
+          <td> Mark a schedule as overage if schedule is created to address overage needs.
+        <tr>
+          <td> break
+          <td> Break time for this schedule.
+        <tr>
+          <td> reported
+          <td> Determines this schedule as reported if a time entry resource exists for this schedule.
+        <tr>
+          <td> custom_attributes
+          <td> Store extra information for this schedule.
+  - name: UserSearch
+    description: |
+      <b><i>App Name: Searches</b> https://searches.cloudfactory.com</i><br><br>
+      These APIs allow users to search for resources using complex queries.
+  - name: Users
+    description: |
+      <b><i>App Name: Users</b> https://users.cloudfactory.com</i><br><br>
+      User is a person who interacts with app, typically through an interface, to extract some functional benefit. They have unique identity and perform different roles.
+      <br><br>There are three types of users in the system.
+      <ol>
+        <li>
+          Core : This user type represents our core team members of CloudFactory. Their roles can be one of admin or sales representative. Any core user with admin privilege has read and write access to all the areas in the system. If you have the admin privilege, you should be cautious when you are making changes to the data in the system.
+        </li>
+        <li>
+          Client : This user type represents our clients. Clients have limited access to the platform. They will be able to see the activity happened during the onboarding process and the team members working on the workstream. Currently, clients do not have access to project schedules.
+        </li>
+        <li>
+          Worker : This user type represents our cloud workers. They are our data specialists who work on the workstreams. Workers also have limited access to the platform. Currently, they are able to update
+          certain attributes in their profile and see their work schedule.
+        </li>
+      </ol>
+  - name: Availabilities
+    description: |
+      <b><i>App Name: Users</b> https://users.cloudfactory.com</i><br><br>
+      Every worker is scheduled for 4 hours slot in WorkStream at a time. When workers add
+      information in their profile, they are also asked to give their availabilities in terms of
+      slot for each day so that team leads can filter the workers according to their availabilities
+      and schedule them.
+  - name: Delivery Hubs
+    description: |
+      <b><i>App Name: Users</b> https://users.cloudfactory.com</i><br><br>
+      CloudFactory Delivery Hubs are the locations where slots are scheduled.
+      All delivery hubs have their own capacity according to which workers are scheduled.
+  - name: Slots
+    description: |
+      <b><i>App Name: Users</b> https://users.cloudfactory.com</i><br><br>
+      Slot are the predefined shifts. Slots are the actual timeframe for which workers are assigned
+      to work. There are different predefined slots which contains start and end time and are
+      specified in GMT in the following sections along with their code:
+      <ol>
+        <li> 9:00 PM - 1:00 AM (E)
+        <li> 1:00 AM - 5:00 AM (F)
+        <li> 5:00 AM - 9:00 AM (A)
+        <li> 9:00 AM - 1:00 PM (B)
+        <li> 1:00 PM - 5:00 PM (C)
+        <li> 5:00 PM - 9:00 PM (D)
+      </ol>
+      Whether or not a particular slot is available in a delivery hub depends on the
+      delivery hub. For example, 5:00 PM - 9:00 PM may not be available in CF HQ.
+  - name: Time Entries
+    description: |
+      The <span style="color:#1abc9c"><b>TimeEntry REST API</b></span> allows users to log and manage
+      the workstream work hours put in by a cloud worker. Users can start and stop a TimeEntry along
+      with basic fetch, create, update and delete operations.
+      The <span style="color:#1abc9c"><b>TimeEntry resource</b></span>
+      represents a "work duration"<i> - a scope in which a user has worked for a specific workstream
+      on a specific schedule</i>.
+      <h4> Each time_entry has these properties - </h4><br>
+      <table>
+        <tr>
+          <th> Name </th>
+          <th> Description </th>
+        </tr>
+        <tr>
+          <td> id </td>
+          <td> A 20 character string that uniquely identifies this resource. </td>
+        </tr>
+        <tr>
+          <td> user_id </td>
+          <td> The unique id of the User resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> project_id </td>
+          <td> The unique id of the Project resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> task_id </td>
+          <td> The unique id of the Task resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> slot_id </td>
+          <td> The unique id of the Slot resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> schedule_id </td>
+          <td> The unique id of the Schedule resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> delivery_hub_id </td>
+          <td> The unique id of the Delivery Hub resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> start_time </td>
+          <td> The date-time that denotes the time_entry's start. </td>
+        </tr>
+        <tr>
+          <td> end_time </td>
+          <td> The date-time that denotes the time_entry's end. </td>
+        </tr>
+        <tr>
+          <td> duration </td>
+          <td> Actual duration worked (in seconds) in this time_entry. </td>
+        </tr>
+        <tr>
+          <td> premium_for_client </td>
+          <td> Defines a time_entry as Premium or Standard for Client user type. </td>
+        </tr>
+        <tr>
+          <td> premium_for_worker </td>
+          <td> Determines a schedule as Premium or Standard for Workers user type. </td>
+        </tr>
+        <tr>
+          <td> notes </td>
+          <td> Provide extra information for this time_entry. </td>
+        </tr>
+        <tr>
+          <td> timer </td>
+          <td> Distinguish whether this time_entry is created through the start/stop timer or through Create a time entry API. </td>
+        </tr>
+        <tr>
+          <td> overage </td>
+          <td> Distinguish whether this time entry is created to fulfill the overage requirement. Overage value is inherited from Schedule. </td>
+        </tr>
+      </table>
+      <br>
+  - name: Time Offs
+    description: |
+      <b><i>App Name: Users</b> https://users.cloudfactory.com</i><br><br>
+      Time Off is leave provided for workers. Workers can request leave for predefined slots,
+      those requests are known as time offs. Time off requests done through workers needs approval
+      from admin. Time offs can be in two different statuses namely pending and approved.
+x-tagGroups:
+  - name: New/Upcoming
+    tags:
+      - Pre Release
+      - New Release
+      - Deprecated
+  - name: Channels
+    tags:
+      - Channels
+  - name: Calendar/Schedule
+    tags:
+      - Calendar
+      - Schedules
+      - Open Shift Requests
+      - Open Shifts
+  - name: User
+    tags:
+      - Users
+      - Availabilities
+      - Delivery Hubs
+      - Slots
+      - Time Offs
+      - Time Entries
+  - name: Search
+    tags:
+      - UserSearch
+  - name: Project
+    tags:
+      - CRM
+      - Projects
+      - Subscriptions
+      - Members
+      - Milestones
+      - Tasks

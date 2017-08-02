@@ -1,0 +1,58 @@
+errormodel:
+  type: object
+  properties:
+    message:
+      type: string
+      example: 'user not found'
+validation_error:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "user already a member of the project"
+      description: Validation error message
+st_val:
+  type: object
+  properties:
+      message:
+        type: string
+        example: "Validation Failed"
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              example: 'slots[1].start_time'
+            error_message:
+              type: string
+              example: 'is a required field'
+# 400 Responses
+resource_not_found:
+  properties:
+    message:
+      type: string
+      example: '{resource} not found'
+request_forbidden:
+  properties:
+    message:
+      type: string
+      example: '{custom message}'
+validation_error_response:
+  properties:
+    message:
+      type: string
+      default: 'Validation Failed'
+    errors:
+      type: array
+      items:
+        $ref: '#/definitions/validation_error_block'
+validation_error_block:
+  properties:
+    field:
+      type: string
+      example: field_name
+    message:
+      type: string
+      example: must be valid

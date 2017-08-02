@@ -1,0 +1,36 @@
+# Slots APIs
+/slots:
+  # List slots
+  get:
+    summary: List Slots
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/slots</span></h3><hr>
+      This API allows users to fetch all the slots.<br><br>
+    tags: [Slots]
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/slot_response'
+
+/slots/{id}:
+  # Get a slot
+  get:
+    summary: Get a Slot
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/slots/:id</span></h3><hr>
+      This API allows users to fetch the details of a specific slot.<br><br>
+    tags: [Slots]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: Id of Slot
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/slot_response'

@@ -1,0 +1,42 @@
+/calendars:
+  # Create a calendar
+  post:
+    summary: Create a calendar
+    description:
+      A calendar is a collection of events. But in addition to calendar, they may also have other important meta information or settings that apply to all events in the calendar.
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: calendar_body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/calendar_request'
+    responses:
+      '201':
+        description: Created
+        schema:
+          $ref: '#/definitions/calendar_response'
+
+  # List Calendars
+  get:
+    summary: Get List of Calendars
+    description: The Calendar API provides a method to list calendars owned by a resource. <b>Note</b>- The only resource supported right now is "project".
+    tags: [Calendar, Deprecated]
+    parameters:
+      - name: owner_type
+        in: query
+        description: The type of owner. The only type supported right now is "project"
+        required: true
+        type: string
+      - name: owner_id
+        in: query
+        description: The identifier to uniquely identify the owner
+        required: true
+        type: string
+    responses:
+      '200':
+        description: Successful
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/lists'

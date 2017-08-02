@@ -1,0 +1,324 @@
+/open_shifts:
+  # Create an open shift
+  post:
+    summary: Create an Open Shift
+    description: |
+      <h3><span style="color:#0088bb"> POST /api/v1/open_shifts </span></h3><hr>
+      This API allows users to create an open shift for an open shift request. <br><br>
+      <b> Validations </b><br>
+        <table>
+          <tr>
+            <th> Error </th>
+            <th> Message </th>
+            <th> Code </th>
+          </tr>
+          <tr>
+            <td> schedule_date is in the past </td>
+            <td> schedule_date must be in the future </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> schedule_date not in the range of request </td>
+            <td> schedule_date must be within the range of request </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> created_at is after end_date of open shift request </td>
+            <td> open shift request is already closed </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> claim_deadline is after schedule_date </td>
+            <td> claim_deadline should be on or before the schedule_date </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td>
+              max_seats is greater than the total seats in the delivery hub in that particular date
+              and slot
+            </td>
+            <td> max_seats must be between 0 and the total seats in the delivery hub </td>
+            <td> 422 </td>
+          </tr>
+        </table>
+    tags: [Open Shifts]
+    parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/open_shift_create_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/open_shift_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+  # List open shifts
+  get:
+    summary: List Open Shifts
+    description:
+      <h3><span style="color:#0088bb"> GET /api/v1/open_shifts </span></h3><hr>
+      This API allows users to list Open Shifts using various filter parameters. <br><br>
+    tags: [Open Shifts]
+    parameters:
+      - name: project_id
+        in: query
+        required: false
+        type: string
+        description: A valid project id
+      - name: open_shift_request_id
+        in: query
+        required: false
+        type: string
+        description: A valid open shift request id
+      - name: status
+        in: query
+        required: false
+        type: string
+        description: Unpublished | Published | Closed
+      - name: time_min
+        in: query
+        type: string
+        required: false
+        format: date-time
+        description: Time min in UTC in ISO 8601 format
+      - name: time_max
+        in: query
+        type: string
+        required: false
+        format: date-time
+        description: Time max in UTC in ISO 8601 format
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/open_shift_list_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+
+/open_shifts/{id}:
+  # Get an open shift
+  get:
+    summary: Get an Open Shift
+    description:
+      <h3><span style="color:#0088bb"> GET /api/v1/open_shifts/:id </span></h3><hr>
+      This API allows users to fetch details of an Open Shift. <br><br>
+    tags: [Open Shifts]
+    parameters:
+     - name: id
+       in: path
+       required: true
+       type: string
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/open_shift_response'
+      404:
+        description: Not Found
+        schema:
+          $ref: '#/definitions/resource_not_found'
+  # Update an open shift
+  put:
+    summary: Update an Open Shift
+    description:
+      <h3><span style="color:#0088bb"> PUT /api/v1/open_shifts/:id </span></h3><hr>
+      This API allows users to update the attributes of an Open Shift. <br><br>
+      <b> Validations </b>
+      <table>
+        <tr>
+          <th> Error </th>
+          <th> Message </th>
+          <th> Code </th>
+        </tr>
+        <tr>
+          <td> delivery_hub_id </td>
+          <td> delivery_hub_id cannot be updated for open shifts having claims </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> schedule_date </td>
+          <td> schedule_date cannot be updated for open shifts having claims </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> slot_id </td>
+          <td> slot_id cannot be updated for open shifts having claims </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> claim_deadline </td>
+          <td> claim_deadline cannot be beyond open shift schedule date </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> claim_deadline </td>
+          <td> claim_deadline cannot be before the original claim deadline </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> max_seats </td>
+          <td> max_seats cannot be updated to value less than the original value </td>
+          <td> 422 </td>
+        </tr>
+      </table>
+    tags: [Open Shifts]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/open_shift_update_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/open_shift_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'
+  # Delete an Open Shift
+  delete:
+    summary: Delete an Open Shift
+    description:
+      <h3><span style="color:#0088bb"> DELETE /api/v1/open_shifts/:id </span></h3><hr>
+      This API allows users to delete an Open Shift. <br><br>
+      <b> Validations </b>
+      <table>
+        <tr>
+          <th> Error </th>
+          <th> Message </th>
+          <th> Code </th>
+        </tr>
+        <tr>
+          <td> claims present for the open shift </td>
+          <td> cannot delete open shift which has claims </td>
+          <td> 422 </td>
+        </tr>
+      </table>
+    tags: [Open Shifts]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Id of Open Shift
+        type: string
+    responses:
+      204:
+        description: No Content
+      404:
+        description: Open Shift Not Found
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: 'open_shift not found'
+
+/open_shifts/{id}/claims:
+  post:
+    summary: Claim an Open Shift
+    description: |
+      <h3><span style="color:#0088bb"> POST /api/v1/open_shifts/:open_shift_id/claims </span></h3><hr>
+      This API allows users to create a claim for an Open Shift. <br><br>
+      <b> Validations </b><br>
+      <table>
+        <tr>
+          <th> Error </th>
+          <th> Message </th>
+          <th> Code </th>
+        </tr>
+        <tr>
+          <td> Open Shift does not exist </td>
+          <td> open_shift not found </td>
+          <td> 404 </td>
+        </tr>
+        <tr>
+          <td> User does not exist </td>
+          <td> "user_id" must be a valid user id</td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Open Shift has been closed </td>
+          <td> Cannot claim. Open shift has already been closed </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Deadline of Open Shift is missed </td>
+          <td> Cannot claim. Deadline has already passed </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> No seats are available in Open Shift </td>
+          <td> Cannot claim. All open seats are taken </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Requested hours in Open Shift Request has already been scheduled </td>
+          <td> Cannot claim. Requested hours have already been fulfilled </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Not enough seats available in the Delivery Hub </td>
+          <td> Cannot claim. Delivery hub doesn't have seats available during the slot </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> User has already claimed for the same Open Shift </td>
+          <td> Cannot claim. User already claimed for the same open shift </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> User has already been scheduled for that same time period </td>
+          <td> Cannot claim. User already scheduled during the slot </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> User has already been scheduled for 12 hours on that day </td>
+          <td> Cannot claim. User already scheduled max 12 hours per day </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> User has an approved leave on the Open Shift schedule date </td>
+          <td> Cannot claim. User has taken time off on the same slot of the day </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> User is not assigned to the Project </td>
+          <td> Cannot claim. User not assigned to the project </td>
+          <td> 422 </td>
+        </tr>
+      </table>
+    tags: [Open Shifts]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        format: uid
+        description: Id of Open Shift
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/claim_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/claim_response'
+      422:
+        description: Validation Error
+        schema:
+          $ref: '#/definitions/validation_error_response'

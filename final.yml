@@ -1,0 +1,6667 @@
+---
+swagger: '2.0'
+info:
+  version: '1'
+  title: Core API Documentation
+  description: >
+    # Introduction
+
+    Collection of API related to following app:
+
+
+    Calendar - https://calendar.cloudfactory.com <br>
+
+    Projects - https://projects.cloudfactory.com <br>
+
+    Users    - https://users.cloudfactory.com  <br>
+
+    Searches - https://searches.cloudfactory.com <br>
+
+    CRM      - https://crm.cloudfactory.com <br>
+
+    Channels - https://channels.cloudfactory.com <br>
+
+
+    https://www.related_app.cloudfactory.com - related_app is the placeholder
+    for app name in url for example for calendar, related app name is
+    calendar.cloudfactory.com
+
+
+    The following API facilitates these features
+  contact:
+    name: Core Services
+    url: 'https://related_app.cloudfactory.com'
+host: related_app.cloudfactory.com
+basePath: /api/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: X-API-TOKEN
+    in: header
+tags:
+  - name: New Release
+    description: >-
+      It comprises of all the changes that are currently being worked on and are
+      in line for release.
+  - name: Pre Release
+    description: It comprises of all the latest changes that are recently released.
+  - name: Calendar
+    description: calendar
+  - name: CRM
+    description: CRM
+  - name: Channels
+    description: |
+      Channel is a tool to streamline communication. The API allows you to
+      create/update rooms, add/remove members to/from a room, get details of
+      room/user and update user avatar.
+  - name: Members
+    description: Members
+  - name: Milestones
+    description: Milestones
+  - name: Projects
+    description: Projects
+  - name: Subscriptions
+    description: Subscriptions
+  - name: Tasks
+    description: Tasks
+  - name: Open Shift Requests
+    description: Open shift requests
+  - name: Open Shifts
+    description: Open shifts
+  - name: Schedules
+    description: >
+      <h3>SCHEDULE REST API</h3><br>
+
+      The Schedule REST API allows you to manage the CloudFactory schedules for
+      WorkStream Delivery.
+
+      You can fetch, create, update and delete schedules along with querying the
+      state of your
+
+      schedules through the attributes of a scheduled resource.<br>
+
+      <br><h3>SCHEDULE RESOURCE</h3><br>
+
+      The Schedule resource represents a "shift" - a scope in which a user is
+      scheduled to be
+
+      available for a specific project on a specific CF delivery hub on a
+      specific time slot of a
+
+      day.<br>Schedules also have additional properties that help determine the
+      reporting and
+
+      billing criterias necessary for the reporting and billing purposes.<br>
+
+      <br>
+
+      <h4> Each schedule has these properties - </h4><br>
+
+      <table>
+        <tr>
+          <th> Name
+          <th> Description
+        <tr>
+          <td> id
+          <td> A 20 character string that uniquely identifies this resource.
+        <tr>
+          <td> user_id
+          <td> The unique id of the User resource associated with this schedule.
+        <tr>
+          <td> project_id
+          <td> The unique id of the Project resource associated with this schedule.
+        <tr>
+          <td> delivery_hub_id
+          <td> The unique id of the Delivery Hub resource associated with this schedule.
+        <tr>
+          <td> slot_id
+          <td> The unique id of the Slot resource associated with this schedule.
+        <tr>
+          <td> status
+          <td> The visibility of this schedule - either published or unpublished.
+        <tr>
+          <td> type
+          <td> The scope of this schedule - either normal or margin.
+        <tr>
+          <td> premium_for_client
+          <td> Determines if a schedule is Premium or Standard for Client User
+               Type - either true or false.
+        <tr>
+          <td> premium_for_worker
+          <td> Determines if a schedule is Premium or Standard for Worker User
+               Type - either true or false.
+        <tr>
+          <td> start_time
+          <td> The date-time that denotes the schedule's start.
+        <tr>
+          <td> end_time
+          <td> The date-time that denotes the schedule's end.
+        <tr>
+          <td> overage
+          <td> Mark a schedule as overage if schedule is created to address overage needs.
+        <tr>
+          <td> break
+          <td> Break time for this schedule.
+        <tr>
+          <td> reported
+          <td> Determines this schedule as reported if a time entry resource exists for this schedule.
+        <tr>
+          <td> custom_attributes
+          <td> Store extra information for this schedule.
+  - name: UserSearch
+    description: UserSearch
+  - name: Users
+    description: Users
+  - name: Availabilities
+    description: Availabilities
+  - name: Delivery Hubs
+    description: Delivery hubs
+  - name: Slots
+    description: Slots
+  - name: Time Entries
+    description: >
+      The <span style="color:#1abc9c"><b>TimeEntry REST API</b></span> allows
+      you to log and manage the workstream work hours put in by a cloud worker.
+      You can start and stop a TimeEntry along with basic fetch, create, update
+      and delete operations.
+
+      The <span style="color:#1abc9c"><b>TimeEntry resource</b></span>
+      represents a "work duration"<i> - a scope in which a user has worked for a
+      specific workstream on a specific schedule</i>.
+
+      <h4> Each time_entry has these properties - </h4><br>
+
+      <table>
+        <tr>
+          <th> Name </th>
+          <th> Description </th>
+        </tr>
+        <tr>
+          <td> id </td>
+          <td> A 20 character string that uniquely identifies this resource. </td>
+        </tr>
+        <tr>
+          <td> user_id </td>
+          <td> The unique id of the User resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> project_id </td>
+          <td> The unique id of the Project resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> task_id </td>
+          <td> The unique id of the Task resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> slot_id </td>
+          <td> The unique id of the Slot resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> schedule_id </td>
+          <td> The unique id of the Schedule resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> delivery_hub_id </td>
+          <td> The unique id of the Delivery Hub resource associated with this time_entry. </td>
+        </tr>
+        <tr>
+          <td> start_time </td>
+          <td> The date-time that denotes the time_entry's start. </td>
+        </tr>
+        <tr>
+          <td> end_time </td>
+          <td> The date-time that denotes the time_entry's end. </td>
+        </tr>
+        <tr>
+          <td> duration </td>
+          <td> Actual duration worked (in seconds) in this time_entry. </td>
+        </tr>
+        <tr>
+          <td> premium_for_client </td>
+          <td> Defines a time_entry as Premium or Standard for Client user type. </td>
+        </tr>
+        <tr>
+          <td> premium_for_worker </td>
+          <td> Determines a schedule as Premium or Standard for Workers user type. </td>
+        </tr>
+        <tr>
+          <td> notes </td>
+          <td> Provide extra information for this time_entry. </td>
+        </tr>
+        <tr>
+          <td> timer </td>
+          <td> Distinguish whether this time_entry is created through the start/stop timer or through Create a time entry API. </td>
+        </tr>
+        <tr>
+          <td> overage </td>
+          <td> Distinguish whether this time entry is created to fulfill the overage requirement. Overage value is inherited from Schedule. </td>
+        </tr>
+      </table>
+
+      <br>
+  - name: Time Offs
+    description: Time offs
+x-tagGroups:
+  - name: New/Upcoming
+    tags:
+      - Pre Release
+      - New Release
+  - name: Channels
+    tags:
+      - Channels
+  - name: Calendar/Schedule
+    tags:
+      - Calendar
+      - Schedules
+      - Open Shift Requests
+      - Open Shifts
+  - name: User
+    tags:
+      - Users
+      - Availabilities
+      - Delivery Hubs
+      - Slots
+      - Time Offs
+      - Time Entries
+  - name: Search
+    tags:
+      - UserSearch
+  - name: Project
+    tags:
+      - CRM
+      - Projects
+      - Subscriptions
+      - Members
+      - Milestones
+      - Tasks
+paths:
+  /calendars:
+    post:
+      summary: Create a calendar
+      description: >-
+        A calendar is a collection of events. But in addition to calendar, they
+        may also have other important meta information or settings that apply to
+        all events in the calendar.
+      tags:
+        - Calendar
+      parameters:
+        - name: calendar_body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/calendar_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/calendar_response'
+    get:
+      summary: Get List of Calendars
+      description: >-
+        The Calendar API provides a method to list calendars owned by a
+        resource. <b>Note</b>- The only resource supported right now is
+        "project".
+      tags:
+        - Calendar
+      parameters:
+        - name: owner_type
+          in: query
+          description: The type of owner. The only type supported right now is "project"
+          required: true
+          type: string
+        - name: owner_id
+          in: query
+          description: The identifier to uniquely identify the owner
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/lists'
+  '/calendars/{calendar_id}/events':
+    post:
+      description: >-
+        This API allows users to create an event in a specific calendar. <br>
+        <b> behaviour</b>
+
+
+        When a user resource is added to an event. It sends an invitation email
+        to the person. In future, the person might accept or reject the
+        invitation. However, for now, they are considered to have automatically
+        accepted the invitation.
+      summary: Create an Event
+      tags:
+        - Calendar
+      parameters:
+        - name: calendar_id
+          in: path
+          type: string
+          required: true
+          description: id of calendar
+        - name: eventbody
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/eventbody'
+      responses:
+        '201':
+          description: Successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/geteventresponse'
+    get:
+      description: >-
+        <b> Optional query parameters </b>
+
+        These parameters need to be supplied in query string.<br> <table>
+        <th>Name  <th>Type  <th>Description <tr>
+
+        <td> time_min <td>  number  <td>Lower bound (inclusive) for an event's
+        end time to filter by.  The default is not to filter by end time. ISO
+        8601 UTC <tr> <td>time_max  <td>number<td>  Upper bound (exclusive) for
+        an event's start time to filter by. The default is not to filter by
+        start time. ISO 8601 UTC <tr> <td>page <td>number<td>  The page number
+        for events to be returned. Maximum value depends  upon the number of
+        events that gets included and is included in header <tr>
+        <td>per_page<td>  number  <td>The maximum number of events to be
+        returned per page. Maximum value is 1000 and default value is 100 </tr>
+
+        </table> <b>Notes</b> <br> <ul> <li>The results are paginated using
+        standard API pagination mechanism used by CloudFactory platform.</li>
+        <li>The events are ordered by start_date in ascending order.</li></ul>
+      summary: Get list of Events
+      tags:
+        - Calendar
+      parameters:
+        - name: calendar_id
+          in: path
+          required: true
+          description: The id of the calendar in which event was created
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/geteventresponse'
+  '/calendars/{calendar_id}/events/{id}':
+    get:
+      summary: Get an Event
+      description: >-
+        This API allows users to fetch an event through the owner's calendar as
+        well as through the associated resource's  calendar.
+      tags:
+        - Calendar
+      parameters:
+        - name: calendar_id
+          in: path
+          required: true
+          description: The id of the calendar to which event is associated
+          type: string
+        - name: id
+          in: path
+          required: true
+          description: The id of event
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/geteventresponse'
+    put:
+      summary: Update an event
+      description: |
+        <b>Editable Parameters</b> <br>
+        name, description, start_time, end_time, custom_attributes, resources
+      tags:
+        - Calendar
+      parameters:
+        - name: calendar_id
+          in: path
+          required: true
+          description: The id of the calendar in which event was created
+          type: string
+        - name: id
+          in: path
+          required: true
+          description: The id of events
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/geteventresponse'
+    delete:
+      description: >-
+        <b>Note</b> <br> <ul> <li>When an event is deleted, the event  stops
+        being reported from calendars of the associated resources as well.</li>
+        <li>It is  possible to delete both past and future events.</li></ul>
+      summary: Delete an event
+      tags:
+        - Calendar
+      parameters:
+        - name: calendar_id
+          in: path
+          required: true
+          description: The id of the calendar in which event was created
+          type: string
+        - name: id
+          in: path
+          required: true
+          description: The id of events
+          type: string
+      responses:
+        '204':
+          description: No content
+  /events/stats:
+    get:
+      summary: Total hours scheduled
+      description: >-
+        <b>Note</b> <br>
+
+        * All four aggregated hours (standard, premium) will be a floating value
+        roundedup to two decimal places.
+
+        * Summary is calculated as
+
+        1. Standard for client => sum of duration when premium_for_client =
+        false
+
+        2. Standard for worker => sum of duration when premium_for_worker =
+        false
+
+        3.  Premium for client => sum of duration when premium_for_client = true
+
+        4.  Premium for worker => sum of duration when premium_for_worker = true
+
+        * standard_for_client + premium_for_client = standard_for_worker +
+        premium_for_worker = total time scheduled for that duration
+
+        * Pagination is added for the list as per our standard pagination rule.
+        Order of the fields in the group by column should not affect the
+        results. <br>
+
+        * <b>Group By</b><br> <ol><li> Groups the summaries by the given fields.
+        Fields for now- date,        type & slot_id</li><li>The query parameter
+        group_by must be an array with at least one of     date  , slot_id and
+        type as the format as shown-
+        <code>group_by[]=date&group_by[]=slot_id&group_by[]=type</code>
+        </li><ol>
+
+
+        <b> Validation</b> <br>
+
+        * Error- group_by has an invalid field
+
+        * Message- must be an array with at least one of date, slot_id and type
+
+        * Error Code-  422 Unprocessable Entity
+
+        * time_min cannot be greater than time_max. It should respond with a 422
+        error and this message-  "time_max must be greater than or equal to
+        time_min"
+      tags:
+        - Calendar
+      parameters:
+        - name: time_min
+          in: query
+          type: string
+          format: date-time
+          required: true
+          description: >-
+            time since which the event was started and format according to  ISO
+            8601 standard
+        - name: time_max
+          in: query
+          type: string
+          format: date-time
+          required: true
+          description: >-
+            time before which the event was started and format according to  ISO
+            8601 standard
+        - name: project_id
+          in: query
+          type: string
+          required: false
+          description: id of the project for which the event was created
+        - name: status
+          in: query
+          type: string
+          required: false
+          description: 'status of schedule, can be published or unpublished'
+        - name: slot_id
+          in: query
+          type: string
+          required: false
+          description: Id of slot
+        - name: user_id
+          in: query
+          type: string
+          required: false
+          description: id of the user for whom the event was created
+        - name: premium_for_client
+          in: query
+          type: string
+          required: false
+          description: >-
+            Denotes whether an event was created for a premium (for client)
+            shift
+        - name: premium_for_worker
+          in: query
+          type: string
+          required: false
+          description: >-
+            Denotes whether an event was created for a premium (for worker)
+            shift
+        - name: group_by
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          description: >-
+            Groups the summaries by the given fields. Allows only these three
+            fields for now- date, slot_id & type. Multiple values separated by
+            comma which does the 'AND' operation
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/total_scheduled_hours'
+  /rooms:
+    post:
+      summary: Create a Room
+      description: |
+        <h3><span style="color:#0088bb">POST /api/v1/rooms</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: Create
+          in: body
+          schema:
+            $ref: '#/definitions/room_create_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/room_create_response'
+    get:
+      summary: List Rooms
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/rooms?projectId=id</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: string
+          description: Id of a workstream
+        - name: scope
+          in: query
+          required: true
+          type: string
+          description: Scope of a room
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/rooms'
+  '/rooms/{id}':
+    put:
+      summary: Update a Room
+      description: |
+        <h3><span style="color:#0088bb">PUT /api/v1/rooms/:id</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: Id of a room
+        - name: Update
+          in: body
+          schema:
+            $ref: '#/definitions/room_update_request'
+      responses:
+        '200':
+          description: Updated
+          schema:
+            $ref: '#/definitions/room_update_response'
+    get:
+      summary: Get a Room
+      description: |
+        <h3><span style="color:#0088bb">GET /api/v1/rooms/:id</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: Id of a room
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/room_detail'
+  /rooms/group:
+    get:
+      summary: Get Rooms Grouped by Scope
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/rooms/group?projectId=id</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: string
+          description: Id of a workstream
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/get_rooms_by_scope_response'
+  '/rooms/{id}/join':
+    post:
+      summary: Join a Room
+      description: >
+        <h3><span style="color:#0088bb">POST
+        /api/v1/rooms/:id/join</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: Id of a room
+        - name: Join
+          in: body
+          schema:
+            $ref: '#/definitions/join_room_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/join_room_response'
+  /rooms/join:
+    post:
+      summary: Join Multiple Rooms Based on Scope
+      description: |
+        <h3><span style="color:#0088bb">POST /api/v1/rooms/join</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: Join
+          in: body
+          schema:
+            $ref: '#/definitions/join_rooms_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/join_rooms_response'
+  /rooms/remove:
+    post:
+      summary: Remove Member from Rooms
+      description: >
+        <h3><span style="color:#0088bb">POST
+        /api/v1/rooms/remove</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: Remove
+          in: body
+          schema:
+            $ref: '#/definitions/remove_from_rooms_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/remove_from_rooms_response'
+  '/rooms/{id}/remove':
+    post:
+      summary: Remove Member from a Room
+      description: >
+        <h3><span style="color:#0088bb">POST
+        /api/v1/rooms/:id/remove</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: Id of a room
+        - name: Remove
+          in: body
+          schema:
+            $ref: '#/definitions/remove_from_a_room_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/remove_from_a_room_response'
+  /channels/search/users:
+    get:
+      summary: Find a User
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/search/users?email=bonnie.bennet@cf.com</span></h3><hr>
+
+
+        **_Note_:**
+
+
+        Since endpoint `/search/users` clashes with Users search in Searches
+        app, it returns
+
+        only single API. Thus to distinguish, we have added dummy content i.e
+        `channels`. But the actual
+
+        endpoint is `api/v1/search/users`.
+      tags:
+        - Channels
+      parameters:
+        - name: email
+          in: query
+          required: true
+          type: string
+          description: Email of a user
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/find_user_response'
+  /users/username:
+    get:
+      summary: Get Username
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/users/username?username=sneha</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: username
+          in: query
+          required: true
+          type: string
+          description: Username of the user in rocketchat
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/get_username_response'
+  /rooms/name:
+    get:
+      summary: Get Room Name
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/rooms/name?domain=microsoft</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: domain
+          in: query
+          required: true
+          type: string
+          description: Domain of user's email
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/get_room_name_response'
+  /users/avatar:
+    put:
+      summary: Update Users Avatar
+      description: |
+        <h3><span style="color:#0088bb">PUT /api/v1/users/avatar</span></h3><hr>
+      tags:
+        - Channels
+      parameters:
+        - name: Update avatar
+          in: body
+          schema:
+            $ref: '#/definitions/update_user_avatar_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/update_user_avatar_response'
+  /hubspot/forms:
+    put:
+      summary: HubSpot Form API
+      description: >-
+        <b>Description</b><br> Currently, when a new parameter is to be added to
+        a Hubspot form, it needs to be changed both in the experience side as
+        well as the core services side. This is quite limiting. So, we want the
+        form submission API to be agnostic to the form content.
+      tags:
+        - CRM
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/crmhub'
+      responses:
+        '204':
+          description: No content
+  '/projects/{project_id}/members':
+    post:
+      summary: Create a member
+      description: >
+        <h3><span style="color:#0088bb">POST
+        /api/v1/projects/:project_id/members</span></h3><hr>
+      tags:
+        - Members
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: string
+          description: id of project
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/member_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/member_response'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/validation_error'
+    get:
+      summary: List members
+      tags:
+        - Members
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/projects/:project_id/members</span></h3><hr>
+
+        This API provides a method to list all users associated with a project.
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: string
+          description: id of project
+        - name: type
+          in: query
+          type: array
+          items:
+            type: string
+          description: >-
+            filter members list by at least one of "client", "core", "worker"
+            user types
+        - name: scope
+          in: query
+          type: array
+          items:
+            type: string
+          description: filter members list by at least one of the scopes of the memnbers
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/member_response'
+  '/projects/{project_id}/members/{id}':
+    put:
+      summary: Update a member
+      description: >
+        <h3><span style="color:#0088bb">PUT
+        /api/v1/projects/:project_id/members/:id</span></h3><hr>
+
+        This API provides a method to update some attributes of a member
+        resource.
+      tags:
+        - Members
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: string
+          description: id of project
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: id of member
+        - name: request
+          in: body
+          schema:
+            type: object
+            properties:
+              scope:
+                type: string
+                example: team leader
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/member_response'
+    delete:
+      summary: Delete a Member of a Project
+      description: >
+        <h3><span style="color:#0088bb">DELETE
+        /api/v1/projects/:project_id/members/:id</span></h3><hr>
+
+        This API provides a method to remove a user associated with a project.
+      tags:
+        - Members
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: string
+          description: id of project
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: id of the member
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Project/User not found
+          schema:
+            $ref: '#/definitions/errormodel'
+  '/milestones/{id}':
+    get:
+      summary: Get milestone
+      tags:
+        - Milestones
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/milestone'
+  /milestones:
+    get:
+      summary: List milestones
+      description: >-
+        <b>Description</b> <br> A milestone is a stage at which a Workstream is
+        in the sales process. It could be just at the first stage of discovery
+        or it could be matured enough to be able to start processing data.
+        Currently, we have a limited set of milestones. So, no need to have a
+        create/delete/update API for milestones. However, we have a way to get
+        and list the milestones.<br>
+
+        Currently, we have only these milestones-<br> <table><tr> <th>Name 
+        <th>Order <th>Flow  <th>No-Flow <tr>
+
+        <td>Gathering requirements  <td>1 <td>true  <td>true <tr> <td>Preparing
+        a proposal  <td>2 <td>true  <td>true <tr> <td>Reviewing service
+        agreement <td>3 <td>true  <td>true <tr> <td>Spinning up team  <td>4
+        <td>false <td>true <tr> <td>Rapid Prototyping <td>4 <td>true  <td>false
+        <tr> <td>Processing data <td>5 <td>true  <td>true
+      tags:
+        - Milestones
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/milestone'
+  /projects:
+    post:
+      summary: Create a Project
+      description: |
+        <h3><span style="color:#0088bb">POST /api/v1/projects</span></h3><hr>
+        <b> Possible Errors </b>
+        <br>
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> HTTP status Code
+          <tr>
+            <td> invalid subscription_type
+            <td> can only be one of these 'monthly', 'flex_pass'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid billable unit
+            <td> can only be one of these 'hour', 'piece_rate'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid workforce_model
+            <td> can only be one of these 'in-house', 'semi-distributed'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid payment_option
+            <td> can only be one of these 'yearly', 'monthly', 'one_time'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid tools
+            <td> can only be one of these 'client', 'third_party', 'ws_flow'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid channel
+            <td> can only be one of these 'api', 'file_upload', 'task_board', 'client_tools'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid status
+            <td> can only be one of these 'open', 'closed'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid current_milestone
+            <td> does not apply for this project type
+            <td> 422 Unprocessable Entity
+      tags:
+        - Projects
+      parameters:
+        - name: create
+          in: body
+          schema:
+            $ref: '#/definitions/project_create_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/project'
+    get:
+      summary: List Projects
+      description: |
+        <h3><span style="color:#0088bb">GET /api/v1/projects</span></h3><hr>
+      tags:
+        - Projects
+      parameters:
+        - name: name
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          description: |
+            Lists projects that have name similar to provided value
+        - name: status
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          description: open | closed
+        - name: subscription_type
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          description: monthly | flex_pass
+        - name: ws_flow_enabled
+          in: query
+          type: string
+          required: false
+          description: true | false
+        - name: ws_shield_enabled
+          in: query
+          type: string
+          required: false
+          description: true | false
+        - name: billable_unit
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          description: piece_rate | hour
+        - name: milestone_id
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          description: The ids of milestone the projects are in
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/project'
+  '/projects/{id}':
+    get:
+      summary: Get a Project
+      description: >-
+        <h3><span style="color:#0088bb">GET /api/v1/projects/:id</span></h3><hr>
+        If 'include[]=milestone' is present in the query parameter, then the
+        response will also include current milestone details.
+      tags:
+        - Projects
+      parameters:
+        - name: id
+          in: path
+          description: Id of project
+          required: true
+          type: string
+        - name: include
+          in: query
+          description: fetch an embedded "milestone" resource
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/project_including_milestone'
+    put:
+      summary: Update a Project
+      description: |
+        <h3><span style="color:#0088bb">PUT /api/v1/projects/:id</span></h3><hr>
+        <b> Possible Errors </b> <br>
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> HTTP status Code
+          <tr>
+            <td> invalid subscription_type
+            <td> can only be one of these 'monthly', 'flex_pass'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid billable_unit
+            <td> can only be one of these 'hour', 'piece_rate'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid workforce_model
+            <td> can only be one of these 'in-house', semi-distributed'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid payment_option
+            <td> can only be one of these 'yearly', 'monthly', 'one_time'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid tools
+            <td> can only be one of these 'client', 'third_party', 'ws_flow'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid channel
+            <td> can only be one of these 'api', 'file_upload', 'task_board', 'client_tools'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td> invalid status
+            <td> can only be one of these 'open', 'closed'
+            <td> 422 Unprocessable Entity
+          <tr>
+            <td>invalid current_milestone
+            <td>does not apply for this project type
+            <td>422 Unprocessable Entity
+      tags:
+        - Projects
+      parameters:
+        - name: id
+          in: path
+          description: Id of project
+          required: true
+          type: string
+        - name: update_request
+          in: body
+          schema:
+            $ref: '#/definitions/project_update_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/project'
+  '/users/{user_id}/projects':
+    get:
+      summary: List Projects of a User
+      description: >-
+        <h3><span style="color:#0088bb">GET
+        /api/v1/users/:user_id/projects</span></h3><hr>
+      tags:
+        - Projects
+      parameters:
+        - name: user_id
+          type: string
+          in: path
+          description: Id of user
+          required: true
+        - name: billable_unit
+          in: query
+          type: string
+          required: false
+          description: hour | piece_rate
+        - name: milestone_id
+          in: query
+          type: string
+          required: false
+          description: Valid milestone id
+        - name: status
+          in: query
+          type: string
+          required: false
+          description: open | closed
+        - name: subscription_type
+          in: query
+          type: string
+          required: false
+          description: monthly | flex_pass
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/project'
+  '/projects/{project_id}/subscriptions':
+    post:
+      summary: Create a Subscription
+      description: >-
+        <b> Validation</b> <table> <tr> <th> Error <th> Message <th> Code </tr>
+        <tr> <td> effective_from is before the project start_date <td>
+        effective_from must be on or after the project start_date <td> 422 </tr>
+        <tr> <td> effective_from is after effective_till <td> effective_from
+        must be on or before effective_till <td> 422 </tr> <tr> <td> invalid
+        stage <td> stage must be one of these- validation, proposal,
+        contracting, booked or lost <td> 422 </tr> </table><br>
+
+        <b> Other Validations </b><br> <ul> <li> monthly_units, monthly_hours,
+        flex_pass_units, flex_pass_hours are positive integers >= 0.
+        monthly_units and flex_pass units could go be in millions but the
+        monthly_hours and flex_pass_hours in general are in thousands <li>
+        monthly_price and flex_pass_price are floating point numbers rounded
+        upto two decimal places. Minimum >=0 <li> cannot create a subscription
+        for a "closed" project. If attempted, it will give out this validation
+        error- "can create a subscription only when  the project is open" 422.
+        <li> cannot create a subscription if the billable_unit is not present in
+        a project. </ul> <br>
+
+        <b> Note </b><br> <ol> <li> The first subscription created under a
+        project will be marked as the base subscription. <li> For a base
+        subscription, the adjustments values will be an object with all the keys
+        but null in the values. <li> For others, the adjustments are created
+        based on the current and the previous subscription. <li> When the
+        subscription_type is flex_pass <ul> <li> if the billable_unit is 'hour'
+        - update "flex_pass_hours", "hourly_rate", "flex_pass_price" <li> if
+        billable_unit is 'piece_rate' - update "flex_pass_units", "piece_rate",
+        "flex_pass_price" </ul> <li> When the subscription_type is 'monthly'
+        <ul> <li> if billable_unit is 'hour' - update "monthly_hours,
+        hourly_rate, monthly_price" <li> if billable_unit is 'piece_rate' -
+        update "monthly_units, piece_rate, monthly_price" </ul> </ol>
+      tags:
+        - Subscriptions
+      parameters:
+        - name: project_id
+          type: string
+          in: path
+          required: true
+          description: id of project
+        - name: subrequest
+          in: body
+          schema:
+            $ref: '#/definitions/subscription_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/subscription_response'
+    get:
+      summary: List Subscriptions
+      description: >-
+        <b> Filter parameters</b> <br> <table> <tr> <th> Filter <th> Description
+        </tr> <tr> <td> sf_opportunity_id <td> Optional. Returns the
+        subscription with the given sf_opportunity_id </tr> <tr> <td> base <td>
+        Optional. Boolean. List the base subscription </tr> <tr> <td> time_min
+        <td> Optional. Lists all the subscriptions that are effective on or
+        after this date. </tr> <tr> <td> time_max <td> Optional. Lists all the
+        subscriptions that are effective before this date. </tr> <tr> <td> stage
+        <td> Optional. Lists all the subscriptions with the given stage </tr>
+        </table>
+      tags:
+        - Subscriptions
+      parameters:
+        - name: project_id
+          type: string
+          in: path
+          required: true
+          description: Id of project
+        - name: sf_opportunity_id
+          type: string
+          in: query
+          required: false
+          description: Returns the subscription with the given sf_opportunity_id
+        - name: base
+          type: boolean
+          in: query
+          required: false
+          description: List the base subscription
+        - name: stage
+          type: string
+          in: query
+          required: false
+          description: Lists all the subscriptions with the given stage
+        - name: time_min
+          type: string
+          format: date-time
+          in: query
+          required: false
+          description: >-
+            Lists all the subscriptions that are effective on or after this
+            date.
+        - name: time_max
+          type: string
+          format: date-time
+          in: query
+          required: false
+          description: >-
+            Lists all the subscriptions that are effective on or before this
+            date.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/subscription_response'
+  '/projects/{project_id}/subscriptions/{id}':
+    get:
+      summary: Get a Subscription
+      tags:
+        - Subscriptions
+      parameters:
+        - name: project_id
+          type: string
+          in: path
+          required: true
+          description: Id of project
+        - name: id
+          type: string
+          in: path
+          required: true
+          description: Id of subscription
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/subscription_response'
+    put:
+      summary: Update a Subscription
+      description: >-
+        <b> Validations </b> <table> <tr> <th> Error <th> Message <th> Code
+        </tr> <tr> <td> effective_from is before the project start_date <td>
+        effective_from must be on or after the project start_date <td> 422 </tr>
+        <tr> <td> effective_from is after effective_till <td> effective_from
+        must be on or before effective_till <td> 422 </tr> <tr> <td> invalid
+        stage <td> stage must be one of these- validation, proposal,
+        contracting, booked or lost <td> 422 </tr> <tr> <td> update a
+        subscription that is not the latest one <td> Only the most recent
+        subscription is allowed for update <td> 422 </tr> </table> <br> <b> Note
+        </b> <br> <ol> <li> "base" attribute cannot be updated. It is calculated
+        from inside. <li> For a base subscription, the adjustments values will
+        be an object with all the keys but null in the values. <li> For others,
+        the adjustments are created based on the current and the previous
+        subscription. <li> When the subscription_type is flex_pass <ul> <li> if
+        the billable_unit is 'hour' - update "flex_pass_hours",
+        "flex_pass_price" , "hourly_rate" <li> if billable_unit is 'piece_rate'
+        - update "flex_pass_units", "flex_pass_price" , "piece_rate" </ul> <li>
+        When the subscription_type is 'monthly' <ul> <li> if billable_unit is
+        hour - update "monthly_hours, hourly_rate, monthly_price" <li> if
+        billable_unit is piece_rate - update "monthly_units, piece_rate,
+        monthly_price" </ul> </ol>
+      tags:
+        - Subscriptions
+      parameters:
+        - name: project_id
+          type: string
+          in: path
+          required: true
+          description: Id of project
+        - name: id
+          type: string
+          in: path
+          required: true
+          description: Id of subscription
+        - name: subrequest
+          in: body
+          schema:
+            $ref: '#/definitions/subscription_update_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/subscription_response'
+  /tasks:
+    post:
+      summary: Create a Task
+      description: >
+        <b><i> App Name: Projects</b> https://projects.cloudfactory.com
+        </i><br><br>
+
+        <h3>
+          <span style="color:#0088bb">POST /api/v1/tasks</span>
+        </h3><br>
+
+        This API allows you to create a task. <br><br>
+
+        <b> Possible Errors </b><br>
+          <table>
+            <tr>
+              <th> Error </th>
+              <th> Message </th>
+              <th> Code </th>
+            </tr>
+            <tr>
+              <td> billable is not a boolean </td>
+              <td> must be a boolean </td>
+              <td> 422 </td>
+            </tr>
+            <tr>
+              <td> task name is either empty or exceeded the max length limit </td>
+              <td> must be a non-blank string with a maximum of 200 characters </td>
+              <td> 422 </td>
+            </tr>
+            <tr>
+              <td> task name is not unique (compared by ignoring case-sensitivity and leading and trailing spaces) </td>
+              <td> task with the same name already exists </td>
+              <td> 422 </td>
+            </tr>
+          </table>
+      tags:
+        - Tasks
+      parameters:
+        - name: task_body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/task_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/task_response'
+    get:
+      summary: List Tasks
+      tags:
+        - Tasks
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/task_response'
+  '/tasks/{id}':
+    get:
+      summary: Get a Task
+      tags:
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/task_response'
+  '/projects/{project_id}/tasks':
+    post:
+      summary: Assign Task to a Project
+      description: |
+        <b> Validation </b><br>
+        <ol>
+          <li> If either the project or the task is not valid, it will return a 404 error with
+               the message- "project | task not found"
+          <li> If the task is already assigned, it will return 422 Unprocessable entity with
+               the message- "task already assigned to the project"
+        </ol>
+      tags:
+        - Tasks
+      parameters:
+        - name: project_id
+          type: string
+          in: path
+          required: true
+        - name: requestbody
+          in: body
+          schema:
+            type: object
+            properties:
+              task_id:
+                type: string
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/task_response'
+    get:
+      summary: List Tasks assigned to a Project.
+      description: >
+        We will have a list of tasks in our platform that can be used by
+        WorkStreams.
+
+        However, not all tasks are applicable to all WorkStreams. So, we need a
+        mechanism to
+
+        associate those applicable tasks to each WorkStreams.
+
+        For that, we have an API to return all the tasks associated with a
+        WorkStream.<br>
+      tags:
+        - Tasks
+      parameters:
+        - name: project_id
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/task_response'
+  /open_shift_requests:
+    post:
+      summary: Create an Open Shift Request
+      description: >
+        <b><i>App Name: Calendar
+        </b>https://calendar.cloudfactory.com</i><br><br>
+
+        Create Open Shift Request based on the provided parameters<br><br>
+
+        <b> Possible errors</b> <br>
+
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> Code
+          <tr>
+            <td> invalid project_id
+            <td>"project_id" must be a valid project id
+            <td>422
+          <tr>
+            <td> end_time is in the past
+            <td> "end_time" must be in present or in future
+            <td> 422
+          <tr>
+            <td> end_time is before start_time
+            <td> "end_time" must be greater than or equal to start_time
+            <td> 422
+          <tr>
+            <td> requested_hours is greater than 99999
+            <td> "requested_hours" must be an integer between 0 and 100K
+            <td> 422
+        </table>
+      tags:
+        - Open Shift Requests
+      parameters:
+        - name: open_shift_request_body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/open_shift_request_create_body'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/open_shift_request_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+    get:
+      summary: List Open Shift Requests
+      description: >-
+        Lists all the Open Shift Requests based on the provided filter
+        parameters
+      tags:
+        - Open Shift Requests
+      parameters:
+        - name: time_min
+          in: query
+          description: Datetime that is before or on the end date of the open shift request
+          type: string
+          format: date-time
+        - name: time_max
+          in: query
+          description: Datetime that is after the start date of the open shift request
+          type: string
+          format: date-time
+        - name: project_id
+          in: query
+          description: A valid project id
+          type: string
+        - name: overage
+          in: query
+          description: >-
+            A boolean value to denote whether the request is from client or the
+            from internal team
+          type: boolean
+      responses:
+        '200':
+          description: Successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/open_shift_request_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+  '/open_shift_requests/{id}':
+    get:
+      summary: Get an Open Shift Request
+      description: >
+        The API returns a json representation of an Open Shift Request
+        identified by the provided id<br>
+      tags:
+        - Open Shift Requests
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          description: ID of open shift request
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/open_shift_request_response'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+    put:
+      summary: Update an Open Shift Request
+      description: |
+        <b> Note:</b> Supports partial update<br><br>
+        <b> Validations</b><br>
+        <b> When there are no associated open shifts</b>
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> Code
+          <tr>
+            <td> invalid project_id
+            <td> "project_id" must be a valid project id
+            <td> 422
+          <tr>
+            <td> end_time is in the past
+            <td> "end_time" must be in present or in future
+            <td> 422
+          <tr>
+            <td> end_time is before start_time
+            <td> "end_time" must be greater than or equal to start_time
+            <td> 422
+          <tr>
+            <td> requested_hours is greater than 99999
+            <td> "requested_hours" must be an integer between 0 and 100K
+            <td> 422
+        </table>
+
+        <b> When there are associated open shifts</b>
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> Code
+          <tr>
+            <td> start_time is passed
+            <td> "start_time" cannot be updated for open shift request having open shifts
+            <td> 422
+          <tr>
+            <td> project_id is passed
+            <td> "project_id" cannot be updated for open shift request having open shifts
+            <td> 422
+          <tr>
+            <td> overage is passed
+            <td> "overage" cannot be updated for open shift request having open shifts
+            <td> 422
+          <tr>
+            <td> end_time is reduced
+            <td> "end_time" cannot be reduced for open shift request having open shifts
+            <td> 422
+          <tr>
+            <td> requested_hours is decreased
+            <td> "requested_hours" cannot be decreased for open shift request having open shifts
+            <td> 422
+        </table>
+      tags:
+        - Open Shift Requests
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          description: ID of open shift request
+        - name: open_shift_request_body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/open_shift_request_update_body'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/open_shift_request_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+    delete:
+      summary: Delete an Open Shift Request
+      tags:
+        - Open Shift Requests
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          description: ID of open shift request
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Open Shift Request not found
+          schema:
+            $ref: '#/definitions/errormodel'
+  /open_shifts:
+    post:
+      summary: Create an Open Shift
+      description: >
+        <h3><span style="color:#0088bb"> POST /api/v1/open_shifts
+        </span></h3><hr>
+
+        This API allows you to create an open shift for an open shift request.
+        <br><br>
+
+        <b><i> App Name: Calendar </b>https://calendar.cloudfactory.com
+        </i><br><br>
+
+        <b> Possible Errors </b><br>
+          <table>
+            <tr>
+              <th> Error </th>
+              <th> Message </th>
+              <th> Code </th>
+            </tr>
+            <tr>
+              <td> schedule_date is in the past </td>
+              <td> schedule_date must be in the future </td>
+              <td> 422 </td>
+            </tr>
+            <tr>
+              <td> schedule_date not in the range of request </td>
+              <td> schedule_date must be within the range of request </td>
+              <td> 422 </td>
+            </tr>
+            <tr>
+              <td> created_at is after end_date of open shift request </td>
+              <td> open shift request is already closed </td>
+              <td> 422 </td>
+            </tr>
+            <tr>
+              <td> claim_deadline is after schedule_date </td>
+              <td> claim_deadline should be on or before the schedule_date </td>
+              <td> 422 </td>
+            </tr>
+            <tr>
+              <td> max_seats is greater than the total seats in the delivery hub in that particular date and slot </td>
+              <td> max_seats must be between 0 and the total seats in the delivery hub </td>
+              <td> 422 </td>
+            </tr>
+          </table>
+      tags:
+        - Open Shifts
+      parameters:
+        - name: request
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/open_shift_create_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/open_shift_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+    get:
+      summary: List Open Shifts
+      description: >-
+        <h3><span style="color:#0088bb"> GET /api/v1/open_shifts
+        </span></h3><hr> This API allows you to fetch the open shifts using
+        various filter parameters. <br><br>
+      tags:
+        - Open Shifts
+      parameters:
+        - name: project_id
+          in: query
+          required: false
+          type: string
+          description: A valid project id
+        - name: open_shift_request_id
+          in: query
+          required: false
+          type: string
+          description: A valid open shift request id
+        - name: status
+          in: query
+          required: false
+          type: string
+          description: Unpublished | Published | Closed
+        - name: time_min
+          in: query
+          type: string
+          required: false
+          format: date-time
+          description: Time min in UTC in ISO 8601 format
+        - name: time_max
+          in: query
+          type: string
+          required: false
+          format: date-time
+          description: Time max in UTC in ISO 8601 format
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/open_shift_list_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+  '/open_shifts/{id}':
+    get:
+      summary: Get an Open Shift
+      description: >-
+        <h3><span style="color:#0088bb"> GET /api/v1/open_shifts/:id
+        </span></h3><hr> This API allows you to fetch an open shift. <br><br>
+      tags:
+        - Open Shifts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/open_shift_response'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+    put:
+      summary: Update an Open Shift
+      description: >-
+        <h3><span style="color:#0088bb"> PUT /api/v1/open_shifts/:id
+        </span></h3><hr> This API allows you to update the attributes of an open
+        shift. <br><br> <table> <tr> <th> Error </th> <th> Message </th> <th>
+        Code </th> </tr> <tr> <td> delivery_hub_id </td> <td> delivery_hub_id
+        cannot be updated for open shifts having claims </td> <td> 422 </td>
+        </tr> <tr> <td> schedule_date </td> <td> schedule_date cannot be updated
+        for open shifts having claims </td> <td> 422 </td> </tr> <tr> <td>
+        slot_id </td> <td> slot_id cannot be updated for open shifts having
+        claims </td> <td> 422 </td> </tr> <tr> <td> claim_deadline </td> <td>
+        claim_deadline cannot be beyond open shift schedule date </td> <td> 422
+        </td> </tr> <tr> <td> claim_deadline </td> <td> claim_deadline cannot be
+        before the original claim deadline </td> <td> 422 </td> </tr> <tr> <td>
+        max_seats </td> <td> max_seats cannot be updated to value less than the
+        original value </td> <td> 422 </td> </tr> </table>
+      tags:
+        - Open Shifts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: request
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/open_shift_update_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/open_shift_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+    delete:
+      summary: Delete an Open Shift
+      description: >-
+        <h3><span style="color:#0088bb"> DELETE /api/v1/open_shifts/:id
+        </span></h3><hr> This API allows you to delete an open. <br><br> <b>
+        Possible Errors </b> <table> <tr> <th> Error </th> <th> Message </th>
+        <th> Code </th> </tr> <tr> <td> claims present for the open shift </td>
+        <td> cannot delete open shift which has claims </td> <td> 422 </td>
+        </tr> </table>
+      tags:
+        - Open Shifts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of open shift
+          type: string
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Open Shift not found
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: open_shift not found
+  '/open_shifts/{id}/claims':
+    post:
+      summary: Claim an Open Shift
+      description: >
+        <h3><span style="color:#0088bb"> POST
+        /api/v1/open_shifts/:open_shift_id/claims </span></h3><hr>
+
+        This API allows you to create a claim for an open shift. <br><br>
+
+        <b> Possible Errors </b><br>
+
+        <table>
+          <tr>
+            <th> Error </th>
+            <th> Message </th>
+            <th> Code </th>
+          </tr>
+          <tr>
+            <td> open_shift is closed </td>
+            <td> Cannot claim. Open shift has already been closed </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> deadline of open_shift is missed </td>
+            <td> Cannot claim. Deadline has already passed </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> seat not available in open_shift </td>
+            <td> Cannot claim. All open seats are taken </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+             <td> requested hours in open_shift_request already scheduled </td>
+             <td> Cannot claim. Requested hours have already been fulfilled </td>
+             <td> 422 </td>
+          </tr>
+          <tr>
+            <td> not enough seats available in delivery_hub </td>
+            <td> Cannot claim. Delivery hub doesn't have seats available during the slot </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> user already claimed for the same open shift </td>
+            <td> Cannot claim. User already claimed for the same open shift </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> user already scheduled for that same time period </td>
+            <td> Cannot claim. User already scheduled during the slot </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> user already scheduled for 12 hours on that day </td>
+            <td> Cannot claim. User already scheduled max 12 hours per day </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> user has an approed leave on the open_shift schedule date </td>
+            <td> Cannot claim. User has taken time off on the same slot of the day </td>
+            <td> 422 </td>
+          </tr>
+          <tr>
+            <td> user not assigned to the project </td>
+            <td> Cannot claim. User not assigned to the project </td>
+            <td> 422 </td>
+          </tr>
+        </table>
+      tags:
+        - Open Shifts
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          format: uid
+          description: id of open shift
+        - name: request
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/claim_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/claim_response'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/validation_error_response'
+  /schedules:
+    post:
+      summary: Create a Schedule
+      description: >
+        <h3><span style="color:#0088bb"> POST /api/v1/schedules </span></h3><hr>
+
+        This API allows you to schedule a user on a specific day of CloudFactory
+        slots for delivering the requested hours of work in a WorkStream by
+        creating a <span style="color:#1abc9c"><b>Schedule resource</b></span>.
+      tags:
+        - Schedules
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/schedule_create_request'
+      responses:
+        '201':
+          description: A single schedule is created.
+          schema:
+            $ref: '#/definitions/schedule_response'
+    get:
+      summary: List Schedules
+      tags:
+        - Schedules
+      parameters:
+        - name: time_min
+          in: query
+          type: string
+          required: true
+          format: date-time
+        - name: time_max
+          in: query
+          type: string
+          required: true
+          format: date-time
+        - name: user_id
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          format: array of strings
+        - name: delivery_hub_id
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          format: array of strings
+        - name: slot_id
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          format: array of strings
+        - name: open_shift_id
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          format: array of strings
+        - name: project_id
+          in: query
+          type: string
+          required: false
+        - name: status
+          in: query
+          type: string
+          required: false
+        - name: type
+          in: query
+          type: string
+          required: false
+        - name: overage
+          in: query
+          type: boolean
+          required: false
+        - name: reported
+          in: query
+          type: boolean
+          required: false
+        - name: premium_for_worker
+          in: query
+          type: boolean
+          required: false
+        - name: premium_for_client
+          in: query
+          type: boolean
+          required: false
+        - name: page
+          in: query
+          type: number
+          required: false
+        - name: per_page
+          in: query
+          type: number
+          required: false
+      responses:
+        '200':
+          description: An array of schedules
+          schema:
+            $ref: '#/definitions/schedule_list_response'
+  '/schedules/{id}':
+    put:
+      summary: Update a Schedule
+      description: >
+        <h3><span style="color:#0088bb"> PUT
+        /api/v1/schedules/:id</span></h3><hr>
+
+        This API allows you to update the properties of a specific schedule.<br>
+
+        <span style="color:#1abc9c">[New Release] New attributes available for
+        update:
+          <span style="font-family:consolas">premium_for_client</span> and
+          <span style="font-family:consolas">premium_for_worker</span>
+        </span>
+      tags:
+        - Schedules
+        - New Release
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          format: uid
+          description: id of schedule
+        - name: update_body
+          in: body
+          schema:
+            $ref: '#/definitions/schedule_update_request'
+      responses:
+        '200':
+          description: A single schedule
+          schema:
+            $ref: '#/definitions/schedule_response'
+    delete:
+      summary: Delete a Schedule
+      tags:
+        - Schedules
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          format: uid
+          description: id of schedule
+      responses:
+        '204':
+          description: No content
+    get:
+      summary: Get a Schedule
+      tags:
+        - Schedules
+      parameters:
+        - name: id
+          in: path
+          type: string
+          required: true
+          format: uid
+          description: id of schedule
+      responses:
+        '200':
+          description: A single schedule
+          schema:
+            $ref: '#/definitions/schedule_response'
+  /schedules/stats:
+    get:
+      summary: Total Scheduled hours API
+      tags:
+        - Schedules
+      parameters:
+        - name: time_min
+          in: query
+          type: string
+          required: true
+          format: date-time
+        - name: time_max
+          in: query
+          type: string
+          required: true
+          format: date-time
+        - name: user_id
+          in: query
+          type: string
+          required: false
+        - name: slot_id
+          in: query
+          type: string
+          required: false
+        - name: project_id
+          in: query
+          type: string
+          required: false
+        - name: status
+          in: query
+          type: string
+          required: false
+        - name: group_by
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          format: array of strings
+        - name: page
+          in: query
+          type: number
+          required: false
+        - name: per_page
+          in: query
+          type: number
+          required: false
+      responses:
+        '200':
+          description: An array of total scheduled hours
+          schema:
+            $ref: '#/definitions/total_scheduled_hours'
+  /search/users:
+    get:
+      summary: User Search
+      description: >
+        <h3><span style="color:#0088bb"> GET /api/v1/search/users </span></h3>
+        <br>
+
+        This API provides a method to search users by various parameters. <br>
+
+        Multiple fields and values <br>
+
+        <ol>
+          <li> Multiple fields are always AND-ed
+          <li> Multiple values of a field can be combined using operators explained in following section.
+        </ol>
+
+        <b> Logical Operators </b>
+
+        <table>
+          <tr>
+            <th> Name </th>
+            <th> Operator </th>
+            <th> Example </th>
+            <th> Description </th>
+          </tr>
+          <tr>
+            <td> AND </td>
+            <td> , </td>
+            <td> available_day=SUN,MON,TUE </td>
+            <td> Available on all three days </td>
+          </tr>
+          <tr>
+            <td> OR </td>
+            <td> || </td>
+            <td> available_day=SUN||MON||TUE </td>
+            <td> Available on either of three days </td>
+          </tr>
+          <tr>
+            <td>NOT</td>
+            <td> ! </td>
+            <td> available_day=!SUN </td>
+            <td> Not available on Sundays </td>
+          </tr>
+          <tr>
+            <td> GREATER THAN </td>
+            <td> > </td>
+            <td> weekly_commitment=>20 </td>
+            <td> weekly commitment is greater than 20 </td>
+          </tr>
+          <tr>
+            <td> LESS THAN </td>
+            <td> < </td>
+            <td> weekly_commitment=>=20 </td>
+            <td> weekly commitment is less than 20 </td>
+          </tr>
+          <tr>
+            <td> GREATER THAN OR EQUAL TO </td>
+            <td> >= </td>
+            <td> starting_date=>=2016-12-01 </td>
+            <td> Starting date is greater than or equal to december 1st, 2016 </td>
+          </tr>
+          <tr>
+            <td> LESS THAN OR EQUAL TO </td>
+            <td> <= </td>
+            <td> weekly_commitment=<=6 </td>
+            <td> weekly commitment is less than or equal to 6 </td>
+          </tr>
+          <tr>
+            <td> LIKE</td>
+            <td> ~ </td>
+            <td> name=~Somnath </td>
+            <td> Name is like Somnath </td>
+          </tr>
+        </table>
+
+        <br>
+
+        <b> Searchable fields </b> <br>
+
+        These are the list of fields that can be used to search Users <br>
+
+        <table>
+          <tr>
+            <th> Entity </th>
+            <th> Field Name </th>
+            <th> Sample values </th>
+            <th> Description </th>
+          </tr>
+          <tr>
+            <td rowspan="4"> Main Attributes </td>
+            <td> name </td>
+            <td> Ram <br> Ram||Shyam </td>
+            <td> Full Name of the User, using like query </td>
+          </tr>
+          <tr>
+            <td> country </td>
+            <td> Nepal <br> Nepal||Kenya </td>
+            <td> User’s country of residence </td>
+          </tr>
+          <tr>
+            <td> status </td>
+            <td> active <br> disabled||archived </td>
+            <td> The status of the User; that are active, disabled or archived </td>
+          </tr>
+          <tr>
+            <td> type </td>
+            <td> Core<br>Client||Worker </td>
+            <td> The type of the User; that are worker, core or client </td>
+          </tr>
+          <tr>
+            <td> Membership </td>
+            <td> project_id </td>
+            <td> Dihwd2d8437 <br> ioywefuyqwe,oinuew387 </td>
+            <td> The ids of the project, which the user is associated with </td>
+          </tr>
+          <tr>
+            <td rowspan="4"> Worker Attributes </td>
+            <td> starting_date </td>
+            <td> 2016-12-04 <br> <2016-11-01 </td>
+            <td> The starting/joined date of the worker. </td>
+          </tr>
+          <tr>
+            <td> employment_status </td>
+            <td> full time <br> part time </td>
+            <td> The status of a worker, if s/he is full time or part time </td>
+          </tr>
+          <tr>
+            <td> weekly_commitment </td>
+            <td> 20 <br> 20 || 40 </td>
+            <td> The number of hours a worker has agreed to work for. </td>
+          </tr>
+          <tr>
+            <td> primary_delivery_hub </td>
+            <td> ud243876 </td>
+            <td> The id of the delivery hub that has been set as primary for the worker </td>
+          </tr>
+          <tr>
+            <td rowspan="2"> Availability </td>
+            <td> available_day </td>
+            <td> SUN <br> MON||TUE </td>
+            <td> The day which the worker is available on </td>
+          </tr>
+          <tr>
+            <td> available_time </td>
+            <td> 10:45-12:45 <br> 10:45-12:45,12:45-14:45 </td>
+            <td> The time slots in which the worker is available. The start time and
+                 the end time of the  slot separated by a dash </td>
+          </tr>
+          <tr>
+            <td> Schedule </td>
+            <td> scheduled_time </td>
+            <td> 2016-10-02T10:00:00Z-2016-10-02T14:00:00Z <br>
+                 !2016-10-02T10:00:00Z-2016-10-02T14:00:00Z </td>
+            <td> The time range in which the worker has been scheduled to work on any project </td>
+          </tr>
+        </table>
+
+        <span style="color:#3d566f">*<i>New-Release</i></span>
+      tags:
+        - UserSearch
+      parameters:
+        - name: name
+          in: query
+          description: Search users having name similar to. eg- Ram Sharan
+          type: string
+        - name: type
+          in: query
+          description: >-
+            Search users having user type <i>client, worker and core</i>. <br>
+            eg- worker <br> eg- worker||client
+          type: string
+        - name: status
+          in: query
+          description: >
+            Search users based on their status <i> active, disabled or archived
+            </i>. <br>
+
+            eg- active <br>
+
+            eg- disabled||archived
+          type: string
+        - name: country
+          in: query
+          description: >-
+            Search users residing on some specific countries.<br> eg- US <br>
+            eg- Nepal||Kenya
+          type: string
+        - name: starting_date
+          in: query
+          description: >-
+            Search users who started working from a specific date. Primarily
+            applicable for users with type <i>worker</i>. <br> eg- 2016-12-04
+            <br> eg- <2016-11-01 <br> eg- 2017-01-04||>=2017-01-09
+          type: string
+        - name: available_day
+          in: query
+          description: >-
+            Search users based on their preferred days of availability in a
+            week. Primarily applicable for users with type <i>worker</i>. <br>
+            eg- SUN <br> eg- MON,TUE
+          type: string
+        - name: available_time
+          in: query
+          description: >-
+            Search users based on their preferred time of availability.
+            Primarily applicable for users with type <i>worker</i>. <br> eg-
+            10:45-12:45 <br> eg- 10:45-12:45,12:45-14:45
+          type: string
+        - name: project_id
+          in: query
+          description: >-
+            Search users associated with some specific projects.<br> eg-
+            bydnSFrBeQyAQx6bwSYR <br> eg-
+            bydnSFrBeQyAQx6bwSYR||qYytSYyYqiFSoYOFdMuM
+          type: string
+        - name: weekly_commitment
+          in: query
+          description: >-
+            Search users on basis of the hours commited to work. Primarily
+            applicable for users with type <i>worker</i>. <br> eg- !20 <br> eg-
+            20||40
+          type: integer
+        - name: employement_status
+          in: query
+          description: >-
+            Search users on basis of full time or part time employment.
+            Primarily applicable for users with type <i>worker</i>. <br> eg-
+            part_time
+          type: string
+        - name: primary_delivery_hub
+          in: query
+          description: >-
+            Search users on basis of some specific delivery hub id. Primarily
+            applicable for users with type <i>worker</i>. <br> eg-
+            VzKu93fIa45VZJpKhiq2
+          type: string
+        - name: scheduled_time
+          in: query
+          type: string
+          description: >-
+            Search users on basis of the time they have been scheduled for work.
+            Primarily applicable for users with type <i>worker</i>. <br> eg-
+            2016-10-02T10:00:00Z-2016-10-02T14:00:00Z <br> eg-
+            !2016-10-02T10:00:00Z-2016-10-02T14:00:00Z
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/user_response'
+  '/users/{user_id}/availabilities':
+    put:
+      summary: Create/Update availabilities
+      description: >-
+        <b> Description</b><br> The Core Services  provides a way to save
+        worker's availability.<br> <b>Motivation</b><br> In the UI, the workers
+        report their availability by themselves.<br>
+
+        <b> Notes</b><br>
+
+        1. Since all fields inside slots are required, not providing them would
+        generate validation error. We are following our standard validation
+        error format.
+
+        2. The core services  tracks available slots instead of unavailable
+        slots. The  UI might require the users to put in unavailable slots but
+        the UI will translate it to available slots when calling the API.
+
+        3. No need to support preferred slots and exceptions for the first
+        version. There is no validation for overlapping slots. However, system 
+        internally stores availability information correctly.
+
+        4.   The availability is  an integral part of worker sign-up process.
+        Therefore, it is unlikely that it would not be filled out. However, if
+        it is indeed not filled out, it should be assumed that the worker is not
+        available in a given slot. In other words, if a worker hasn't explicitly
+        mentioned that he or she is available in any given time slot, he or she
+        should be considered unavailable.
+      tags:
+        - Availabilities
+      parameters:
+        - name: user_id
+          in: path
+          description: id of users
+          required: true
+          type: string
+        - name: availability_body
+          in: body
+          schema:
+            $ref: '#/definitions/availability_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/availability_response'
+        '422':
+          description: Validation error
+          schema:
+            $ref: '#/definitions/st_val'
+  /delivery_hubs:
+    get:
+      summary: List delivery hubs
+      description: >
+        <b><i>App Name: Users</b>https://users.cloudfactory.com</i><br><br>
+
+        <h3><span style="color:#0088bb">GET
+        /api/v1/delivery_hubs</span></h3><hr>
+
+        This API allows you to fetch all the delivery_hubs that are available
+        for worker scheduling.<br><br>
+      tags:
+        - Delivery Hubs
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/delivery_hub_response'
+  '/delivery_hubs/{id}':
+    get:
+      summary: Get a delivery hub
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/delivery_hubs/:id</span></h3><hr>
+
+        This API allows you to fetch the details of a specific delivery_hub
+        resource.<br><br>
+      tags:
+        - Delivery Hubs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/delivery_hub_response'
+  '/delivery_hubs/{id}/capacity':
+    get:
+      summary: Get Delivery Hub capacity
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/delivery_hubs/:id/capacity</span></h3><hr>
+
+        This API allows you to get the capacity of a specific delivery_hub
+        capacity based some query parameters<br>
+      tags:
+        - Delivery Hubs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: id of the delivery_hub resource
+        - name: date
+          in: query
+          required: true
+          type: string
+          format: date
+          description: query delivery_hub capacity for this specific date
+        - name: slot_id
+          in: query
+          required: true
+          type: string
+          format: uuid
+          description: query delivery_hub capacity for this specific slot
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/delivery_hub_capacity_response'
+  /slots:
+    get:
+      summary: Lists Slots
+      tags:
+        - Slots
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/slot_response'
+  '/slots/{id}':
+    get:
+      summary: Get a Slot
+      description: >-
+        The workers work in shifts (or slots) in a delivery hub. The current
+        understanding is that all delivery hubs will use standard slots. The
+        slots are specified in GMT in the following section. <ol><li> 9:00 PM -
+        1:00 AM <li>1:00 AM - 5:00 AM <li>5:00 AM - 9:00 AM <li>9:00 AM - 1:00
+        PM <li>1:00 PM - 5:00 PM <li>5:00 PM - 9:00 PM  </ol> Whether or not a
+        particularity slot is available in a delivery hub depends on the
+        delivery hub. For example, 5:00 PM - 9:00 PM may not be available in CF
+        HQ.
+      tags:
+        - Slots
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: Id of slot
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/slot_response'
+  /time_entries:
+    post:
+      summary: Create a Time Entry
+      description: >
+        <h3><span style="color:#0088bb"> POST /api/v1/time_entries
+        </span></h3><hr>
+
+        This API allows you to track the time spent on delivering the requested
+        hours of work in a WorkStream by creating a <span
+        style="color:#1abc9c"><b>TimeEntry resource</b></span>.
+
+
+        <span style="color:#1abc9c"> [Pre Release] New custom attribute added in
+        the request body and response. </span>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/time_entry_create_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/time_entry_response'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/validation_error_response'
+    get:
+      summary: List Time Entries
+      description: >
+        <h3><span style="color:#0088bb"> GET /api/v1/time_entries
+        </span></h3><hr>
+
+        This API allows you to fetch all the time_entries that have been logged
+        except the ones
+
+        that are still in progress. <br><br>
+
+        <span style="color:#1abc9c">[Pre Release] New custom attribute added in
+        time entry in the response.</span>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: time_min
+          in: query
+          description: >-
+            Get time entries having end_datetime less than this date-time
+            parameter
+          type: string
+        - name: time_max
+          in: query
+          description: >-
+            Get time entries having start_datetime greater than this date-time
+            parameter
+          type: string
+        - name: user_id
+          in: query
+          description: Get time entries belonging to a particular user or users
+          type: array
+          items:
+            type: string
+        - name: delivery_hub_id
+          in: query
+          description: Get time entries belonging to a particular delivery hub or hubs
+          type: array
+          items:
+            type: string
+        - name: slot_id
+          in: query
+          description: Get time entries belonging to a particular slot or slots
+          type: array
+          items:
+            type: string
+        - name: task_id
+          in: query
+          description: Get time entries belonging to a particular task or tasks
+          type: array
+          items:
+            type: string
+        - name: project_id
+          in: query
+          description: Get time entries belonging to a particular project or projects
+          type: array
+          items:
+            type: string
+        - name: schedule_id
+          in: query
+          description: Get time entries belonging to a particular schedule or schedules
+          type: array
+          items:
+            type: string
+        - name: premium_for_client
+          in: query
+          description: Filter time entries as per the premium flag for clients
+          type: boolean
+        - name: premium_for_worker
+          in: query
+          description: Filter time entries as per the premium flag for workers
+          type: boolean
+        - name: overage
+          in: query
+          description: Filter time_entries as per the overage
+          type: boolean
+        - name: page
+          in: query
+          description: Get a specific page of the time entries list
+          type: number
+          minimum: 1
+          default: 1
+        - name: per_page
+          in: query
+          description: Get a specific number of items in a page of the time entries list
+          type: number
+          minimum: 1
+          maximum: 1000
+          default: 100
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/time_entry_response'
+  /time_entries/running:
+    get:
+      summary: List running Time Entries
+      description: >
+        <h3>
+          <span style="color:#1abc9c"> [Pre Release] New API </span><br>
+          <span style="color:#0088bb"> GET /api/v1/time_entries/running </span>
+        </h3><hr>
+
+        This API allows to fetch all currently running time entries and filter
+        them based on different parameters.
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: time_min
+          in: query
+          description: >-
+            Get running time entries having start_time less than this date-time
+            parameter
+          type: string
+        - name: time_max
+          in: query
+          description: >-
+            Get running time entries having start_time greater than this
+            date-time parameter
+          type: string
+        - name: user_id
+          in: query
+          description: Get running time entries belonging to a particular user or users
+          type: array
+          items:
+            type: string
+        - name: delivery_hub_id
+          in: query
+          description: >-
+            Get running time entries belonging to a particular delivery hub or
+            hubs
+          type: array
+          items:
+            type: string
+        - name: schedule_id
+          in: query
+          description: >-
+            Get running time entries belonging to a particular schedule or
+            schedules
+          type: array
+          items:
+            type: string
+        - name: slot_id
+          in: query
+          description: Get running time entries belonging to a particular slot or slots
+          type: array
+          items:
+            type: string
+        - name: task_id
+          in: query
+          description: Get running time entries belonging to a particular task or tasks
+          type: array
+          items:
+            type: string
+        - name: project_id
+          in: query
+          description: >-
+            Get running time entries belonging to a particular project or
+            projects
+          type: array
+          items:
+            type: string
+        - name: premium_for_client
+          in: query
+          description: Filter running time entries as per the premium flag for clients
+          type: boolean
+        - name: premium_for_worker
+          in: query
+          description: Filter running time entries as per the premium flag for workers
+          type: boolean
+        - name: overage
+          in: query
+          description: Filter running time_entries as per the overage
+          type: boolean
+        - name: page
+          in: query
+          description: Get a specific page of the time entries list
+          type: number
+          minimum: 1
+          default: 1
+        - name: per_page
+          in: query
+          description: Get a specific number of items in a page of the time entries list
+          type: number
+          minimum: 1
+          maximum: 1000
+          default: 100
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/running_time_entry_response'
+  '/time_entries/{id}':
+    put:
+      summary: Update a Time Entry
+      description: >
+        <h3><span style="color:#0088bb"> PUT /api/v1/time_entries/:id</span>
+        </h3><hr>
+         This API allows you to update the properties of a specific time entry resource.<br>
+        <span style="color:#1abc9c">[Pre Release] New custom attribute added in
+        the request body and response.</span><br>
+
+        <span style="color:#1abc9c">[Pre Release] New validations for a running
+        time entry.</span>
+
+
+        <h4> Validations </h4>
+
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> Code
+          </tr>
+          <tr>
+            <td> user does not exist
+            <td> must be a valid user id
+            <td> 422
+          </tr>
+          <tr>
+            <td> slot does not exist
+            <td> must be a valid slot id
+            <td> 422
+          </tr>
+          <tr>
+            <td> schedule does not exist
+            <td> must be a valid schedule id
+            <td> 422
+          </tr>
+          <tr>
+            <td> delivery hub does not exist
+            <td> must be a valid delivery hub id
+            <td> 422
+          </tr>
+          <tr>
+            <td> end_time is less than start_time
+            <td> end_time must be greater than or equal to start_time
+            <td> 422
+          </tr>
+        </table><br>
+
+        <h4><span style="color:#1abc9c">[Pre Release]</span> Validations for
+        running time entry </h4>
+
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> Code
+          </tr>
+          <tr>
+            <td> duration is passed in the request parameter for running time entry
+            <td> cannot update running time entry
+            <td> 422
+          </tr>
+          <tr>
+            <td> end_time is passed in the request parameter for running time entry
+            <td> cannot update running time entry
+            <td> 422
+          </tr>
+        </table>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/time_entry_update_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/time_entry_response'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/validation_error_response'
+    get:
+      summary: Get a Time Entry
+      description: >
+        <h3><span style="color:#0088bb"> GET /api/v1/time_entries/:id
+        </span></h3><hr>
+
+        This API allows you to fetch a specific time entry resource.
+
+
+        <span style="color:#1abc9c"> [Pre Release] New custom attribute added in
+        the response. </span>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/time_entry_response'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+    delete:
+      summary: Delete a Time Entry
+      description: >
+        <h3><span style="color:#0088bb">DELETE
+        /api/v1/time_entries/:id</span></h3><hr>
+
+        This API allows you to delete a specific time_entry resource.
+      tags:
+        - Time Entries
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+  '/users/{user_id}/time_entries/start':
+    post:
+      summary: Start a Time Entry
+      description: >
+        <h3><span style="color:#0088bb">POST
+        /api/v1/users/:user_id/time_entries/start</span></h3><hr>
+
+        This API allows you to track the time spent on delivering the requested
+        hours of work in a WorkStream.
+
+        You can start a timer by providing the minimum data needed for a
+        time_entry resource to be created.
+
+
+        <span style="color:#1abc9c"> [Pre Release] New custom attribute added in
+        the response. </span>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: body_start
+          in: body
+          schema:
+            $ref: '#/definitions/time_entry_start_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/time_entry_response'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/time_entry_start_error_response'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/validation_error_response'
+  '/users/{user_id}/time_entries/current':
+    get:
+      summary: Get currently running Time Entry
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/users/:user_id/time_entries/current</span></h3><hr>
+
+        This API allows you to fetch the currently running time_entry for a
+        specific user.
+
+
+        <span style="color:#1abc9c"> [Pre Release] New custom attribute added in
+        the response. </span>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/time_entry_response'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+  '/users/{user_id}/time_entries/stop':
+    put:
+      summary: Stop a Time Entry
+      description: >
+        <h3><span style="color:#0088bb">PUT
+        /api/v1/users/:user_id/time_entries/stop</span></h3><hr>
+
+        This API allows you to stop a running time_entry for a specific user.
+
+
+        <span style="color:#1abc9c"> [Pre Release] New custom attribute added in
+        the response. </span>
+      tags:
+        - Time Entries
+        - Pre Release
+      parameters:
+        - name: user_id
+          in: path
+          type: string
+          required: true
+        - name: request
+          in: body
+          schema:
+            type: object
+            properties:
+              end_time:
+                type: string
+                format: date-time
+                example: 2017-10-10T13:00:00.000Z
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/time_entry_response'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/resource_not_found'
+        '422':
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/time_entry_stop_error_response'
+  /time_entries/stats/total_hours:
+    get:
+      summary: Get total logged hours
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/time_entries/stats/total_hours</span></h3><hr>
+
+        This API provides aggregated data for the selected time_entries by
+        categorizing them into four sections namely -
+
+        <br>
+          1. Standard for client => sum of duration when premium_for_client = false
+        <br>
+          2. Standard for worker => sum of duration when premium_for_worker = false
+        <br>
+          3. Premium for client => sum of duration when premium_for_client = true
+        <br>
+          4. Premium for worker => sum of duration when premium_for_worker = true
+        <br>
+          5. Client.base => The sum of hours reported that are not marked as overage (overage is false).
+        <br>
+          6. Client.overage (client) => The sum of hours reported that are marked as overage (overage is true).
+        <br>
+          7. Worker.base => The sum of hours reported by worker by working on the regular shifts (based on the employment status with CF).
+        <br>
+          8. Worker.overage (worker) => The sum of hours reported by worker by working on the extra shifts.
+      tags:
+        - Time Entries
+      parameters:
+        - name: time_min
+          in: query
+          type: string
+          format: date-time
+          description: >-
+            Query stat for time entries having end_datetime less than this
+            date-time parameter
+        - name: time_max
+          in: query
+          type: string
+          format: date-time
+          description: >-
+            Query stat for time entries having start_datetime greater than this
+            date-time
+        - name: project_id
+          in: query
+          type: string
+          description: Get time entries belonging to a specific project resource
+        - name: task_id
+          in: query
+          type: string
+          description: Get time entries belonging to a specific task resource
+        - name: slot_id
+          in: query
+          type: string
+          description: Get time entries belonging to a specific slot resource
+        - name: user_id
+          in: query
+          type: string
+          description: Get time entries belonging to a specific user resource
+        - name: group_by
+          in: query
+          type: string
+          description: >-
+            Group the stat using one or more of date, task_id and/or slot_id
+            fields
+        - name: page
+          in: query
+          description: Get a specific page of the time entries list
+          type: number
+          minimum: 1
+          default: 1
+        - name: per_page
+          in: query
+          description: Get a specific number of items in a page of the time entries list
+          type: number
+          minimum: 1
+          maximum: 1000
+          default: 100
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/total_logged_hour'
+  /time_offs:
+    post:
+      summary: Create a time off
+      description: |
+        <h3><span style="color:#0088bb">POST /api/v1/time_offs</span></h3><hr>
+        This method allows users to create time off requests.<br> <br>
+        <b> Possible Errors </b> <br> <br>
+        <table>
+          <tr> <th> Field </th> <th>Message </th> <th> Code </th> </tr>
+          <tr>
+            <td> Incorrect or missing leave_type</td>
+            <td>must be "regular", "sick" or "emergency"</td> <td> 422 </td>
+          <tr>
+            <td> Incorrect or missing status </td>
+            <td>must be "pending", "approved" or "denied" </td> <td> 422 </td>
+          <tr>
+            <td> Time off spans over two years </td>
+            <td> time offs can not span two years </td> <td> 422 </td>
+        </table>
+      tags:
+        - Time Offs
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/create_timeoff_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/timeoff_response'
+    get:
+      summary: List time offs
+      description: >
+        <h3><span style="color:#0088bb">GET /api/v1/time_offs</span></h3><hr>
+
+        This API provides a list of time_offs as per the filter conditions
+        provided.
+
+        <br><br>
+      parameters:
+        - name: user_id
+          in: query
+          description: get time_offs belonging to a particular user
+          type: string
+          format: uuid
+        - name: time_min
+          in: query
+          description: get time_offs falling on this date-time paremeter upto current time
+          type: string
+          format: date-time
+        - name: time_max
+          in: query
+          description: >-
+            get time_offs falling on first time_off created date upto this
+            date-time paremeter
+          type: string
+          format: date-time
+        - name: status
+          in: query
+          description: get time_offs having a specific status
+          type: string
+        - name: projects
+          in: query
+          type: array
+          items:
+            type: string
+          required: false
+          format: array of valid project_id
+          description: get time_offs of users belonging to specific projects
+        - name: sort
+          in: query
+          description: >-
+            sort the list of time_offs as per one of start_date, end_date,
+            created_at or updated_at fields
+          type: string
+          default: created_at
+        - name: order
+          in: query
+          type: string
+          description: >-
+            order the list of time_offs in ascending (asc) or descending (desc)
+            order
+          default: desc
+        - name: page
+          in: query
+          description: get a specific page from the list of time_offs
+          type: integer
+          default: 1
+          minimum: 1
+        - name: per_page
+          in: query
+          description: get a specific item per_page
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 1000
+      tags:
+        - Time Offs
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/timeoff_response'
+  '/time_offs/{id}':
+    put:
+      summary: Update a time off
+      description: >
+        <h3><span style="color:#0088bb">PUT
+        /api/v1/time_offs/:id</span></h3><hr>
+      tags:
+        - Time Offs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: Id of the timeoff to be updated
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/update_timeoff_request'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/timeoff_response'
+  '/users/{user_id}/time_offs/stats':
+    get:
+      summary: Get time off stats for a user
+      description: >
+        <h3><span style="color:#0088bb">GET
+        /api/v1/users/:user_id/time_offs/stats</span></h3><hr>
+
+        This API provides the information about time_offs which includes:
+
+        <ol>
+          <li>how much time off a user has taken
+          <li>how much balance is remaining
+          <li>how much balance is carried forward from the previous year
+        </ol>
+      tags:
+        - Time Offs
+      parameters:
+        - name: user_id
+          type: string
+          description: Id of the user
+          in: path
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/timeoff_stat_response'
+  '/users/{id}':
+    get:
+      summary: Get a User
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: id of users
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/user_response'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/errormodel'
+    put:
+      description: >
+        <b> Note</b> <br>
+
+        Partial update is not available on the following attributes - <br> 
+        <i>address, client_attributes, worker_attributes,
+        custom_attributes</i><br>
+
+        All the sub-attributes needs to be sent with old values even when the
+        sub-attribute is not intended for update.<br>
+
+        If something is to be deleted, the value needs to be sent as null.
+
+
+        <br>
+
+        <b> Validations </b> <br>
+
+        <table>
+          <tr>
+            <th> Error
+            <th> Message
+            <th> HTTP status Code
+          <tr>
+            <td> invalid status
+            <td> must be one of active, disabled or archived
+            <td> 422 Unprocessable Entity
+      summary: |
+        Update a User
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: id of users
+          required: true
+          type: string
+        - name: update_body
+          in: body
+          schema:
+            $ref: '#/definitions/update_user_request'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/user_response'
+  '/users/email/{email}':
+    get:
+      summary: Get a user by email
+      description: >-
+        There could be several use cases where a user needs to be searched via
+        email instead of just id. One of them is- when a user is being added to
+        a project via email, it needs to be first verified whether that person
+        already exists or not. And, to do that, we need to search the user via
+        email.
+      tags:
+        - Users
+      parameters:
+        - name: email
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/user_response'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/errormodel'
+definitions:
+  calendar_request:
+    type: object
+    required:
+      - owner
+    properties:
+      name:
+        type: string
+        description: The name of the calendar. Optional. Max 100 Chars
+        example: Sample Calendar
+      description:
+        type: string
+        description: The calendar description. Optional. Max 500 chars
+        example: This is sample description
+      owner:
+        type: object
+        description: Contains information about the object that owns the calendar
+        properties:
+          type:
+            type: string
+            description: >-
+              The type of the object that owns the calendar. Currently, only
+              "project" can own a calendar. In the future "user", or "resources"
+              may also own a calendar
+            example: project
+          id:
+            type: string
+            description: The id that uniquely identifies the owner
+            example: Iwizlw8bIYorPEuFzxHE
+  calendar_response:
+    type: object
+    properties:
+      id:
+        type: string
+        description: id of calendar
+        example: Iwizlw8bIYorPEuFzxHE
+      name:
+        type: string
+        description: The name of the calendar. Optional. Max 100 Chars
+        example: Sample Calendar
+      description:
+        type: string
+        description: The calendar description. Optional. Max 500 chars
+        example: This is sample description
+      owner:
+        type: object
+        description: Contains information about the object that owns the calendar
+        properties:
+          type:
+            type: string
+            description: >-
+              The type of the object that owns the calendar. Currently, only
+              "project" can own a calendar. In the future "user", or "resources"
+              may also own a calendar
+            example: project
+          id:
+            type: string
+            description: The id that uniquely identifies the owner
+            example: Iwizlw8bIYorPEuFzxHE
+  eventbody:
+    type: object
+    required:
+      - start_time
+      - end_time
+      - resources
+    properties:
+      name:
+        type: string
+        description: Name of event
+        example: Event X
+      description:
+        type: string
+        description: Description of event
+        example: This is sample description
+      start_time:
+        type: string
+        format: date-time
+        description: Start time of event according to  ISO 8601 standard
+      end_time:
+        type: string
+        format: date-time
+        description: End time of event according to  ISO 8601 standard
+      status:
+        type: string
+        example: unpublished
+        description: Value can be published or unpublished
+      custom_attributes:
+        type: array
+        description: Custom attributes for events. The attributes are dynamic
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+      resources:
+        type: array
+        items:
+          type: object
+          required:
+            - type
+            - id
+          properties:
+            type:
+              type: string
+              description: >-
+                This parameter stores type of resources. For now the type of
+                resoure is user
+              example: user
+            id:
+              type: string
+              description: Id that uniquely identifies the resource type
+              example: Iwizlw8bIYorPEuFzxHE
+            response_status:
+              type: string
+              description: >-
+                Response status can be accepted or denied. For now the default
+                value id accepted
+              example: accepted
+  geteventresponse:
+    type: object
+    properties:
+      id:
+        type: string
+        description: id of event
+        example: Iwizlw8bIYorPEuFzxHE
+      created:
+        type: string
+        format: date-time
+        description: Created date of event according to  ISO 8601 standard
+      updated:
+        type: string
+        format: date-time
+        description: Updated date of event according to  ISO 8601 standard
+      name:
+        type: string
+        description: Name of event
+        example: EventA
+      description:
+        type: string
+        description: Description of event
+        example: This is sample description
+      start_time:
+        type: string
+        format: date-time
+        description: Start time of event according to  ISO 8601 standard
+      end_time:
+        type: string
+        format: date-time
+        description: End time of event according to  ISO 8601 standard
+      status:
+        type: string
+        example: unpublished
+        description: Value can be published or unpublished
+      calendar_id:
+        type: string
+        description: id of calendar
+        example: Iwizlw8bIYorPEuFzxHE
+      custom_attributes:
+        type: array
+        description: Custom attributes for events
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+      resources:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              description: The type of resource. For now the type of resource is user
+              example: user
+            id:
+              type: string
+              description: Id that uniquely identifies the resource type
+              example: u8pP7CXH2jzykQFQExob
+            response_status:
+              type: string
+              example: accepted
+              description: >-
+                Response status can be accepted or denied. For now the default
+                value id accepted
+  room_create_request:
+    type: object
+    required:
+      - name
+      - customFields
+    properties:
+      name:
+        $ref: '#/definitions/RoomName'
+      description:
+        $ref: '#/definitions/RoomDescription'
+      topic:
+        $ref: '#/definitions/RoomTopic'
+      type:
+        $ref: '#/definitions/RoomType'
+      readOnly:
+        $ref: '#/definitions/RoomReadOnly'
+      customFields:
+        $ref: '#/definitions/RoomCustomFields'
+      archived:
+        $ref: '#/definitions/RoomArchive'
+  room_update_request:
+    type: object
+    required:
+      - name
+      - customFields
+    properties:
+      name:
+        $ref: '#/definitions/RoomName'
+      description:
+        $ref: '#/definitions/RoomDescription'
+      topic:
+        $ref: '#/definitions/RoomTopic'
+      type:
+        $ref: '#/definitions/RoomType'
+      readOnly:
+        $ref: '#/definitions/RoomReadOnly'
+      customFields:
+        $ref: '#/definitions/RoomCustomFields'
+      archived:
+        $ref: '#/definitions/RoomArchive'
+  room_create_response:
+    type: object
+    properties:
+      room:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: ByehQjC44FwMeiLbX
+          name:
+            type: string
+            example: CloudFactory Discovery
+          msgs:
+            type: integer
+            example: 0
+          u:
+            type: object
+            properties:
+              _id:
+                type: string
+                example: aobEdbYhXfu5hkeqG
+              username:
+                type: string
+                example: kylie
+          customFields:
+            type: object
+            properties:
+              scope:
+                type: string
+                example:
+                  - user
+              projectId:
+                type: string
+                example: NfO7bTGgM0gQrezv9CBT
+          ts:
+            type: string
+            format: date-time
+          sysMes:
+            type: boolean
+            example: true
+          _updatedAt:
+            type: string
+            format: date-time
+          meta:
+            type: object
+            properties:
+              revision:
+                type: integer
+                example: 5
+              created_at:
+                type: integer
+                example: 14938970000016
+              version:
+                type: integer
+                example: 0
+              updated:
+                type: integer
+                example: 1493897000153
+          $loki:
+            type: integer
+            example: 404
+          usernames:
+            type: string
+            description: Name
+            example:
+              - Katherine Piers
+              - Bonnie Bennet
+          topic:
+            type: string
+            example: Customer and CloudFactory Communication
+          description:
+            type: string
+            example: Internal Channel
+          archived:
+            type: boolean
+            example: false
+          readOnly:
+            type: boolean
+            example: true
+          type:
+            type: string
+            description: 'Type of room. Either public {c} or private {p}'
+            example: c
+      success:
+        type: boolean
+      statusCode:
+        type: integer
+        example: 201
+  room_update_response:
+    type: object
+    properties:
+      room:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: ACehQjC44FwDFKLbX
+          name:
+            type: string
+            description: CloudFactory Discovery
+            example: CloudFactory Discovery
+          msgs:
+            type: integer
+            example: 0
+          u:
+            type: object
+            properties:
+              _id:
+                type: string
+                example: tTAibfAzxAhM4PnJ5
+              username:
+                type: string
+                example: philip.tester
+          customFields:
+            type: object
+            properties:
+              scope:
+                type: string
+                example:
+                  - 'cfteam, user'
+              projectId:
+                type: string
+                example: fOwSA3pUZJkh1h7RBXW9
+          ts:
+            type: string
+            format: date-time
+          sysMes:
+            type: boolean
+            example: true
+          _updatedAt:
+            type: string
+            format: date-time
+          archived:
+            type: string
+            example: true
+          meta:
+            type: object
+            properties:
+              revision:
+                type: integer
+                example: 5
+              created_at:
+                type: integer
+                example: 14938970000016
+              version:
+                type: integer
+                example: 0
+              updated:
+                type: integer
+                example: 1493897000153
+          $loki:
+            type: integer
+            example: 914
+          usernames:
+            type: string
+            description: Name
+            example:
+              - Katherine Piers
+              - Bonnie Bennet
+          topic:
+            type: string
+            example: Customer and CloudFactory Communication
+          description:
+            type: string
+            example: Internal Channel
+          readOnly:
+            type: boolean
+            example: true
+          type:
+            type: string
+            example: c
+      success:
+        type: boolean
+        example: true
+      statusCode:
+        type: integer
+        example: 200
+  room:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: ByehQjC44FwMeiLbX
+      name:
+        type: string
+        example: blackrock-discovery
+      msgs:
+        type: boolean
+        example: 0
+      u:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: aobEdbYhXfu5hkeqG
+          username:
+            type: string
+            example: philip.tester
+      customFields:
+        type: object
+        properties:
+          scope:
+            type: string
+            example:
+              - cfteam
+              - user
+          projectId:
+            type: string
+            example: fOwSA3pUZJkh1h7RBXW9
+      ts:
+        type: string
+        format: date-time
+      sysMes:
+        type: boolean
+        example: true
+      _updatedAt:
+        type: string
+        format: date-time
+      topic:
+        type: string
+        example: Customer and CloudFactory Communication
+      description:
+        type: string
+        example: Internal Channel
+      archived:
+        type: boolean
+        example: false
+      meta:
+        type: object
+        properties:
+          revision:
+            type: integer
+            example: 5
+          created_at:
+            type: integer
+            example: 14938970000016
+          version:
+            type: integer
+            example: 0
+      $loki:
+        type: integer
+        example: 915
+      usernames:
+        type: array
+        minLength: 0
+        items:
+          type: string
+          example: Aaron.Ford
+      readOnly:
+        type: boolean
+        example: false
+      type:
+        type: string
+        example: c
+  rooms:
+    type: object
+    properties:
+      rooms:
+        type: array
+        items:
+          $ref: '#/definitions/room'
+      success:
+        type: boolean
+        example: true
+      statusCode:
+        type: integer
+        example: 200
+  room_detail:
+    type: object
+    properties:
+      room:
+        $ref: '#/definitions/room'
+      success:
+        type: boolean
+        example: true
+      statusCode:
+        type: integer
+        example: 200
+  join_room_request:
+    type: object
+    properties:
+      userId:
+        type: string
+        description: Id of the User
+        example: y6TA5mHs93aDChMWu
+  join_room_response:
+    type: object
+    properties:
+      userId:
+        type: string
+        example: y6TA5mHs93aDChMWu
+      room:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: aySoEpmcnRrBQypf4
+          name:
+            type: string
+            example: CloudFactory1484885718643
+          msgs:
+            type: boolean
+            example: 4
+          u:
+            type: object
+            properties:
+              _id:
+                type: string
+                example: knQx65DQLKMpXazop
+              username:
+                type: string
+                example: cf.admin
+          customFields:
+            type: object
+            properties:
+              projectId:
+                type: string
+                example: fOwSA3pUZJkh1h7RBXW9
+          ts:
+            type: string
+            format: date-time
+          sysMes:
+            type: boolean
+            example: true
+          _updatedAt:
+            type: string
+            format: date-time
+          archived:
+            type: boolean
+            example: false
+          topic:
+            type: string
+            example: Rocket Fly
+          description:
+            type: string
+            example: >-
+              The most exciting thing you can possibly do on Earth is to get
+              away from it; jump in a rocket and blast into space!
+          meta:
+            type: object
+            properties:
+              revision:
+                type: integer
+                example: 5
+              created_at:
+                type: integer
+                example: 14938970000016
+              version:
+                type: integer
+                example: 0
+          $loki:
+            type: integer
+            example: 915
+          usernames:
+            type: string
+            example:
+              - katherine.piers
+              - bonnie.bennet
+              - cf.admin
+          readOnly:
+            type: boolean
+            example: false
+          type:
+            type: string
+            example: p
+          userId:
+            type: string
+            example: y6TA5mHs93aDChMWu
+          success:
+            type: boolean
+            example: true
+  join_rooms_request:
+    type: object
+    required:
+      - userId
+      - scope
+      - projectId
+    properties:
+      userId:
+        type: string
+        description: Id of the user
+        example: y6TA5mHs93aDChMWu
+      scope:
+        type: string
+        example: client
+        description: |
+          client | user | cfteam
+      projectId:
+        type: string
+        example: NfO7bTGgM0gQrezv9CBT
+        description: Id of the Project
+  UserId:
+    type: string
+    description: User id from channels
+    example: y6TA5mHs93aDChMWu
+  MemberScope:
+    type: string
+    example: user
+  Joined:
+    type: string
+    example:
+      - aoWDDbYhXfu5hk23G
+      - dEFTaHms93aDChMWu
+  FailedId:
+    type: string
+    example:
+      - dEFTaHms93aDChMWu
+  Success:
+    type: boolean
+    example: true
+  join_rooms_response:
+    type: object
+    properties:
+      userId:
+        $ref: '#/definitions/UserId'
+      scope:
+        $ref: '#/definitions/MemberScope'
+      joined:
+        $ref: '#/definitions/Joined'
+      failed:
+        type: string
+        example: []
+      message:
+        type: string
+        example: Successfully added y6TA5mHs93aDChMWu to rooms
+      success:
+        $ref: '#/definitions/Success'
+      statusCode:
+        type: integer
+        example: 200
+  get_rooms_by_scope_response:
+    type: object
+    properties:
+      user:
+        type: string
+        example: RE4vKJn3sueMkxLSP
+      client:
+        type: string
+        example:
+          - RE4vKJn3sueMkxLSP
+          - QHLoAg67CpxXYxKBd
+      cfteam:
+        type: string
+        example:
+          - RE4vKJn3sueMkxLSP
+          - QHLoAg67CpxXYxKBd
+      projectId:
+        type: string
+        example: nktmrnktmrnktmr
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  remove_from_rooms_request:
+    type: object
+    required:
+      - userId
+      - projectId
+    properties:
+      userId:
+        type: string
+        example: y6TA5mHs93aDChMWu
+        description: Id of the user in channels
+      projectId:
+        type: string
+        example: nKtMrNkTmRnKtMr
+        description: Id of the project
+  remove_from_rooms_response:
+    type: object
+    properties:
+      userId:
+        type: string
+        example: y6TA5mHs93aDChMWu
+      projectId:
+        type: string
+        example: nKtMrNkTmRnKtMr
+      removed:
+        type: string
+        example:
+          - RE4vKJn3sueMkxLSP
+          - QHLoAg67CpxXYxKBd
+      failed:
+        type: string
+        example: []
+      message:
+        type: string
+        example: Successfully removed fn8BFNdRh73hY8rCM from rooms
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  remove_from_a_room_request:
+    type: object
+    required:
+      - userId
+    properties:
+      userId:
+        type: string
+        description: Id of user in channels
+        example: fn8BFNdRh73hY8rCM
+  remove_from_a_room_response:
+    type: object
+    properties:
+      userId:
+        type: string
+        example: fn8BFNdRh73hY8rCM
+      room:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: QHLoAg67CpxXYxKBd
+          name:
+            type: string
+            example: FirstRoom
+          msgs:
+            type: integer
+            example: 6
+          u:
+            type: object
+            properties:
+              _id:
+                type: string
+                example: ZgnFReaoSTX66ykHg
+              username:
+                type: string
+                example: Channels.Bot
+          ts:
+            type: string
+            format: date-time
+          sysMes:
+            type: boolean
+            example: true
+          _updatedAt:
+            type: string
+            format: date-time
+          topic:
+            type: string
+            example: Nuts and Bolts
+          description:
+            type: string
+            example: Customer and CloudFactory Communication
+          archived:
+            type: boolean
+            example: true
+          meta:
+            type: object
+            properties:
+              revision:
+                type: integer
+                example: 6
+              created:
+                type: integer
+                example: 1492709309284
+              version:
+                type: integer
+                example: 0
+              updated:
+                type: integer
+                example: 1492709313308
+          $loki:
+            type: integer
+            example: 914
+          usernames:
+            type: string
+            example: Channels.Bot
+          readOnly:
+            type: boolean
+            example: false
+          type:
+            type: string
+            example: c
+          customFields:
+            type: object
+            properties:
+              scope:
+                type: string
+                example:
+                  - client
+                  - cfteam
+              projectId:
+                type: string
+                example: nKtMrNkTmRnKtMr
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  find_user_response:
+    type: object
+    properties:
+      user:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: QHLoAg67CpxXYxKBd
+          createdAt:
+            type: string
+            format: date-time
+          avatarOrigin:
+            type: string
+            example: none
+          name:
+            type: string
+            example: Bonnie
+          username:
+            type: string
+            example: Bonnie.Bennet
+          emails:
+            type: object
+            properties:
+              address:
+                type: string
+                example: bonnie@cloudfactory.com
+              verified:
+                type: boolean
+                example: true
+          status:
+            type: string
+            example: online
+          statusDefault:
+            type: string
+            example: online
+          utcOffset:
+            type: integer
+            example: 0
+          active:
+            type: boolean
+            example: true
+          type:
+            type: string
+            example: user
+          roles:
+            type: string
+            example:
+              - admin
+          _updatedAt:
+            type: string
+            format: date-time
+          meta:
+            type: object
+            properties:
+              revision:
+                type: integer
+                example: 6
+              created:
+                type: integer
+                example: 1492709309284
+              version:
+                type: integer
+                example: 0
+              updated:
+                type: string
+                example: date-time
+          $loki:
+            type: integer
+            example: 914
+          services:
+            type: object
+            properties:
+              password:
+                type: object
+                properties:
+                  bcrypt:
+                    type: string
+                    example: >-
+                      $2a$10$OHs924MXX/oSjH/.uZXI8OBOtuyp71HB9oeMLMbHlRBTt0Z8wj7AO
+              resume:
+                type: object
+                properties:
+                  loginTokens:
+                    type: string
+                    example: []
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  get_username_response:
+    type: object
+    properties:
+      username:
+        type: string
+        example: sneha1
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  get_room_name_response:
+    type: object
+    properties:
+      roomName:
+        type: string
+        example: microsoft-discovery
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  update_user_avatar_request:
+    type: object
+    required:
+      - userId
+      - avatarUrl
+    properties:
+      userId:
+        type: string
+        example: JRacCyM4gdrknaWy7
+        description: Id of the user
+      avatarUrl:
+        type: string
+        example: >-
+          https://s-media-cache-ak0.pinimg.com/736x/9d/0e/a4/9d0ea426351bdfc79043fcd113738def.jpg
+        description: Url
+  update_user_avatar_response:
+    type: object
+    properties:
+      roomName:
+        type: string
+        example: roomName
+      statusCode:
+        type: integer
+        example: 200
+      success:
+        type: boolean
+        example: true
+  RoomName:
+    type: string
+    description: Room name
+    example: authentix-discovery
+  RoomDescription:
+    type: string
+    description: Room description
+    example: Discovery level information between customer and CloudFactory team
+  RoomTopic:
+    type: string
+    description: Room Topic
+    example: Customer and CloudFactory communication
+  RoomType:
+    type: string
+    description: 'Type of room. Either public {c} or private {p}'
+    example: c
+  RoomReadOnly:
+    type: boolean
+    description: true | false
+    example: true
+  RoomCustomFields:
+    type: object
+    properties:
+      scope:
+        type: string
+        description: |
+          user | client | cfteam
+        example:
+          - client
+          - user
+      projectId:
+        type: string
+        description: id of the Project
+        example: NfO7bTGgM0gQrezv9CBT
+  RoomArchive:
+    type: boolean
+    description: true | false
+    example: false
+  crmhub:
+    type: object
+    properties:
+      firstname:
+        type: string
+        example: Sagun
+      lastname:
+        type: string
+        example: Khanal
+      email:
+        type: string
+        example: sagun@cf.com
+      hs_context:
+        type: string
+        example:
+          '\"hutk\":\"4a878f8055cc7c2ae204b5d83a8c515\"': null
+          '\"ipAddress\":\"192.168.2.12\"': null
+  Identifier:
+    type: string
+    description: Unique identifier for the created resource.
+    format: uuid
+    example: 6MJM2OeK2s2xisiRyAkZ
+  CustomAttributes:
+    type: array
+    description: >-
+      Free-end "array of objects" field to add extra attributes for the
+      resource.
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the key that is used to identify the custom attribute.
+          example: team-name
+        value:
+          type: string
+          description: Value for the key that is used to identify the custom attribute.
+          example: core_services
+  CreatedAt:
+    type: string
+    format: date-time
+    description: TimeStamp when the resource was created.
+    example: 2017-04-05T17:19:04.000Z
+  UpdatedAt:
+    type: string
+    format: date-time
+    description: TimeStamp when the resource was created.
+    example: 2017-04-05T17:19:04.000Z
+  member_request:
+    type: object
+    required:
+      - user_id
+    properties:
+      user_id:
+        type: string
+        description: User to be added. Needs to be a valid user id
+        example: 6MJM2OeK2s2xisiRyAkZ
+      scope:
+        type: string
+        description: The role/title of the user in the project. This parameter is optional
+        example: team leader
+  member_response:
+    type: object
+    properties:
+      user_id:
+        type: string
+        description: id of user
+        example: 6MJM2OeK2s2xisiRyAkZ
+      project_id:
+        type: string
+        description: id of project
+        example: 6MJM2OeQW2s2xisiRyAkZ
+      scope:
+        type: string
+        description: The role/title of the user in the project.
+        example: team leader
+      created_at:
+        type: string
+        format: date-time
+        description: The date when the member was added to project
+      updated_at:
+        type: string
+        format: date-time
+        description: The date when member detail was updated
+      type:
+        type: string
+        description: 'The type of member ie.''worker'' , ''client'' or ''core'''
+        example: core
+  lists:
+    type: object
+    properties:
+      id:
+        type: string
+        description: id of calendar
+        example: Iwizlw8bIYorPEuFzxHE
+      name:
+        type: string
+        description: Name of calendar
+        example: Sample calendar
+      description:
+        type: string
+        description: Description of calendar
+        example: Sampe description of calendar
+      owner:
+        type: object
+        description: Contains information about the object that owns the calendar
+        properties:
+          type:
+            type: string
+            description: >-
+              The type of the object that owns the calendar. Currently, only
+              "project" can own a calendar. In the future "user", or "resources"
+              may also own a calendar
+            example: project
+          id:
+            type: string
+            description: The id that uniquely identifies the owner
+            example: Iwizlw8bIYorPEuFzxHE
+      primary:
+        type: boolean
+        description: Boolean value to store if the calendar is primary
+        example: true
+  milestone:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Identifier'
+      name:
+        $ref: '#/definitions/MilestonesName'
+      order:
+        $ref: '#/definitions/MilestonesOrder'
+      flow:
+        $ref: '#/definitions/MilestonesFlow'
+      no_flow:
+        $ref: '#/definitions/MilestonesNoFlow'
+  MilestonesName:
+    type: string
+    example: Assembling Data Squad
+    description: Name of the milestone.
+  MilestonesOrder:
+    type: string
+    example: 1
+    description: Denotes the progress of the milestone.
+  MilestonesFlow:
+    type: boolean
+    example: false
+    description: Determines whether the milestone is applicable for flow workstream type.
+  MilestonesNoFlow:
+    type: boolean
+    example: true'
+    description: >-
+      Determines whether the milestone is applicable for non-flow workstream
+      type.
+  project_create_request:
+    type: object
+    required:
+      - name
+      - subscription_type
+    properties:
+      name:
+        $ref: '#/definitions/ProjectsName'
+      description:
+        $ref: '#/definitions/ProjectsDescription'
+      start_date:
+        $ref: '#/definitions/ProjectsStartDate'
+      intended_start_date:
+        $ref: '#/definitions/ProjectsIntendedStartDate'
+      subscription_type:
+        $ref: '#/definitions/ProjectsSubscriptionType'
+      billable_unit:
+        $ref: '#/definitions/ProjectsBillableUnit'
+      workforce_model:
+        $ref: '#/definitions/ProjectsWorkforceModel'
+      ws_flow_enabled:
+        $ref: '#/definitions/ProjectsWSFlowEnabled'
+      ws_shield_enabled:
+        $ref: '#/definitions/ProjectsWSShieldEnabled'
+      payment_option:
+        $ref: '#/definitions/ProjectsPaymentOption'
+      tools:
+        $ref: '#/definitions/ProjectsTools'
+      channel:
+        $ref: '#/definitions/ProjectsChannel'
+      status:
+        $ref: '#/definitions/ProjectsStatus'
+      estimated_time_per_unit:
+        $ref: '#/definitions/ProjectsEstimatedTimePerUnit'
+      current_milestone:
+        $ref: '#/definitions/ProjectsCurrentMilestone'
+      custom_attributes:
+        $ref: '#/definitions/CustomAttributes'
+  project_update_request:
+    type: object
+    properties:
+      name:
+        $ref: '#/definitions/ProjectsName'
+      description:
+        $ref: '#/definitions/ProjectsDescription'
+      start_date:
+        $ref: '#/definitions/ProjectsStartDate'
+      intended_start_date:
+        $ref: '#/definitions/ProjectsIntendedStartDate'
+      subscription_type:
+        $ref: '#/definitions/ProjectsSubscriptionType'
+      billable_unit:
+        $ref: '#/definitions/ProjectsBillableUnit'
+      workforce_model:
+        $ref: '#/definitions/ProjectsWorkforceModel'
+      ws_flow_enabled:
+        $ref: '#/definitions/ProjectsWSFlowEnabled'
+      ws_shield_enabled:
+        $ref: '#/definitions/ProjectsWSShieldEnabled'
+      payment_option:
+        $ref: '#/definitions/ProjectsPaymentOption'
+      tools:
+        $ref: '#/definitions/ProjectsTools'
+      channel:
+        $ref: '#/definitions/ProjectsChannel'
+      status:
+        $ref: '#/definitions/ProjectsStatus'
+      estimated_time_per_unit:
+        $ref: '#/definitions/ProjectsEstimatedTimePerUnit'
+      current_milestone:
+        $ref: '#/definitions/ProjectsCurrentMilestone'
+      custom_attributes:
+        $ref: '#/definitions/CustomAttributes'
+  project:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Identifier'
+      name:
+        $ref: '#/definitions/ProjectsName'
+      description:
+        $ref: '#/definitions/ProjectsDescription'
+      start_date:
+        $ref: '#/definitions/ProjectsStartDate'
+      intended_start_date:
+        $ref: '#/definitions/ProjectsIntendedStartDate'
+      subscription_type:
+        $ref: '#/definitions/ProjectsSubscriptionType'
+      billable_unit:
+        $ref: '#/definitions/ProjectsBillableUnit'
+      workforce_model:
+        $ref: '#/definitions/ProjectsWorkforceModel'
+      ws_flow_enabled:
+        $ref: '#/definitions/ProjectsWSFlowEnabled'
+      ws_shield_enabled:
+        $ref: '#/definitions/ProjectsWSShieldEnabled'
+      payment_option:
+        $ref: '#/definitions/ProjectsPaymentOption'
+      tools:
+        $ref: '#/definitions/ProjectsTools'
+      channel:
+        $ref: '#/definitions/ProjectsChannel'
+      status:
+        $ref: '#/definitions/ProjectsStatus'
+      estimated_time_per_unit:
+        $ref: '#/definitions/ProjectsEstimatedTimePerUnit'
+      current_milestone:
+        $ref: '#/definitions/ProjectsCurrentMilestone'
+      custom_attributes:
+        $ref: '#/definitions/CustomAttributes'
+      created_at:
+        $ref: '#/definitions/CreatedAt'
+      updated_at:
+        $ref: '#/definitions/UpdatedAt'
+  project_including_milestone:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Identifier'
+      name:
+        $ref: '#/definitions/ProjectsName'
+      description:
+        $ref: '#/definitions/ProjectsDescription'
+      start_date:
+        $ref: '#/definitions/ProjectsStartDate'
+      intended_start_date:
+        $ref: '#/definitions/ProjectsIntendedStartDate'
+      subscription_type:
+        $ref: '#/definitions/ProjectsSubscriptionType'
+      billable_unit:
+        $ref: '#/definitions/ProjectsBillableUnit'
+      workforce_model:
+        $ref: '#/definitions/ProjectsWorkforceModel'
+      ws_flow_enabled:
+        $ref: '#/definitions/ProjectsWSFlowEnabled'
+      ws_shield_enabled:
+        $ref: '#/definitions/ProjectsWSShieldEnabled'
+      payment_option:
+        $ref: '#/definitions/ProjectsPaymentOption'
+      tools:
+        $ref: '#/definitions/ProjectsTools'
+      channel:
+        $ref: '#/definitions/ProjectsChannel'
+      status:
+        $ref: '#/definitions/ProjectsStatus'
+      estimated_time_per_unit:
+        $ref: '#/definitions/ProjectsEstimatedTimePerUnit'
+      current_milestone:
+        $ref: '#/definitions/ProjectsCurrentMilestone'
+      milestone:
+        type: object
+        properties:
+          id:
+            $ref: '#/definitions/Identifier'
+          name:
+            $ref: '#/definitions/MilestonesName'
+          order:
+            $ref: '#/definitions/MilestonesOrder'
+          flow:
+            $ref: '#/definitions/MilestonesFlow'
+          no_flow:
+            $ref: '#/definitions/MilestonesNoFlow'
+      custom_attributes:
+        $ref: '#/definitions/CustomAttributes'
+      created_at:
+        $ref: '#/definitions/CreatedAt'
+      updated_at:
+        $ref: '#/definitions/UpdatedAt'
+  ProjectsName:
+    type: string
+    description: The name of project being created.
+    example: Sample  Projects
+  ProjectsDescription:
+    type: string
+    description: Description about the project.
+    example: Transcribing old paperworks
+  ProjectsStartDate:
+    type: string
+    format: date-time
+    description: Start date of the project according to ISO 8601 standard.
+  ProjectsIntendedStartDate:
+    type: string
+    description: >-
+      Text field to capture the client's preferred start date during the initial
+      conversation.
+    example: A couple of weeks
+  ProjectsSubscriptionType:
+    type: string
+    description: >-
+      One of "monthly" or "flex_pass" subscriptions the client has subscribed
+      to.
+    example: monthly
+  ProjectsBillableUnit:
+    type: string
+    description: One of "hour" or "piece_Rate" unit defining how client will be charged.
+    example: hour
+  ProjectsWorkforceModel:
+    type: string
+    description: >-
+      One of "in-house" or "semi-distributed" workforce model selected for the
+      project.
+    example: in-house
+  ProjectsWSFlowEnabled:
+    type: boolean
+    description: Determines whether the project uses workstream flow.
+    example: true
+    default: false
+  ProjectsWSShieldEnabled:
+    type: boolean
+    description: Determines whether the project uses workstream shield.
+    example: true
+    default: false
+  ProjectsPaymentOption:
+    type: string
+    description: >-
+      One of "yearly", "monthly" or "one_time" payment option selected for the
+      project.
+    example: yearly
+  ProjectsTools:
+    type: string
+    description: >-
+      One of "client", "third_party" or "ws_flow" tools selected for processing
+      the project tasks.
+    example: client
+  ProjectsChannel:
+    type: string
+    description: >-
+      One of "api", "file_upload", "task_board" or "client_tools" selected for
+      receiving the project tasks.
+    example: api
+  ProjectsStatus:
+    type: string
+    description: One of "open" or "closed" status for a project.
+    example: open
+    default: open
+  ProjectsEstimatedTimePerUnit:
+    type: integer
+    description: Estimated number of seconds per unit. Applicable only for WorkStream Flow.
+    example: 200
+  ProjectsCurrentMilestone:
+    type: string
+    description: Milestone ID of the base subscription of the project.
+    example: kMJM2OeQW2s2xisiRyAkZ
+  subscription_request:
+    type: object
+    required:
+      - effective_from
+    properties:
+      name:
+        type: string
+        example: XYZ
+      sf_opportunity_id:
+        type: string
+        example: 456fgh
+      stage:
+        type: string
+        example: validation
+      effective_from:
+        type: string
+        format: date
+      effective_till:
+        type: string
+        format: date
+      monthly_units:
+        type: integer
+        example: 1300
+      monthly_price:
+        type: number
+        format: float
+        example: 200
+      monthly_hours:
+        type: number
+        format: float
+        example: 20
+      piece_rate:
+        type: number
+        format: float
+        example: 14
+      hourly_rate:
+        type: number
+        format: float
+        example: 12.5
+      flex_pass_units:
+        type: integer
+        example: 20
+      flex_pass_price:
+        type: number
+        format: float
+      flex_pass_hours:
+        type: number
+        format: float
+        example: 20
+  subscription_update_request:
+    type: object
+    properties:
+      name:
+        type: string
+        example: XYZ
+      sf_opportunity_id:
+        type: string
+        example: 456fgh
+      stage:
+        type: string
+        example: validation
+      effective_from:
+        type: string
+        format: date
+      effective_till:
+        type: string
+        format: date
+      monthly_units:
+        type: integer
+        example: 1300
+      monthly_price:
+        type: number
+        format: float
+        example: 200
+      monthly_hours:
+        type: number
+        format: float
+        example: 20
+      piece_rate:
+        type: number
+        format: float
+        example: 14
+      hourly_rate:
+        type: number
+        format: float
+        example: 12.5
+      flex_pass_units:
+        type: integer
+        example: 20
+      flex_pass_price:
+        type: number
+        format: float
+      flex_pass_hours:
+        type: number
+        format: float
+        example: 20
+  subscription_response:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 123xyz
+      name:
+        type: string
+        example: XYZ
+      sf_opportunity_id:
+        type: string
+        example: 123abc
+      base:
+        type: boolean
+        example: 'false'
+      stage:
+        type: string
+        example: validation
+      effective_from:
+        type: string
+        format: date
+      effective_till:
+        type: string
+        format: date
+      monthly_units:
+        type: integer
+        example: 10
+      monthly_price:
+        type: number
+        format: float
+        example: 200
+      monthly_hours:
+        type: number
+        format: float
+        example: 20
+      piece_rate:
+        type: number
+        format: float
+      hourly_rate:
+        type: number
+        format: float
+        example: 15
+      flex_pass_units:
+        type: integer
+        example: 20
+      flex_pass_price:
+        type: number
+        format: float
+        example: 16
+      flex_pass_hours:
+        type: number
+        format: float
+        example: 30
+      adjustments:
+        type: object
+        properties:
+          flex_pass_units:
+            type: integer
+            example: 11
+          flex_pass_hours:
+            type: number
+            format: float
+            example: 20
+          flex_pass_price:
+            type: number
+            format: float
+            example: 400
+          monthly_units:
+            type: integer
+            example: 17
+          monthly_price:
+            type: number
+            format: float
+            example: 30
+          monthly_hours:
+            type: number
+            format: float
+            example: 30
+          piece_rate:
+            type: number
+            format: float
+            example: 20
+          hourly_rate:
+            type: number
+            format: float
+            example: 20
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+  task_request:
+    type: object
+    required:
+      - name
+      - billable
+    properties:
+      name:
+        type: string
+        description: The name of the task. Max 200 Chars
+        example: Task A
+      billable:
+        type: boolean
+        description: Defines if the task is billable or not.
+        example: false
+  task_response:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 912414xyz
+      name:
+        type: string
+        example: Task A
+      billable:
+        type: boolean
+        example: false
+      created_at:
+        type: string
+        format: date-time
+        description: |
+          The created timestamp of the Task
+        example: '2017-05-01T08:54:14Z'
+      updated_at:
+        type: string
+        format: date-time
+        description: |
+          The updated timestamp of the Task
+        example: '2017-05-01T10:34:23Z'
+  OpenShiftSettings:
+    type: object
+    properties:
+      auto_approve:
+        type: boolean
+        description: |
+          true | false <br>
+        default: false
+      schedule_status:
+        type: string
+        description: |
+          unpublished | published <br>
+        default: published
+      schedule_type:
+        type: string
+        default: regular
+      schedule_break:
+        type: integer
+        description: |
+          In minutes
+        example: 30
+  OpenShiftCustomAttributes:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+  OpenShiftResponseProperties:
+    type: object
+    properties:
+      open_shift_request_id:
+        type: string
+        example: awqWEw8bIYorPEuFzxHE
+      project_id:
+        type: string
+        example: 123JM2OeK2s2xisiRyGd
+      delivery_hub_id:
+        type: string
+        example: is2JM2OeR5s2xisiRyGd5
+      slot_id:
+        type: string
+        example: 09qRgEwbbIYorPEuFzxHE
+      schedule_date:
+        type: string
+        format: date
+        example: '2017-03-14'
+      claim_deadline:
+        type: string
+        format: date-time
+        example: '2017-03-13T05:58:32Z'
+      start_time:
+        type: string
+        format: date-time
+        example: '2017-03-14T16:00:00Z'
+      end_time:
+        type: string
+        format: date-time
+        example: '2017-03-14T20:00:00Z'
+      max_seats:
+        type: integer
+        example: 40
+      open_hours:
+        type: number
+        format: float
+        description: Open hours is based on max_seats * (4 - schedule_break / 60)
+        example: 140
+      available_seats:
+        type: integer
+        description: Calculated based on max_seats minus total claims
+        example: 20
+      settings:
+        $ref: '#/definitions/OpenShiftSettings'
+      custom_attributes:
+        $ref: '#/definitions/OpenShiftCustomAttributes'
+      status:
+        type: string
+        example: unpublished
+      scheduled_hours:
+        type: number
+        description: Sum of scheduled_durations for each schedule
+        example: 40
+      reported_hours:
+        type: number
+        description: >-
+          Sum of all the reported duration of schedules. Reported hours will be
+          rounded up in 2 decimal places
+        example: 38.5
+      created_at:
+        type: string
+        example: '2017-03-10T05:58:36Z'
+      updated_at:
+        type: string
+        example: '2017-03-11T05:58:36Z'
+  open_shift_create_request:
+    type: object
+    required:
+      - open_shift_request_id
+      - delivery_hub_id
+      - slot_id
+      - claim_deadline
+      - schedule_date
+      - max_seats
+    properties:
+      open_shift_request_id:
+        type: string
+        description: A valid open shift request id
+      delivery_hub_id:
+        type: string
+        description: A valid delivery hub id
+      slot_id:
+        type: string
+        description: A valid slot id
+      schedule_date:
+        type: string
+        format: date
+        description: A valid UTC in ISO 8601 date
+      claim_deadline:
+        type: string
+        format: date-time
+        description: A valid UTC in ISO 8601 date format
+      max_seats:
+        type: integer
+        minimum: 1
+        maximum: 999
+        description: Between 0 and total seats in the delivery hub
+      settings:
+        $ref: '#/definitions/OpenShiftSettings'
+      custom_attributes:
+        $ref: '#/definitions/OpenShiftCustomAttributes'
+      status:
+        type: string
+        description: |
+          unpublished | published | closed <br>
+        default: unpublished
+  open_shift_update_request:
+    type: object
+    properties:
+      delivery_hub_id:
+        type: string
+        description: A valid delivery hub id
+      slot_id:
+        type: string
+        description: A valid slot id
+      schedule_date:
+        type: string
+        format: date
+        description: A valid  UTC in ISO 8601 date format
+      claim_deadline:
+        type: string
+        format: date-time
+        description: A valid  UTC in ISO 8601 date format
+      max_seats:
+        type: integer
+        minimum: 1
+        maximum: 999
+        description: Between 0 and total seats in the delivery hub
+      settings:
+        $ref: '#/definitions/OpenShiftSettings'
+      custom_attributes:
+        $ref: '#/definitions/OpenShiftCustomAttributes'
+      status:
+        type: string
+        description: |
+          unpublished | published | closed <br>
+  open_shift_response:
+    $ref: '#/definitions/OpenShiftResponseProperties'
+  open_shift_list_response:
+    type: array
+    items:
+      $ref: '#/definitions/OpenShiftResponseProperties'
+  claim_request:
+    type: object
+    required:
+      - user_id
+    properties:
+      user_id:
+        type: string
+        example: 1246614xyz
+  claim_response:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of claim
+        example: 6MJM2OeK2s2xisiRyAkZ
+      open_shift_id:
+        type: string
+        description: ID of open shift
+        example: t2JM2OeK2s2xisiRyGd5
+      user_id:
+        type: string
+        description: ID of open shift
+        example: 2xisiRyGd5s2xisiRyGd
+      status:
+        type: string
+        description: status of claim
+        example: claimed | approved | cancelled
+      created_at:
+        type: string
+        format: date-time
+        description: Timestamp of when the request was created in UTC in ISO 8601 format
+        example: '2017-02-24T10:15:00Z'
+      updated_at:
+        type: string
+        format: date-time
+        description: Timestamp of when the request was updated in UTC in ISO 8601 format
+        example: '2017-02-27T07:25:00Z'
+  open_shift_request_create_body:
+    type: object
+    required:
+      - project_id
+      - start_time
+      - end_time
+      - requested_hours
+      - overage
+    properties:
+      project_id:
+        type: string
+        description: A valid project id
+        example: bBOhSjxCIVKKzqgsOiQi
+      start_time:
+        type: string
+        format: date-time
+        description: Start time of the open shift request in UTC in ISO 8601 format
+      end_time:
+        type: string
+        format: date-time
+        description: End time of the open shift request in UTC in ISO 8601 format
+      requested_hours:
+        type: integer
+        example: 200
+        minimum: 1
+        maximum: 99999
+        description: Total hours requested
+      overage:
+        type: boolean
+        example: true
+        description: A flag denoting whether the schedules to be created are overage or not
+      notes:
+        type: string
+        example: We need extra hours to clear the backlog
+        description: Further information related to the open shift request
+  open_shift_request_update_body:
+    type: object
+    properties:
+      project_id:
+        type: string
+        description: A valid project id
+        example: bBOhSjxCIVKKzqgsOiQi
+      start_time:
+        type: string
+        format: date-time
+        description: Start time of the open shift request in UTC in ISO 8601 format
+      end_time:
+        type: string
+        format: date-time
+        description: End time of the open shift request in UTC in ISO 8601 format
+      requested_hours:
+        type: integer
+        example: 200
+        minimum: 1
+        maximum: 99999
+        description: Total hours requested
+      overage:
+        type: boolean
+        example: true
+        description: A flag denoting whether the schedules to be created are overage or not
+      notes:
+        type: string
+        example: We need extra hours to clear the backlog
+        description: Further information related to the open shift request
+  open_shift_request_response:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of open shift request
+        example: 6MJM2OeK2s2xisiRyAkZ
+      project_id:
+        type: string
+        description: ID of the project
+        example: t2JM2OeK2s2xisiRyGd5
+      start_time:
+        type: string
+        format: date-time
+        description: Start time of the open shift request in UTC in ISO 8601 format
+      end_time:
+        type: string
+        format: date-time
+        description: End time of the open shift request in UTC in ISO 8601 format
+      requested_hours:
+        type: number
+        description: Total hours requested
+        example: 100
+      overage:
+        type: boolean
+        description: A flag denoting whether the schedules to be created are overage or not
+        example: true
+      notes:
+        type: string
+        description: Further information related to the open shift request
+        example: Extra hours requested because of New year holidays
+      open_hours:
+        type: number
+        description: Sum of open hours from all the open shifts created within this request
+        example: 120
+      scheduled_hours:
+        type: number
+        description: Sum of hours of the schedules created via this open shift request
+        example: 80
+      reported_hours:
+        type: number
+        description: >-
+          Sum of the reported hours of all the open_shifts associated with this
+          open_shift_request
+        example: 50
+      created_at:
+        type: string
+        format: date-time
+        description: Timestamp of when the request was created in UTC in ISO 8601 format
+        example: '2017-02-24T10:15:00Z'
+      updated_at:
+        type: string
+        format: date-time
+        description: Timestamp of when the request was updated in UTC in ISO 8601 format
+        example: '2017-02-27T07:25:00Z'
+  schedule_create_request:
+    type: object
+    required:
+      - user_id
+      - project_id
+      - delivery_hub_id
+      - slot_id
+      - start_date
+    properties:
+      user_id:
+        type: string
+        format: uid
+        example: JtzxY8MejfbCzxvLxeMH
+      project_id:
+        type: string
+        format: uid
+        example: ApsHWmZQrVaK2TBhSOTi
+      delivery_hub_id:
+        type: string
+        format: uid
+        example: UhbUQ3eUFqQFSScTzqgG
+      slot_id:
+        type: string
+        format: uid
+        example: KpYwX97xuWmrE4zjvRZF
+      start_date:
+        type: string
+        format: date
+        example: '2016-08-29'
+      status:
+        type: string
+        default: unpublished
+      type:
+        type: string
+        default: regular
+      overage:
+        type: boolean
+        default: false
+      break:
+        type: integer
+        default: 0
+        description: In minutes
+      premium_for_client:
+        type: boolean
+        description: >
+          Mark a schedule as Premium or Standard for Client User.
+
+          Default value is calculated using day, slot and delivery hub
+          information.
+      premium_for_worker:
+        type: boolean
+        description: >
+          Mark a schedule as Premium or Standard for Worker User.
+
+          Default value is calculated using day, slot and delivery hub
+          information.
+      custom_attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+  schedule_update_request:
+    type: object
+    properties:
+      user_id:
+        type: string
+        format: uid
+        example: JtzxY8MejfbCzxvLxeMH
+      project_id:
+        type: string
+        format: uid
+        example: ApsHWmZQrVaK2TBhSOTi
+      delivery_hub_id:
+        type: string
+        format: uid
+        example: UhbUQ3eUFqQFSScTzqgG
+      slot_id:
+        type: string
+        format: uid
+        example: KpYwX97xuWmrE4zjvRZF
+      start_date:
+        type: string
+        format: date
+        example: '2016-08-29'
+      status:
+        type: string
+        default: unpublished
+      type:
+        type: string
+        default: regular
+      overage:
+        type: boolean
+        default: false
+      break:
+        type: integer
+        description: In minutes
+        default: 0
+      premium_for_client:
+        type: boolean
+        description: >
+          <span style="color:#1abc9c">[New Release]</span>
+
+          Mark a schedule as Premium or Standard for Client User.
+
+          Default value is calculated using day, slot and delivery hub
+          information.
+      premium_for_worker:
+        type: boolean
+        description: >
+          <span style="color:#1abc9c">[New Release]</span>
+
+          Mark a schedule as Premium or Standard for Worker User.
+
+          Default value is calculated using day, slot and delivery hub
+          information.
+      custom_attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+  schedule_response:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uid
+        example: Hiu67HKMejfbCzxHJ99e
+      user_id:
+        type: string
+        format: uid
+        example: JtzxY8MejfbCzxvLxeMH
+      project_id:
+        type: string
+        format: uid
+        example: ApsHWmZQrVaK2TBhSOTi
+      delivery_hub_id:
+        type: string
+        format: uid
+        example: UhbUQ3eUFqQFSScTzqgG
+      slot_id:
+        type: string
+        format: uid
+        example: KpYwX97xuWmrE4zjvRZF
+      status:
+        type: string
+        default: unpublished
+      type:
+        type: string
+        default: regular
+      premium_for_client:
+        type: boolean
+      premium_for_worker:
+        type: boolean
+      start_time:
+        type: string
+        format: date-time
+        example: '2017-02-13T01:00:00Z'
+      end_time:
+        type: string
+        format: date-time
+        example: '2017-02-13T05:00:00Z'
+      overage:
+        type: boolean
+        default: false
+      break:
+        type: integer
+        description: |
+          In minutes
+      reported:
+        type: boolean
+      custom_attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date
+  schedule_list_response:
+    type: array
+    items:
+      $ref: '#/definitions/schedule_response'
+  total_scheduled_hour:
+    type: object
+    properties:
+      group_by:
+        type: object
+        description: 'fields used for group_by query (type, slot_id, date)'
+        properties: {}
+        example: >-
+          "group_by": {"date": "2017-02-10","slot_id":
+          "oAz5bP23iGz8oa5SkxIW","type": "regular"}
+      standard_for_client:
+        type: number
+        format: float
+        example: 110.5
+      standard_for_worker:
+        type: number
+        format: float
+        example: 120
+      premium_for_client:
+        type: number
+        format: float
+        example: 39.5
+      premium_for_worker:
+        type: number
+        format: float
+        example: 30
+  total_scheduled_hours:
+    type: array
+    items:
+      $ref: '#/definitions/total_scheduled_hour'
+  availability_request:
+    type: object
+    properties:
+      slots:
+        type: array
+        items:
+          type: object
+          required:
+            - start_time
+            - end_time
+            - day
+          properties:
+            start_time:
+              type: string
+              description: 'start time of the availability ''HH:MM'''
+              example: 'HH:MM'
+            end_time:
+              type: string
+              description: >-
+                end time of the availability. Since no date is specified, the
+                first instance of the given time after the start time is assumed
+                'HH:MM'
+              example: 'HH:MM'
+            day:
+              type: string
+              description: >-
+                The day in which the start_time falls. The valid values are-
+                "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"
+              example: SUN
+  availability_response:
+    type: object
+    properties:
+      slots:
+        type: array
+        items:
+          type: object
+          properties:
+            start_time:
+              type: string
+              example: 'HH:MM'
+            end_time:
+              type: string
+              example: 'HH:MM'
+            day:
+              type: string
+              description: MON
+              example: SUN
+  delivery_hub_response:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+        example: Bhanimandal
+      code:
+        type: string
+        example: 2
+      country:
+        type: string
+        example: Nepal
+      seats:
+        type: integer
+        example: 4
+      time_zone:
+        type: string
+        example: Kathmandu
+      slots:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 1246614xyz
+            day:
+              type: string
+              example: Tue
+            code:
+              type: string
+              example: F
+            premium_for_client:
+              type: boolean
+              example: true
+            premium_for_worker:
+              type: boolean
+              example: false
+  delivery_hub_capacity_response:
+    type: object
+    properties:
+      delivery_hub_id:
+        type: string
+        example: 1246614xyz
+      seats:
+        type: integer
+        example: 40
+      slot_id:
+        type: string
+        example: wst1234abcd
+      date:
+        type: string
+        format: date
+      scheduled_seats:
+        type: integer
+        example: 4
+  slot_response:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Id of slot
+        example: oAz5bP23iGz8oa5SkxIW
+      start_time:
+        type: string
+        example: 'HH:MM'
+      end_time:
+        type: string
+        example: 'HH:MM'
+      code:
+        type: string
+        example: F
+  time_entry_response:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uid
+        example: RfKhsbCgEijEvCk9MH8R
+      user_id:
+        type: string
+        format: uid
+        example: Zm4LepVRUtL4LpbPsoiI
+      project_id:
+        type: string
+        format: uid
+        example: 4TjV7qg5t8394ZsCal0S
+      task_id:
+        type: string
+        format: uid
+        example: QCaj5EAKoTSvQVdxUNi4
+      slot_id:
+        type: string
+        format: uid
+        example: NsidUwXrJq4KcsOqaME8
+      schedule_id:
+        type: string
+        format: uid
+        example: Huja9012jTB96j13hHU2
+      delivery_hub_id:
+        type: string
+        format: uid
+        example: cn3iuwXrJq4KcsOqkjg4
+      start_time:
+        type: string
+        format: date-time
+        example: 2016-12-12T16:00:00.000Z
+      end_time:
+        type: string
+        format: date-time
+        example: 2016-12-14T20:00:00.000Z
+      duration:
+        type: integer
+        description: In seconds
+        example: 1500
+      premium_for_worker:
+        type: boolean
+      premium_for_client:
+        type: boolean
+      notes:
+        type: string
+        example: This is sample note
+      timer:
+        type: boolean
+        description: >-
+          Distinguish a time_entry made from start/stop timer and direct create
+          api.
+      overage:
+        type: boolean
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      custom_attributes:
+        $ref: '#/definitions/TimeEntryCustomAttributes'
+  time_entry_create_request:
+    type: object
+    required:
+      - user_id
+      - project_id
+      - task_id
+      - start_time
+      - end_time
+      - duration
+    properties:
+      user_id:
+        type: string
+        example: Zm4LepVRUtL4LpbPsoiI
+      project_id:
+        type: string
+        example: 4TjV7qg5t8394ZsCal0S
+      task_id:
+        type: string
+        example: QCaj5EAKoTSvQVdxUNi4
+      slot_id:
+        type: string
+        example: NsidUwXrJq4KcsOqaME8
+      schedule_id:
+        type: string
+        example: Huja9012jTB96j13hHU2
+      start_time:
+        type: string
+        format: date-time
+        example: 2016-12-09T05:59:58.000Z
+      end_time:
+        type: string
+        format: date-time
+        example: 2016-12-09T05:59:58.000Z
+      duration:
+        type: integer
+        description: In seconds
+        example: 45
+      premium_for_worker:
+        type: boolean
+        default: false
+      premium_for_client:
+        type: boolean
+        default: false
+      notes:
+        type: string
+      custom_attributes:
+        $ref: '#/definitions/TimeEntryCustomAttributes'
+  time_entry_start_request:
+    type: object
+    required:
+      - project_id
+      - task_id
+      - start_time
+    properties:
+      project_id:
+        type: string
+        example: 4TjV7qg5t8394ZsCal0S
+      task_id:
+        type: string
+        example: QCaj5EAKoTSvQVdxUNi4
+      slot_id:
+        type: string
+        example: NsidUwXrJq4KcsOqaME8
+      schedule_id:
+        type: string
+        example: Huja9012jTB96j13hHU2
+      start_time:
+        type: string
+        format: date-time
+        example: 2016-12-09T05:59:58.000Z
+      premium_for_worker:
+        type: boolean
+        default: false
+      premium_for_client:
+        type: boolean
+        default: false
+      notes:
+        type: string
+  time_entry_update_request:
+    type: object
+    properties:
+      user_id:
+        type: string
+        example: Zm4LepVRUtL4LpbPsoiI
+      project_id:
+        type: string
+        example: 4TjV7qg5t8394ZsCal0S
+      task_id:
+        type: string
+        example: QCaj5EAKoTSvQVdxUNi4
+      slot_id:
+        type: string
+        example: NsidUwXrJq4KcsOqaME8
+      schedule_id:
+        type: string
+        example: Huja9012jTB96j13hHU2
+      start_time:
+        type: string
+        format: date-time
+        example: 2016-12-09T05:59:58.000Z
+      end_time:
+        type: string
+        format: date-time
+        example: 2016-12-09T05:59:58.000Z
+      duration:
+        type: integer
+        description: In seconds
+        example: 45
+      premium_for_worker:
+        type: boolean
+      premium_for_client:
+        type: boolean
+      notes:
+        type: string
+      custom_attributes:
+        $ref: '#/definitions/TimeEntryCustomAttributes'
+  running_time_entry_response:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uid
+        example: RfKhsbCgEijEvCk9MH8R
+      user_id:
+        type: string
+        format: uid
+        example: Zm4LepVRUtL4LpbPsoiI
+      project_id:
+        type: string
+        format: uid
+        example: 4TjV7qg5t8394ZsCal0S
+      task_id:
+        type: string
+        format: uid
+        example: QCaj5EAKoTSvQVdxUNi4
+      slot_id:
+        type: string
+        format: uid
+        example: NsidUwXrJq4KcsOqaME8
+      schedule_id:
+        type: string
+        format: uid
+        example: Huja9012jTB96j13hHU2
+      delivery_hub_id:
+        type: string
+        format: uid
+        example: cn3iuwXrJq4KcsOqkjg4
+      start_time:
+        type: string
+        format: date-time
+        example: 2016-12-12T16:00:00.000Z
+      end_time:
+        type:
+          - string
+          - 'null'
+        format: date-time
+        example: null
+      duration:
+        type:
+          - integer
+          - 'null'
+        description: In seconds
+        example: null
+      premium_for_worker:
+        type: boolean
+      premium_for_client:
+        type: boolean
+      notes:
+        type: string
+        example: This is sample note
+      timer:
+        type: boolean
+        description: >-
+          Distinguish a time_entry made from start/stop timer and direct create
+          api.
+      overage:
+        type: boolean
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      custom_attributes:
+        $ref: '#/definitions/TimeEntryCustomAttributes'
+  total_logged_hour:
+    type: object
+    properties:
+      group_by:
+        type: object
+        description: 'Fields used for group_by query (type, slot_id, date)'
+        properties: {}
+        example: >-
+          "group_by": {"date": "2017-02-10","slot_id":
+          "oAz5bP23iGz8oa5SkxIW","type": "regular"}
+      standard_for_client:
+        type: number
+        format: float
+        example: 110.5
+      standard_for_worker:
+        type: number
+        format: float
+        example: 120
+      premium_for_client:
+        type: number
+        format: float
+        example: 39.5
+      premium_for_worker:
+        type: number
+        format: float
+        example: 30
+      client:
+        type: object
+        description: |
+          Detail information of client<br/>
+          <b> New Release </b>
+        properties:
+          standard:
+            type: object
+            properties:
+              base:
+                type: number
+                format: float
+                example: 50
+              overage:
+                type: number
+                format: float
+                example: 60.5
+          premium:
+            type: object
+            properties:
+              base:
+                type: number
+                format: float
+                example: 30.5
+              overage:
+                type: number
+                format: float
+                example: 9
+      worker:
+        type: object
+        description: |
+          Detail information of worker<br/>
+          <b> New Release </b>
+        properties:
+          standard:
+            type: object
+            properties:
+              base:
+                type: number
+                format: float
+                example: 120
+              overage:
+                type:
+                  - number
+                  - 'null'
+                description: Not implemented for worker
+                example: null
+          premium:
+            type: object
+            properties:
+              base:
+                type: number
+                format: float
+                example: 30
+              overage:
+                type:
+                  - number
+                  - 'null'
+                description: Not implemented for worker
+                example: null
+  time_entry_start_error_response:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Timer is already started. Cannot start a new one
+  time_entry_stop_error_response:
+    type: object
+    properties:
+      message:
+        type: string
+        description: end_time must be greater than the start_time
+  TimeEntryCustomAttributes:
+    type: array
+    description: >
+      <span style="color:#1abc9c">[Pre Release]</span>
+
+      Free-end "array of objects" field to add extra attributes for the
+      resource.
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the key that is used to identify the custom attribute.
+          example: worker_ip
+        value:
+          type: string
+          description: Value for the key that is used to identify the custom attribute.
+          example: 110.44.126.155
+  timeoff_stat_response:
+    type: object
+    properties:
+      year:
+        type: string
+        example: '2016'
+      policy_id:
+        type: string
+        example: 12414xyz
+      carried_forward:
+        type: string
+        format: number
+        example: '5'
+        description: >-
+          A number field that denotes the maximum number of days that is carried
+          forward from the previous calendar year for a worker
+      paid_time_offs_taken:
+        type: string
+        format: number
+        example: '2'
+        description: The number of paid time offs taken by the worker at any given moment.
+      unpaid_time_offs_taken:
+        type: string
+        format: number
+        example: '3'
+        description: >-
+          The number of unpaid time offs taken by the worker at any given
+          moment.
+      current_balance_paid:
+        type: string
+        format: number
+        example: '17'
+        description: >-
+          The number of days worth of time offs remaining from the current
+          calendar year.
+      current_balance_unpaid:
+        type: string
+        format: number
+        example: '5'
+        description: >-
+          The number of days worth of time offs remaining from the current
+          calendar year
+      policy:
+        type: object
+        properties:
+          id:
+            type: string
+            example: 12414xyz
+          paid_time_off:
+            type: string
+            format: number
+            example: '12'
+          unpaid_time_off:
+            type: string
+            format: number
+            example: '5'
+          carry_forward:
+            type: string
+            format: number
+            example: '5'
+          paid_request_before:
+            type: string
+            format: number
+            example: '5'
+  create_timeoff_request:
+    type: object
+    required:
+      - creator_id
+      - user_id
+      - start_date
+      - end_date
+      - leave_type
+      - status
+      - days
+    properties:
+      creator_id:
+        type: string
+        format: uuid
+        description: user_id of the user who created the time off
+        example: oAz5bP23iGz8oa5SkxIXV
+      user_id:
+        type: string
+        format: uuid
+        description: user_id of the user who for whom the time off is requested
+        example: oAz5bP23iGz8oa5SkxIXV
+      start_date:
+        type: string
+        format: date
+        description: date from which the time off starts
+        example: '2016-01-22'
+      end_date:
+        type: string
+        format: date
+        description: date till which the time off is taken
+        example: '2016-01-22'
+      days:
+        type: number
+        format: float
+        example: 2.5
+        description: >-
+          days is a positive number and cannot be greater than (end_date -
+          start_date + 1)
+      approver_id:
+        type: string
+        format: uuid
+        description: user_id of the user who approved the time off
+        example: 23Az5bP23iGz8oa5SkxIW
+      slots:
+        type: array
+        items:
+          type: string
+          description: valid slot id
+          example: A1B5bH31iZt6oaS5xIKp0
+      leave_type:
+        type: string
+        description: 'one of regular, sick or emergency leaves'
+        example: regular
+      status:
+        type: string
+        description: 'one of pending, approved, denied or cancelled status for a time_off'
+        example: pending
+      reason:
+        type: string
+        description: reason for taking the time_off
+      feedback:
+        type: string
+        description: reason for approval or denial of a time_off
+      paid:
+        type: boolean
+        description: flag to mark a time_off as paid or unpaid
+        example: false
+  update_timeoff_request:
+    type: object
+    properties:
+      start_date:
+        type: string
+        format: date
+        description: date from which the time off starts
+        example: '2016-01-22'
+      end_date:
+        type: string
+        format: date
+        description: date till which the time off is taken
+        example: '2016-01-22'
+      days:
+        type: number
+        format: float
+        example: 2.5
+        description: >-
+          days is a positive number and cannot be greater than (end_date -
+          start_date + 1)
+      approver_id:
+        type: string
+        format: uuid
+        description: user_id of the user who approved the time off
+        example: 23Az5bP23iGz8oa5SkxIW
+      slots:
+        type: array
+        items:
+          type: string
+          description: valid slot id
+          example: A1B5bH31iZt6oaS5xIKp0
+      leave_type:
+        type: string
+        description: 'one of regular, sick or emergency leaves'
+        example: regular
+      status:
+        type: string
+        description: 'one of pending, approved, denied or cancelled status for a time_off'
+        example: pending
+      reason:
+        type: string
+        description: reason for taking the time_off
+      feedback:
+        type: string
+        description: reason for approval or denial of a time_off
+      paid:
+        type: boolean
+        description: flag to mark a time_off as paid or unpaid
+        example: false
+  timeoff_response:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: id of the time off resource
+        example: AyB5bH11iZt8oa5SxKIOp
+      creator_id:
+        type: string
+        format: uuid
+        description: user_id of the user who created the time off
+        example: oAz5bP23iGz8oa5SkxIXV
+      user_id:
+        type: string
+        format: uuid
+        description: user_id of the user who for whom the time off is requested
+        example: oAz5bP23iGz8oa5SkxIXV
+      start_date:
+        type: string
+        format: date
+        description: date from which the time off starts
+        example: '2016-01-22'
+      end_date:
+        type: string
+        format: date
+        description: date till which the time off is taken
+        example: '2016-01-22'
+      days:
+        type: number
+        format: float
+        example: 2.5
+        description: >-
+          days is a positive number and cannot be greater than (end_date -
+          start_date + 1)
+      approver_id:
+        type: string
+        format: uuid
+        description: user_id of the user who approved the time off
+        example: 23Az5bP23iGz8oa5SkxIW
+      leave_type:
+        type: string
+        description: 'one of regular, sick or emergency leaves'
+        example: regular
+      status:
+        type: string
+        description: 'one of pending, approved, denied or cancelled status for a time_off'
+        example: pending
+      reason:
+        type: string
+        description: reason for taking the time_off
+      feedback:
+        type: string
+        description: reason for approval or denial of a time_off
+      paid:
+        type: boolean
+        description: flag to mark a time_off as paid or unpaid
+        example: false
+      slots:
+        type: array
+        items:
+          type: string
+          description: valid slot id
+          example: A1B5bH31iZt6oaS5xIKp0
+      created_at:
+        type: string
+        format: date-time
+        description: timestamp when the time_off resource was created
+        example: 2017-04-03T08:54:59.000Z
+      updated_at:
+        type: string
+        format: date-time
+        description: timestamp when the time_off resource was last updated
+        example: 2017-04-03T08:54:59.000Z
+  update_user_request:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      avatar:
+        type: string
+      bio:
+        type: string
+        description: Biography of user
+      status:
+        type: string
+        description: active | disabled | archived
+        example: active
+      address:
+        type: object
+        properties:
+          address_line_1:
+            type: string
+          address_line_2:
+            type: string
+          city:
+            type: string
+          region:
+            type: string
+          zip:
+            type: string
+          country:
+            type: string
+      title:
+        type: string
+      linkedin_url:
+        type: string
+      skype_handle:
+        type: string
+      phone_number:
+        type: string
+      time_zone:
+        type: string
+      client_attributes:
+        type: object
+        properties:
+          company:
+            type: string
+      worker_attributes:
+        type: object
+        properties:
+          slack_handle:
+            type: string
+          starting_date:
+            type: string
+            format: date
+          weekly_commitment:
+            type: integer
+          gender:
+            type: string
+          primary_delivery_hub:
+            type: string
+          employment_status:
+            type: string
+          date_of_birth:
+            type: string
+            format: date
+      custom_attributes:
+        type: object
+        properties:
+          name:
+            type: string
+          value:
+            type: string
+      type:
+        type: string
+  user_response:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 6MJM2OeK2s2xisiRyAkZ
+      first_name:
+        type: string
+        example: Sagun
+      last_name:
+        type: string
+        example: Khanal
+      avatar:
+        type: string
+      bio:
+        type: string
+        description: Biography of user
+        example: This is sample text for Bio
+      status:
+        type: string
+        description: Response will be null as the values for status is not finalised
+        example: null
+      created_on:
+        type: string
+        format: date-time
+      email:
+        type: string
+        example: sagun@cf.com
+      address:
+        type: object
+        properties:
+          address_line_1:
+            type: string
+            example: Kathmandu
+          address_line_2:
+            type: string
+          city:
+            type: string
+          region:
+            type: string
+          zip:
+            type: string
+          country:
+            type: string
+      title:
+        type: string
+      linkedin_url:
+        type: string
+      skype_handle:
+        type: string
+      phone_number:
+        type: string
+      time_zone:
+        type: string
+      client_attributes:
+        type: object
+        properties:
+          company:
+            type: string
+      worker_attributes:
+        type: object
+        properties:
+          slack_handle:
+            type: string
+          starting_date:
+            type: string
+            format: date
+          weekly_commitment:
+            type: integer
+          gender:
+            type: string
+          primary_delivery_hub:
+            type: string
+          employment_status:
+            type: string
+          date_of_birth:
+            type: string
+            format: date
+      custom_attributes:
+        type: object
+        properties:
+          name:
+            type: string
+          value:
+            type: string
+      type:
+        type: string
+  errormodel:
+    type: object
+    properties:
+      message:
+        type: string
+        example: user not found
+  validation_error:
+    type: object
+    properties:
+      message:
+        type: string
+        example: user already a member of the project
+        description: Validation error message
+  st_val:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Validation Failed
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              example: 'slots[1].start_time'
+            error_message:
+              type: string
+              example: is a required field
+  resource_not_found:
+    properties:
+      message:
+        type: string
+        example: '{resource} not found'
+  request_forbidden:
+    properties:
+      message:
+        type: string
+        example: '{custom message}'
+  validation_error_response:
+    properties:
+      message:
+        type: string
+        default: Validation Failed
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/validation_error_block'
+  validation_error_block:
+    properties:
+      field:
+        type: string
+        example: field_name
+      message:
+        type: string
+        example: must be valid
+

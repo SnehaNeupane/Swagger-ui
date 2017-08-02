@@ -1,0 +1,15 @@
+crmhub:
+  type: object
+  properties:
+    firstname:
+      type: string
+      example: Sagun
+    lastname:
+      type: string
+      example: Khanal
+    email:
+            type: string
+            example: sagun@cf.com
+    hs_context:
+            type: string
+            example: {\"hutk\":\"4a878f8055cc7c2ae204b5d83a8c515\",\"ipAddress\":\"192.168.2.12\"}

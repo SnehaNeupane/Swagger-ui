@@ -1,0 +1,117 @@
+open_shift_request_create_body:
+  type: object
+  required:
+    - project_id
+    - start_time
+    - end_time
+    - requested_hours
+    - overage
+  properties:
+    project_id:
+      type: string
+      description: A valid project id
+      example: bBOhSjxCIVKKzqgsOiQi
+    start_time:
+      type: string
+      format: date-time
+      description: Start time of the open shift request in UTC in ISO 8601 format
+    end_time:
+      type: string
+      format: date-time
+      description: End time of the open shift request in UTC in ISO 8601 format
+    requested_hours:
+      type: integer
+      example: 200
+      minimum: 1
+      maximum: 99999
+      description: Total hours requested
+    overage:
+      type: boolean
+      example: true
+      description: A flag denoting whether the schedules to be created are overage or not
+    notes:
+      type: string
+      example: Extra hours requested because of New year holidays
+      description: Further information related to the open shift request
+open_shift_request_update_body:
+  type: object
+  properties:
+    project_id:
+      type: string
+      description: A valid project id
+      example: bBOhSjxCIVKKzqgsOiQi
+    start_time:
+      type: string
+      format: date-time
+      description: Start time of the open shift request in UTC in ISO 8601 format
+    end_time:
+      type: string
+      format: date-time
+      description: End time of the open shift request in UTC in ISO 8601 format
+    requested_hours:
+      type: integer
+      example: 100
+      minimum: 1
+      maximum: 99999
+      description: Total hours requested
+    overage:
+      type: boolean
+      example: true
+      description: A flag denoting whether the schedules to be created are overage or not
+    notes:
+      type: string
+      example: Extra hours requested because of New year holidays
+      description: Further information related to the open shift request
+open_shift_request_response:
+  type: object
+  properties:
+    id:
+      type: string
+      description: ID of open shift request
+      example: 6MJM2OeK2s2xisiRyAkZ
+    project_id:
+      type: string
+      description: ID of the project
+      example: bBOhSjxCIVKKzqgsOiQi
+    start_time:
+      type: string
+      format: date-time
+      description: Start time of the open shift request in UTC in ISO 8601 format
+    end_time:
+      type: string
+      format: date-time
+      description: End time of the open shift request in UTC in ISO 8601 format
+    requested_hours:
+      type: number
+      description: Total hours requested
+      example: 100
+    overage:
+      type: boolean
+      description: A flag denoting whether the schedules to be created are overage or not
+      example: true
+    notes:
+      type: string
+      description: Further information related to the open shift request
+      example: Extra hours requested because of New year holidays
+    open_hours:
+      type: number
+      description: Sum of open hours from all the open shifts created within this request
+      example: 120
+    scheduled_hours:
+      type: number
+      description: Sum of hours of the schedules created via this open shift request
+      example: 80.0
+    reported_hours:
+      type: number
+      description: Sum of the reported hours of all the open_shifts associated with this open_shift_request
+      example: 50.0
+    created_at:
+      type: string
+      format: date-time
+      description: Timestamp of when the request was created in UTC in ISO 8601 format
+      example: '2017-02-24T10:15:00Z'
+    updated_at:
+      type: string
+      format: date-time
+      description: Timestamp of when the request was updated in UTC in ISO 8601 format
+      example: '2017-02-27T07:25:00Z'

@@ -1,0 +1,251 @@
+/projects:
+  # Create a project
+  post:
+    summary: Create a Project
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/projects</span></h3><hr>
+      This API allows users to create a Project.<br><br>
+      <b> Validations </b>
+      <br>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> HTTP status Code
+        <tr>
+          <td> Invalid subscription_type
+          <td> can only be one of these 'monthly', 'flex_pass'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid billable_unit
+          <td> can only be one of these 'hour', 'piece_rate'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid workforce_model
+          <td> can only be one of these 'in-house', 'semi-distributed'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid payment_option
+          <td> can only be one of these 'yearly', 'monthly', 'one_time'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid tools
+          <td> can only be one of these 'client', 'third_party', 'ws_flow'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid channel
+          <td> can only be one of these 'api', 'file_upload', 'task_board', 'client_tools'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid status
+          <td> can only be one of these 'open', 'closed'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid current_milestone
+          <td> does not apply for this project type
+          <td> 422 Unprocessable Entity
+      </table>
+    tags: [Projects]
+    parameters:
+      - name: create
+        in: body
+        schema:
+          $ref: '#/definitions/project_create_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/project'
+
+  # List projects
+  get:
+    summary: List Projects
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/projects</span></h3><hr>
+      This API allows users to list projects based on provided filters.
+    tags: [Projects]
+    parameters:
+      - name: name
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        description: |
+          Lists projects that have name similar to provided value
+      - name: status
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        description: open | closed
+      - name: subscription_type
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        description: monthly | flex_pass
+      - name: ws_flow_enabled
+        in: query
+        type: string
+        required: false
+        description: true | false
+      - name: ws_shield_enabled
+        in: query
+        type: string
+        required: false
+        description: true | false
+      - name: billable_unit
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        description: piece_rate | hour
+      - name: milestone_id
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        description: The ids of milestone the projects are in
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/project'
+
+/projects/{id}:
+  # Get a project
+  get:
+    summary: Get a Project
+    description:
+      <h3><span style="color:#0088bb">GET /api/v1/projects/:id</span></h3><hr>
+      This API allows users to fetch details of a single Project.
+      If 'include[]=milestone' is present in the query parameter, then the response will also
+      include current milestone details.
+    tags: [Projects]
+    parameters:
+      - name: id
+        in: path
+        description: Id of Project
+        required: true
+        type: string
+      - name: include
+        in: query
+        description: fetch an embedded resource
+        type: string
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/project_including_milestone'
+
+  # Update a project
+  put:
+    summary: Update a Project
+    description: |
+      <h3><span style="color:#0088bb">PUT /api/v1/projects/:id</span></h3><hr>
+      This API allows users to update an existing Project.<br><br>
+      <b> Validations </b> <br>
+      <table>
+        <tr>
+          <th> Error
+          <th> Message
+          <th> HTTP status Code
+        <tr>
+          <td> Invalid subscription_type
+          <td> can only be one of these 'monthly', 'flex_pass'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid billable_unit
+          <td> can only be one of these 'hour', 'piece_rate'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid workforce_model
+          <td> can only be one of these 'in-house', semi-distributed'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid payment_option
+          <td> can only be one of these 'yearly', 'monthly', 'one_time'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid tools
+          <td> can only be one of these 'client', 'third_party', 'ws_flow'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid channel
+          <td> can only be one of these 'api', 'file_upload', 'task_board', 'client_tools'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid status
+          <td> can only be one of these 'open', 'closed'
+          <td> 422 Unprocessable Entity
+        <tr>
+          <td> Invalid current_milestone
+          <td> does not apply for this project type
+          <td> 422 Unprocessable Entity
+      </table>
+    tags: [Projects]
+    parameters:
+      - name: id
+        in: path
+        description: Id of project
+        required: true
+        type: string
+      - name: update_request
+        in: body
+        schema:
+          $ref: '#/definitions/project_update_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/project'
+
+/users/{user_id}/projects:
+  # List projects of a user
+  get:
+    summary:  List Projects of a User
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/users/:user_id/projects</span></h3><hr>
+      This API allows users to list projects that the given user is assigned to based on the filter
+      parameters.
+    tags: [Projects]
+    parameters:
+     - name: user_id
+       type: string
+       in: path
+       description: Id of user
+       required: true
+     - name: billable_unit
+       in: query
+       type: string
+       required: false
+       description: hour | piece_rate
+     - name: milestone_id
+       in: query
+       type: string
+       required: false
+       description: Valid milestone id
+     - name: status
+       in: query
+       type: string
+       required: false
+       description: open | closed
+     - name: subscription_type
+       in: query
+       type: string
+       required: false
+       description: monthly | flex_pass
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/project'

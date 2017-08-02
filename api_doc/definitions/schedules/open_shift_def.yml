@@ -1,0 +1,214 @@
+# Open Shift APIs
+OpenShiftSettings:
+  type: object
+  properties:
+    auto_approve:
+      type: boolean
+      description: |
+        true | false <br>
+      default: false
+    schedule_status:
+      type: string
+      description: |
+        unpublished | published <br>
+      default: published
+    schedule_type:
+      type: string
+      default: regular
+    schedule_break:
+      type: integer
+      description: |
+        In minutes
+      example: 30
+OpenShiftCustomAttributes:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          example: hours_needed
+        value:
+          type: string
+          example: '160'
+OpenShiftResponseProperties:
+  type: object
+  properties:
+    open_shift_request_id:
+      type: string
+      example: awqWEw8bIYorPEuFzxHE
+    project_id:
+      type: string
+      example: 123JM2OeK2s2xisiRyGd
+    delivery_hub_id:
+      type: string
+      example: is2JM2OeR5s2xisiRyGd5
+    slot_id:
+      type: string
+      example: 09qRgEwbbIYorPEuFzxHE
+    schedule_date:
+      type: string
+      format: date
+      example: '2017-03-14'
+    claim_deadline:
+      type: string
+      format: date-time
+      example: '2017-03-13T05:58:32Z'
+    start_time:
+      type: string
+      format: date-time
+      example: '2017-03-14T16:00:00Z'
+    end_time:
+      type: string
+      format: date-time
+      example: '2017-03-14T20:00:00Z'
+    max_seats:
+      type: integer
+      example: 40
+    open_hours:
+      type: number
+      format: float
+      description: Open hours is based on max_seats * (4 - schedule_break / 60)
+      example: 140.0
+    available_seats:
+      type: integer
+      description: Calculated based on max_seats minus total claims
+      example: 20
+    settings:
+      $ref: '#/definitions/OpenShiftSettings'
+    custom_attributes:
+      $ref: '#/definitions/OpenShiftCustomAttributes'
+    status:
+      type: string
+      example: unpublished
+    scheduled_hours:
+      type: number
+      description: Sum of scheduled_durations for each schedule
+      example: 40
+    reported_hours:
+      type: number
+      description: Sum of all the reported duration of schedules.
+                   Reported hours will be rounded up in 2 decimal places
+      example: 38.5
+    created_at:
+      type: string
+      example: '2017-03-10T05:58:36Z'
+    updated_at:
+      type: string
+      example: '2017-03-11T05:58:36Z'
+open_shift_create_request:
+  type: object
+  required:
+    - open_shift_request_id
+    - delivery_hub_id
+    - slot_id
+    - claim_deadline
+    - schedule_date
+    - max_seats
+  properties:
+    open_shift_request_id:
+      type: string
+      description: A valid open shift request id
+    delivery_hub_id:
+      type: string
+      description: A valid delivery hub id
+      example: is2JM2OeR5s2xisiRyGd5
+    slot_id:
+      type: string
+      description: A valid slot id
+      example: 09qRgEwbbIYorPEuFzxHE
+    schedule_date:
+      type: string
+      format: date
+      description: A valid UTC in ISO 8601 date
+    claim_deadline:
+      type: string
+      format: date-time
+      description: A valid UTC in ISO 8601 date format
+    max_seats:
+      type: integer
+      minimum: 1
+      maximum: 999
+      description: Between 0 and total seats in the delivery hub
+    settings:
+      $ref: '#/definitions/OpenShiftSettings'
+    custom_attributes:
+      $ref: '#/definitions/OpenShiftCustomAttributes'
+    status:
+      type: string
+      description: |
+        unpublished | published | closed <br>
+      default: unpublished
+open_shift_update_request:
+  type: object
+  properties:
+    delivery_hub_id:
+      type: string
+      description: A valid delivery hub id
+    slot_id:
+      type: string
+      description: A valid slot id
+    schedule_date:
+      type: string
+      format: date
+      description: A valid  UTC in ISO 8601 date format
+    claim_deadline:
+      type: string
+      format: date-time
+      description: A valid  UTC in ISO 8601 date format
+    max_seats:
+      type: integer
+      minimum: 1
+      maximum: 999
+      description: Between 0 and total seats in the delivery hub
+    settings:
+      $ref: '#/definitions/OpenShiftSettings'
+    custom_attributes:
+      $ref: '#/definitions/OpenShiftCustomAttributes'
+    status:
+      type: string
+      description: |
+        unpublished | published | closed <br>
+open_shift_response:
+  $ref: '#/definitions/OpenShiftResponseProperties'
+open_shift_list_response:
+  type: array
+  items:
+    $ref: '#/definitions/OpenShiftResponseProperties'
+claim_request:
+  type: object
+  required:
+    - user_id
+  properties:
+    user_id:
+      type: string
+      example: 2xisiRyGd5s2xisiRyGd
+claim_response:
+  type: object
+  properties:
+    id:
+      type: string
+      description: ID of claim
+      example: 6MJM2OeK2s2xisiRyAkZ
+    open_shift_id:
+      type: string
+      description: ID of open shift
+      example: t2JM2OeK2s2xisiRyGd5
+    user_id:
+      type: string
+      description: ID of open shift
+      example: 2xisiRyGd5s2xisiRyGd
+    status:
+      type: string
+      description: status of claim
+      example: approved
+    created_at:
+      type: string
+      format: date-time
+      description: Timestamp of when the request was created in UTC in ISO 8601 format
+      example: '2017-02-24T10:15:00Z'
+    updated_at:
+      type: string
+      format: date-time
+      description: Timestamp of when the request was updated in UTC in ISO 8601 format
+      example: '2017-02-27T07:25:00Z'

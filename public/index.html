@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Core API</title>
+  <!-- needed for adaptive design -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--
+    ReDoc doesn't change outer page styles
+    -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .code {
+      font-family: consolas;
+    }
+    .with_background{
+      padding: 3px;
+      border-radius: 6px;
+      background-color: #f0f0f0;
+    }
+
+  </style>
+</head>
+
+<body>
+  <redoc spec-url='final.json'></redoc>
+  <script src="dist/bundle.js"></script>
+</body>
+
+</html>

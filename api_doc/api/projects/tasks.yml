@@ -1,0 +1,149 @@
+/tasks:
+  # Create a Task
+  post:
+    summary: Create a Task
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/tasks</span></h3><hr>
+      This API allows users to create a Task.<br><br>
+      <b> Validations </b><br>
+      <table>
+        <tr>
+          <th> Error </th>
+          <th> Message </th>
+          <th> Code </th>
+        </tr>
+        <tr>
+          <td> The billable attribute is not a boolean </td>
+          <td> must be a boolean </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td> Task name is either empty or exceeded the max length limit </td>
+          <td> must be a non-blank string with a maximum of 200 characters </td>
+          <td> 422 </td>
+        </tr>
+        <tr>
+          <td>
+            Task name is not unique (compared by ignoring case-sensitivity and leading and trailing
+            spaces)
+          </td>
+          <td> task with the same name already exists </td>
+          <td> 422 </td>
+        </tr>
+      </table>
+    tags: [Tasks]
+    parameters:
+      - name: task_body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/task_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/task_response'
+
+  # List tasks
+  get:
+    summary: List Tasks
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/tasks</span></h3><hr>
+      This API allows users to list tasks.<br><br>
+    tags: [Tasks]
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/task_response'
+
+/tasks/{id}:
+  # Get a task
+  get:
+    summary: Get a Task
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/tasks/:id</span></h3><hr>
+      This API allows users to fetch details of a Task.<br><br>
+    tags: [Tasks]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/task_response'
+
+/projects/{project_id}/tasks:
+  # Assign a task to a project
+  post:
+    summary: Assign Task to a Project
+    description: |
+      <h3><span style="color:#0088bb">POST /api/v1/projects/:project_id/tasks</span></h3><hr>
+      This API allows users to add a Task to a Project.<br><br>
+      <b> Validations </b><br>
+      <table>
+        <tr>
+          <th> Error </th>
+          <th> Message </th>
+          <th> Code </th>
+        </tr>
+        <tr>
+          <td> The Project does not exist </td>
+          <td> project not found </td>
+          <td> 404 </td>
+        </tr>
+        <tr>
+          <td> The Task does not exist </td>
+          <td> task not found </td>
+          <td> 404 </td>
+        </tr>
+        <tr>
+          <td> The Task is already assigned to the project</td>
+          <td> task already assigned to the project </td>
+          <td> 422 </td>
+        </tr>
+      </table>
+    tags: [Tasks]
+    parameters:
+      - name: project_id
+        type: string
+        in: path
+        required: true
+      - name: requestbody
+        in: body
+        schema:
+          type: object
+          properties:
+            task_id:
+              type: string
+              example: 912414xyz
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/task_response'
+
+  #  List tasks assigned to a project.
+  get:
+    summary: List Tasks assigned to a Project
+    description: |
+      <h3><span style="color:#0088bb">GET /api/v1/projects/:project_id/tasks</span></h3><hr>
+      This API allows users to lists tasks assigned to a Project.<br><br>
+    tags: [Tasks]
+    parameters:
+      - name: project_id
+        type: string
+        in: path
+        required: true
+    responses:
+      200:
+        description: OK
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/task_response'

@@ -1,0 +1,16 @@
+slot_response:
+  type: object
+  properties:
+    id:
+      type: string
+      description: Id of slot
+      example: oAz5bP23iGz8oa5SkxIW
+    start_time:
+      type: string
+      example: 'HH:MM'
+    end_time:
+      type: string
+      example: 'HH:MM'
+    code:
+      type: string
+      example: 'F'

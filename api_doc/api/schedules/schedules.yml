@@ -1,0 +1,228 @@
+/schedules:
+  # Create a schedule
+  post:
+    summary: Create a Schedule
+    description: |
+      <h3><span style="color:#0088bb"> POST /api/v1/schedules </span></h3><hr>
+      This API allows users to schedule a user on a specific day of CloudFactory slots for delivering
+      the requested hours of work in a WorkStream by creating a
+      <span style="color:#1abc9c"><b>Schedule resource</b></span>.
+    tags: [Schedules]
+    parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/schedule_create_request'
+    responses:
+      201:
+        description: Created
+        schema:
+          $ref: '#/definitions/schedule_response'
+
+  # List schedules
+  get:
+    summary: List Schedules
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/schedules </span></h3><hr>
+      This API allows users to get list of schedules based on provided filters.
+    tags: [Schedules]
+    parameters:
+      - name: time_min
+        in: query
+        type: string
+        required: true
+        format: date-time
+      - name: time_max
+        in: query
+        type: string
+        required: true
+        format: date-time
+      - name: user_id
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        format: array of strings
+      - name: delivery_hub_id
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        format: array of strings
+      - name: slot_id
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        format: array of strings
+      - name: open_shift_id
+        in: query
+        type: array
+        items:
+          type: string
+        required: false
+        format: array of strings
+      - name: project_id
+        in: query
+        type: string
+        required: false
+      - name: status
+        in: query
+        type: string
+        required: false
+      - name: type
+        in: query
+        type: string
+        required: false
+      - name: overage
+        in: query
+        type: boolean
+        required: false
+      - name: reported
+        in: query
+        type: boolean
+        required: false
+      - name: premium_for_worker
+        in: query
+        type: boolean
+        required: false
+      - name: premium_for_client
+        in: query
+        type: boolean
+        required: false
+      - name: page
+        in: query
+        type: number
+        required: false
+      - name: per_page
+        in: query
+        type: number
+        required: false
+    responses:
+      200:
+        description: OK
+        schema:
+         $ref: '#/definitions/schedule_list_response'
+
+/schedules/{id}:
+  # Get a schedule
+  get:
+    summary: Get a Schedule
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/schedules/:id</span></h3><hr>
+      This API allows users to fetch details of a schedule.
+    tags: [Schedules]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        format: uid
+        description: id of schedule
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/schedule_response'
+
+  # Update a schedule
+  put:
+    summary: Update a Schedule
+    description: |
+      <h3><span style="color:#0088bb"> PUT /api/v1/schedules/:id</span></h3><hr>
+      This API allows users to update a schedule.
+    tags: [Schedules]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        format: uid
+        description: Id of the schedule
+      - name: update_body
+        in: body
+        schema:
+          $ref: '#/definitions/schedule_update_request'
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/schedule_response'
+
+  # Delete a schedule
+  delete:
+    summary: Delete a Schedule
+    description: |
+      <h3><span style="color:#0088bb"> DELETE /api/v1/schedules/:id</span></h3><hr>
+      This API allows users to delete a schedule.
+    tags: [Schedules]
+    parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        format: uid
+        description: Id of schedule
+    responses:
+      204:
+        description: No Content
+
+# Schedule stats
+/schedules/stats:
+  # Total scheduled hours
+  get:
+    summary: Total Scheduled hours API
+    description: |
+      <h3><span style="color:#0088bb"> GET /api/v1/schedules/stats</span></h3><hr>
+      This API allows users to fetch schedule statistics based on provided filters.
+    tags: [Schedules]
+    parameters:
+      - name: time_min
+        in: query
+        type: string
+        required: true
+        format: date-time
+      - name: time_max
+        in: query
+        type: string
+        required: true
+        format: date-time
+      - name: user_id
+        in: query
+        type: string
+        required: false
+      - name: slot_id
+        in: query
+        type: string
+        required: false
+      - name: project_id
+        in: query
+        type: string
+        required: false
+      - name: status
+        in: query
+        type: string
+        required: false
+      - name: group_by
+        in : query
+        type: array
+        items:
+          type: string
+        required: false
+        format: array of strings
+      - name: page
+        in: query
+        type: number
+        required: false
+      - name: per_page
+        in: query
+        type: number
+        required: false
+    responses:
+      200:
+        description: OK
+        schema:
+          $ref: '#/definitions/total_scheduled_hours'
